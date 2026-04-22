@@ -1,6 +1,13 @@
 set(SPECIFIED_TEMPLATE_AGENT_SOURCES
     "agent/SpecifiedStringTemplateAgent.cpp"
     "renderer/StringTemplateRenderer.cpp"
+    "renderer/StringTemplateRenderer_2.cpp"
+    "renderer/jsTranslator.js"
+    "renderer/sc-client.js"
+    "renderer/TemplateActionGenerator.cpp"
+    "renderer/TemplateActionGenerator.hpp"
+    "renderer/JsonToXMLAgent.cpp"
+    "renderer/JsonToXMLAgent.hpp"
     "SpecifiedStringTemplateModule.cpp"
 )
 set(SPECIFIED_TEMPLATE_AGENT_HEADERS

@@ -1,6 +1,7 @@
 set(TEMPLATE_AGENT_TEST_SOURCES
     "units/SpecifiedStringTemplateAgentTest.cpp"
     "units/StringTemplateRendererTest.cpp"
+    "units/TemplateActionGeneratorTest.cpp"
 )
 
 add_executable(template-agent-test ${TEMPLATE_AGENT_TEST_SOURCES})

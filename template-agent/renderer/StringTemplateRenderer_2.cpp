@@ -20,12 +20,28 @@ using namespace utils;
 namespace specifiedStringTemplateModule
 {
 
-std::string StringTemplateRenderer::RenderStringTemplate(
+std::string StringTemplateRenderer::RenderStringTemplate1(
     ScAgentContext & context,
-    ScAddr const & stringTemplateLink,
+    ScAddr const & stringTemplateLin,
     ScAddr const & stringTemplateLinkReplacements,
     ScAddr const & stringFormatAddr)
 {
+
+  ScIterator3Ptr it3 = context.CreateIterator3(
+    ScType::ConstNodeClass,
+    ScType::ConstPermPosArc,
+    stringTemplateLinkReplacements);
+  
+  ScAddr button_class;
+  // Use it3-Next() to go to the next appropriate by condition sc-construction.
+  if (it3->Next())
+  {
+    button_class = it3->Get(0);
+    // To get values use `it3->Get(index)`, where index in range [0; 2]. 
+  }
+
+  ScAddr stringTemplateLink = IteratorUtils::getAnyByOutRelation(
+      &context, button_class, SpecifiedStringTemplateKeynodes::nrel_html_template);
   // Get string template sc-link content
   std::string templateString;
   bool const templateStringLinkExists = context.GetLinkContent(stringTemplateLink, templateString);
@@ -34,31 +50,29 @@ std::string StringTemplateRenderer::RenderStringTemplate(
   {
     SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "StringTemplateRenderer: string template link has no content.");
   }
+  // В ЭТОЙ ЧСТИ МЫ ВЗЯЛИ ЗНАЧЕНИЕ ШАБЛОНА ОТ ПЕРЕДАННОГО УЗЛА.
 
-  ScAddr const variablesSetAddr = IteratorUtils::getAnyByOutRelation(
-      &context, stringTemplateLink, SpecifiedStringTemplateKeynodes::nrel_variable_template);
 
-  // If link has no variables, return it. Nothing to render
-  if (!context.IsElement(variablesSetAddr))
-  {
-    std::string result = inja::render(templateString, nlohmann::json());
-    SC_LOG_INFO("StringTemplateRenderer: there is no variables. Rendered string is " << result);
-    return result;
-  }
 
   nlohmann::json variableTemplateValues;
   ScAddr variableAddr;
+  ScAddr pre_templateAddr; // добавил, так как лишь она ссылается на шаблон и еще на rrel_outputs' и rrel_inputs'
   std::string variableContent;
   ScAddr templateAddr;
-  ScAddrVector const variableTemplatesVector =
-      IteratorUtils::getAllWithType(&context, variablesSetAddr, ScType::ConstNode);
+  ScAddrVector const variableTemplatesVector = IteratorUtils::getAllByOutRelation(
+      &context, stringTemplateLink, SpecifiedStringTemplateKeynodes::nrel_variable_template);
+
   // Iterate over all the specified in sc-link string variables
   for (ScAddr const & variableTemplateNode : variableTemplatesVector)
   {
     variableAddr = IteratorUtils::getAnyByOutRelation(
         &context, variableTemplateNode, SpecifiedStringTemplateKeynodes::rrel_variable);
+    
+    pre_templateAddr = IteratorUtils::getAnyByOutRelation(
+        &context, variableTemplateNode, SpecifiedStringTemplateKeynodes::rrel_search_template);
+
     templateAddr = IteratorUtils::getAnyByOutRelation(
-        &context, variableTemplateNode, SpecifiedStringTemplateKeynodes::rrel_template);
+        &context, pre_templateAddr, SpecifiedStringTemplateKeynodes::rrel_template);
 
     // Get variable and corresponding template to find variable value
     if (!context.IsElement(variableAddr) || !context.IsElement(templateAddr))
@@ -66,22 +80,51 @@ std::string StringTemplateRenderer::RenderStringTemplate(
       SC_THROW_EXCEPTION(
           utils::ExceptionItemNotFound, "StringTemplateRenderer: string template variables are specified incorrectly.");
     }
-    context.GetLinkContent(variableAddr, variableContent);
+    variableContent = context.GetElementSystemIdentifier(variableAddr);
     SC_LOG_DEBUG("StringTemplateRenderer: found variable " << variableContent);
 
-    ScAddr const keyScElement =
-        IteratorUtils::getAnyByOutRelation(&context, templateAddr, ScKeynodes::rrel_key_sc_element);
+    ScAddr output_construction_node;
+    output_construction_node = IteratorUtils::getAnyByOutRelation(
+        &context, pre_templateAddr, SpecifiedStringTemplateKeynodes::rrel_outputs);
+
+    ScIterator5Ptr it5 = context.CreateIterator5(
+        SpecifiedStringTemplateKeynodes::nrel_value,
+        ScType::VarPermPosArc,
+        ScType::VarCommonArc,
+        ScType::ConstPermPosArc,
+        output_construction_node);
+      // Use `it5-Next()` to go to the next appropriate by condition sc-construction. 
+    
+    ScAddr variableAddr;
+      if (it5->Next())
+      {
+        variableAddr = it5->Get(2);
+        // To get values use `it5->Get(index)`, where index in range [0; 4].
+      }
+    ScIterator3Ptr it3 = context.CreateIterator3(
+        ScType::VarNodeClass,
+        variableAddr,
+        ScType::VarNodeLink);
+  
+      ScAddr keyScElement;
+      // Use it3-Next() to go to the next appropriate by condition sc-construction.
+      if (it3->Next())
+      {
+        keyScElement = it3->Get(2);
+        // To get values use `it3->Get(index)`, where index in range [0; 2]. 
+      }
+
+
     if (!context.IsElement(keyScElement))
     {
       SC_THROW_EXCEPTION(
           utils::ExceptionItemNotFound,
           "StringTemplateRenderer: string template key sc element is specified incorrectly.");
     }
-
+    // ОСТАНОВИЛСЯ ЗДЕСЬ ТУТ НАДО ЗАБРАТЬ БУТТОН В ПАРАМ,ЧТОБЫ В ШАБЛОН ПОДСТАВИТЬ
     ScAddr keyScElementValue;
     ScTemplate scTemplate;
     ScTemplateParams params;
-    
     // Fill ScTemplateParams if valid replacements are passed as a parameter (e.g. real user interface component to pass
     // in sc-template)
     if (context.IsElement(stringTemplateLinkReplacements))
@@ -196,7 +239,7 @@ std::string StringTemplateRenderer::RenderStringTemplate(
   return result;
 }
 
-ScTemplateParams StringTemplateRenderer::GetScTemplateParamsFromTemplateReplacements(
+ScTemplateParams StringTemplateRenderer::GetScTemplateParamsFromTemplateReplacements1(
     ScAgentContext & context,
     ScAddr const & templateAddr,
     ScAddr const & stringTemplateLinkReplacements)

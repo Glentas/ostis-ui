@@ -1,0 +1,63 @@
+{
+  "tests": 9,
+  "name": "AllTests",
+  "testsuites": [
+    {
+      "name": "TemplateAgentTest",
+      "tests": 2,
+      "testsuite": [
+        {
+          "name": "ZeroVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/SpecifiedStringTemplateAgentTest.cpp",
+          "line": 63
+        },
+        {
+          "name": "OneVariableStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/SpecifiedStringTemplateAgentTest.cpp",
+          "line": 68
+        }
+      ]
+    },
+    {
+      "name": "RendererTest",
+      "tests": 7,
+      "testsuite": [
+        {
+          "name": "ZeroVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 41
+        },
+        {
+          "name": "OneVariableStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 46
+        },
+        {
+          "name": "TwoVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 51
+        },
+        {
+          "name": "ThreeVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 56
+        },
+        {
+          "name": "NoVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 61
+        },
+        {
+          "name": "NotAllVariablesStringTemplate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/StringTemplateRendererTest.cpp",
+          "line": 66
+        },
+        {
+          "name": "ButtonActionGenerate",
+          "file": "\/home\/artem\/\u00D0\u00A0\u00D0\u00B0\u00D0\u00B1\u00D0\u00BE\u00D1\u0087\u00D0\u00B8\u00D0\u00B9 \u00D1\u0081\u00D1\u0082\u00D0\u00BE\u00D0\u00BB\/ostis\/ostis-ui\/template-agent\/tests\/units\/TemplateActionGeneratorTest.cpp",
+          "line": 55
+        }
+      ]
+    }
+  ]
+}

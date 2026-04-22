@@ -6,7 +6,7 @@
 
 test_action_node
 	<- action_tranlate_sc_node_to_html;
-	<- question;
+	<- action;
 	-> rrel_1: ..text_output;
 	-> rrel_expected_result: [
 <p class="ostis-ui-text-output ostis-ui-kit-text-large" style=''>

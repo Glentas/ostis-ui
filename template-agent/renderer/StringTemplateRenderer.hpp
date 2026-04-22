@@ -19,6 +19,10 @@ class StringTemplateRenderer
 public:
   static std::string RenderStringTemplate(ScAgentContext & context, ScAddr const & stringTemplateLink, ScAddr const & stringTemplateLinkReplacements, ScAddr const & stringFormatAddr);
   static ScTemplateParams GetScTemplateParamsFromTemplateReplacements(ScAgentContext & context, ScAddr const & templateAddr, ScAddr const & stringTemplateLinkReplacements);
+ 
+  // modified by me
+  static std::string RenderStringTemplate1(ScAgentContext & context, ScAddr const & stringTemplateLink, ScAddr const & stringTemplateLinkReplacements, ScAddr const & stringFormatAddr);
+  static ScTemplateParams GetScTemplateParamsFromTemplateReplacements1(ScAgentContext & context, ScAddr const & templateAddr, ScAddr const & stringTemplateLinkReplacements);
 };
 
 } // namespace specifiedStringTemplateModule
