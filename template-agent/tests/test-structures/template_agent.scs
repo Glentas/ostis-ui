@@ -1,0 +1,41 @@
+button_action_template =
+[*
+	action_translate_json_to_XML _-> _action_node;;
+	action_initiated _-> _action_node;;
+	_action_node _-> rrel_1:: _param;;
+*];;
+@arc_param = (_action_node _-> _param);;
+
+@string_template_expected_result = [<age>30</age><city>New York</city><name>John</name>];;
+@string_template_expected_result => nrel_system_identifier: [string_template_expected_result];;
+
+
+button <- concept_button;;
+button => nrel_system_identifier: [button_id];
+	   => nrel_action_template: tuple_node;;
+
+
+tuple_node -> rrel_component_with_input: component_tuple_node;
+		   -> button_action_template;
+		   -> rrel_input_params: @arc_param;;
+
+
+component_tuple_node -> text_field;;
+
+text_field <- concept_text_field;
+		   => nrel_value: [{
+							"name": "John",
+							"age": 30,
+							"city": "New York"
+						}];;
+
+[{
+							"name": "John",
+							"age": 30,
+							"city": "New York"
+						}]  => nrel_system_identifier: [result];;
+
+test_action_node
+<- action_generate_template;
+<- action_initiated;
+-> rrel_1: [button_id];;
