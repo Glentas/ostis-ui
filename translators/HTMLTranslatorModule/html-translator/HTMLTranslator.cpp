@@ -202,5 +202,4 @@ void HTMLTranslator::InsertParameterValue(
     }
   }
 }
-
 }  // namespace htmlTranslationModule
