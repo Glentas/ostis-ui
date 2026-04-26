@@ -7,6 +7,7 @@
 #include "HTMLTranslator.hpp"
 #include "parameter-retriever/ParameterRetriever.hpp"
 
+#include <cstddef>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 
 #include <keynodes/HTMLTranslatorKeynodes.hpp>
@@ -164,42 +165,46 @@ void HTMLTranslator::InsertParameterValue(
     std::string const & parameterID,
     std::string const & parameterValue)
 {
-  std::string foundParameterID = "";
-  unsigned int start = 0, end = 0, collectMode = 0;
-
-  for (int i = 0; i < componentTemplateString.size(); i++)
+  if (componentTemplateString.empty() || parameterID.empty() || parameterValue.empty())
   {
-    if (componentTemplateString[i] == '}')
-    {
-      end = i;
-      if (foundParameterID == parameterID)
-      {
-        componentTemplateString.replace(start, end - start + 1, parameterValue);
-        break;
-      }
+    return;
+  }
 
+  std::string const openBrackets = "{{";
+  std::string const closeBrackets = "}}";
+
+  size_t pos = 0;
+
+  while ((pos = componentTemplateString.find(openBrackets, pos)) != std::string::npos)
+  {
+    size_t closePos = componentTemplateString.find(closeBrackets, pos + openBrackets.size());
+
+    if (closePos == std::string::npos)
+    {
+      SC_LOG_ERROR("HTMLTranslator: given html template is invalid.");
+      throw utils::ScException(
+          utils::ExceptionInvalidParams("HTMLTranslator: given html template is invalid.", "Unmatched '{{' bracket."));
+    }
+
+    std::string foundParameterID =
+        componentTemplateString.substr(pos + openBrackets.size(), closePos - pos - openBrackets.size());
+
+    size_t first_letter = foundParameterID.find_first_not_of(" \n\r\t");
+    if (first_letter != std::string::npos)
+    {
+      size_t last_letter = foundParameterID.find_last_not_of(" \n\r\t");
+      foundParameterID = foundParameterID.substr(first_letter, last_letter - first_letter + 1);
+    }
+    else
+    {
       foundParameterID.clear();
-      start = end = 0;
-      collectMode--;
     }
 
-    if (collectMode == 1)
+    if (foundParameterID == parameterID)
     {
-      foundParameterID.push_back(componentTemplateString[i]);
+      componentTemplateString.replace(pos, closePos - pos + closeBrackets.size(), parameterValue);
     }
-
-    if (componentTemplateString[i] == '{')
-    {
-      start = i;
-      collectMode++;
-      if (collectMode > 1)
-      {
-        SC_LOG_ERROR("HTMLTranslator: given html template is invalid.");
-        throw utils::ScException(
-            utils::ExceptionInvalidParams(
-                "HTMLTranslator: given html template is invalid.", "Multiple nested brackets {...{...}} were given."));
-      }
-    }
+    pos = closePos + closeBrackets.size();
   }
 }
 }  // namespace htmlTranslationModule

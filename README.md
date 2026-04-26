@@ -24,10 +24,10 @@ git checkout demo
 
 #### 3. Install Dependencies with Conan
 
-Conan stuff can be found in ```/home/<your_pc_name>/.conan2/```.
+Conan stuff can be found in ```/home/<Your_pc_name>/.conan2/```.
 
 Sc-machine files can be found in: 
-```/home/<your_pc_name>/.conan2/p/sc-<something-something>/es/```.
+```/home/<Your_pc_name>/.conan2/p/sc-<something-something>/es/```.
 
 Perform all commands below:
 
@@ -48,7 +48,7 @@ conan install . -s build_type=Debug --build=missing
 You can configure the project using CMake presets. 
 
 
-After you installed all dependencies there are three main configuration options:
+After You installed all dependencies there are three main configuration options:
 - Debug with tests:
   
   ```sh
@@ -69,7 +69,7 @@ After you installed all dependencies there are three main configuration options:
 
 #### 5. Build Project
 
-After configuring, you can build the project:
+After configuring, You can build the project:
 
 For debug build:
 
@@ -87,7 +87,7 @@ cmake --build --preset release
 
 #### 1. Download and extract
 
-Download [GitHub Releases](https://github.com/ostis-ai/sc-machine/releases) and extract them to a location of your choice.
+Download [GitHub Releases](https://github.com/ostis-ai/sc-machine/releases) and extract them to a location of Your choice.
 
 #### 2. Build KB
 
@@ -99,7 +99,7 @@ Build KB:
 ./sc-builder --input /path/to/folder/with/kb/files/ --output /path/to/kb.bin --clear
 ```
 
-- ```/path/to/folder/with/kb/files/``` - folder that contains your gwf's and scs's.
+- ```/path/to/folder/with/kb/files/``` - folder that contains Your gwf's and scs's.
 - ```/path/to/kb.bin``` - location where KB will be saved. You may change it's name: kb1.bin, my_kb.bin, etc.
 
 #### 3. Start sc-machine
@@ -116,56 +116,99 @@ Build KB:
 
 Let's think of each UI component as of self-sustainable component. Which means that button, whole div container, whole ui html document, script with javascript code or single color value (#000022) for some paragraph are equal and have the same structure.
 
-This idea leads to following parameters that can be given to our html component:
-1. html representation of this specific component:
- - color: #23aab2, 
- - paragraph:
-``` html
-<p 
-style="
-    width: 100%;
-    height: auto;
-    color: #90563d;
-    font-size: 16px;
-    font-family: 'Arial';
-    text-align: center;
-    background-color: #fbd9b7;
-    padding: 20px;
-    margin: 20px;
-    line-height: 1.5;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px #dd622d;
-    border: 4px solid #d8a269;
-    border-radius: 10px;
-">
-My text.
-</p>
-```
-- etc.
+Now that we can treat this components equally we can easily design recursive model.
 
-2. template for this component:
-- color: {some_color},
-- paragraph:
-``` html
-<p style="
-    width: {width1};
-    height: {height1};
-    color: {color1};
-    font-size: {fz1};
-    font-family: {ff1};
-    text-align: {text_al1};
-    background-color: {bg_color1};
-    padding: {padding1};
-    margin: {margin1};
-    line-height: {ln_height1};
-    font-weight: {fn_weight1};
-    text-shadow: {text_shadow1};
-    border: {border1};
-    border-radius: {brd_radius1};
-">
-{custom_text20}
-</p>
+For example:
+We start from root - our whole document Its template may look like this:
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{general_head1}}
+  </head>
+  <body>
+    {{custom_body1}}
+  </body>
+</html>
 ```
-- etc.
+We can see that there are 2 parameters: *general_head1* and *custom_body1*.
+Model, designed in SCg, leads us for value for these parameters.
 
-With that you can insert any text instead of brackets.
+Lucky for us *general_head1* already have had HTML representation:
+
+```html
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Format converter</title>
+<style>
+  body {
+    margin: 0;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+```
+
+Now we can complete part of our root document:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Format converter</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    {{custom_body1}}
+  </body>
+</html>
+```
+
+However *custom_body1* doesn't have completed HTML representation. It only has, well, template again:
+```html
+{{paragraph_of_mine_yeah}}
+{{textarea_of_mine_yeah}}
+```
+
+Now we need to find *paragraph_of_mine_yeah* and *textarea_of_mine_yeah* elements in database and insert them in this template.
+
+As You can see this gives us simple recucursive task.
+But You may be wondering: "When does recursion stops? What if lower elements don't have HTML representation? How will recursion stop?"
+
+Well, You see, the standart for this model **requires** that all component-leaves must have HTML representation.
+Look at example below:
+
+```html
+<textarea
+  id={{textarea_id1}}
+  placeholder="{{placeholder1}}
+  style="
+    width: {{width1}};
+    height: {{height1}};
+    padding: {{padding2}};
+    font-family: {{ff2}};
+    font-size: {{fz2}};
+    border: {{brd2}};
+    border-radius: {{brd_radius1}};
+    background: {{bg1}};
+    resize: {{resize1}};
+    margin: {{margin1}};
+  "
+>
+</textarea>
+```
+
+*width: {{width1}}*, *height: {{height1}}*, ... are in fact component-leaves. So they do have HTML represenation by default: *100%*, *auto*, ...
+
