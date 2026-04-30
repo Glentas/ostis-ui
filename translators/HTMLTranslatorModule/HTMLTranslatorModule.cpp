@@ -1,13 +1,31 @@
 /*
- * This source file is part of an OSTIS project. For the latest info, see http://ostis.net
- * Distributed under the MIT License
- * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
+ * This source file is part of an OSTIS project...
  */
-
 #include "agents/HTMLTranslatorAgent.hpp"
-
 #include "HTMLTranslatorModule.hpp"
+#include "agents/VisualAdaptationAgent.hpp"
 
 using namespace htmlTranslationModule;
 
-SC_MODULE_REGISTER(HTMLTranslatorModule)->Agent<HTMLTranslatorAgent>();
+void HTMLTranslatorModule::Initialize(ScMemoryContext * context)
+{
+  SC_LOG_INFO("[ostis-ui] Initializing server...");
+  
+  m_server = std::make_unique<htmlTranslationModule::ServerWrapper>();
+  m_server->StartServer();
+  
+}
+
+void HTMLTranslatorModule::Shutdown(ScMemoryContext * context)
+{
+  SC_LOG_INFO("[ostis-ui] Shutting down server...");
+  
+  if (m_server) {
+    m_server->StopServer();
+  }
+}
+
+SC_MODULE_REGISTER(HTMLTranslatorModule)
+    ->Agent<HTMLTranslatorAgent>()
+    ->Agent<VisualAdaptationAgent>();
+// FORCE REBUILD: 04/30/2026 09:43:03

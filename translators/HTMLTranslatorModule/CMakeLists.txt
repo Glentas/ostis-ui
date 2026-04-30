@@ -3,6 +3,9 @@ set(HTML_TRANSLATOR_SOURCES
 	"agents/HTMLTranslatorAgent.cpp"
     "html-translator/HTMLTranslator.cpp"
     "parameter-retriever/ParameterRetriever.cpp"
+    "agents/UIComponentsReorderAgent.cpp"
+    "agents/AdaptationManagerAgent.cpp"
+    "agents/VisualAdaptationAgent.cpp"
     "HTTPServer.cpp"
     "HTTPRequestHandler.cpp"
 )
@@ -13,6 +16,9 @@ set(HTML_TRANSLATOR_HEADERS
     "agents/HTMLTranslatorAgent.hpp"
     "html-translator/HTMLTranslator.hpp"
     "parameter-retriever/ParameterRetriever.hpp"
+    "agents/UIComponentsReorderAgent.hpp"
+    "agents/AdaptationManagerAgent.hpp"
+    "agents/VisualAdaptationAgent.hpp"
     "HTTPServer.hpp"
     "HTTPRequestHandler.hpp"
 )
@@ -31,6 +37,7 @@ target_link_libraries(ostis-ui-html-translator
     LINK_PUBLIC sc-machine::sc-memory
     LINK_PUBLIC sc-machine::sc-agents-common
     LINK_PRIVATE httplib::httplib
+    LINK_PRIVATE ui-lib
 )
 
 if(${APPLE})

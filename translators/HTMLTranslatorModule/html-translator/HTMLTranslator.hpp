@@ -33,6 +33,17 @@ public:
       std::string & componentTemplateString,
       std::string const & parameterID,
       std::string const & parameterValue);
+    static ScAddr RegenerateHTMLRepresentation(ScAgentContext & context, ScAddr const & uiComponent);
+
+    /**
+ * @brief Перегенерировать HTML-представление компонента и всех его родителей
+ * @param context Контекст для работы с базой знаний
+ * @param uiComponent Адрес компонента, для которого нужно обновить кэш
+ * @return Адрес ссылки с обновлённым HTML-представлением
+ */
+static ScAddr RegenerateHTMLRepresentationWithParents(
+    ScAgentContext & context,
+    ScAddr const & uiComponent);
 };
 
 }  // namespace htmlTranslationModule

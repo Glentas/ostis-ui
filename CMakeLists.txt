@@ -1,37 +1,43 @@
 cmake_minimum_required(VERSION 3.24)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project(ostis-ui VERSION 0.1.0 LANGUAGES C CXX)
-message(STATUS "Current project version: ${CMAKE_PROJECT_VERSION}")
+
+message(STATUS "🔥 Project: ${CMAKE_PROJECT_NAME} v${CMAKE_PROJECT_VERSION}")
+message(STATUS "🔥 BUILD_TOKEN: ${BUILD_TOKEN}")
+
 cmake_policy(SET CMP0048 NEW)
-
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-option(AUTO_CCACHE "Use ccache to speed up rebuilds" ON)
+# Отключаем ccache
+set(AUTO_CCACHE OFF CACHE BOOL "" FORCE)
+set(ENV{CCACHE_DISABLE} "1")
 
-option(SC_BUILD_TESTS "Build project tests" OFF)
-
+# Опции
+option(SC_BUILD_TESTS "" OFF)
 if(${SC_BUILD_TESTS})
     include(CTest)
-    include(GoogleTest)
     find_package(GTest REQUIRED)
 endif()
 
-if(${SC_CLANG_FORMAT_CODE})
-    include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
-endif()
-
-find_program(CCACHE_PROGRAM ccache)
-if(CCACHE_PROGRAM AND ${AUTO_CCACHE})
-    message(STATUS "Using ${CCACHE_PROGRAM} as compiler launcher")
-    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-    set(CMAKE_C_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-endif()
-
+# Поиск зависимостей
 find_package(sc-machine REQUIRED)
 
+# 👇 Подключаем сгенерированный заголовок с таймстампом
+if(DEFINED GENERATED_INCLUDE_DIR AND EXISTS "${GENERATED_INCLUDE_DIR}/build_timestamp.h")
+    include_directories("${GENERATED_INCLUDE_DIR}")
+    add_compile_definitions(USE_BUILD_TIMESTAMP=1)
+    message(STATUS "✅ Using generated timestamp header: ${GENERATED_INCLUDE_DIR}/build_timestamp.h")
+endif()
+
+# Глобальные дефайны
+if(DEFINED BUILD_TOKEN)
+    add_compile_definitions(BUILD_TOKEN="${BUILD_TOKEN}")
+endif()
+
+add_subdirectory(ui-lib)
 add_subdirectory(action-interpreter)
 add_subdirectory(model-generators)
 add_subdirectory(translators)

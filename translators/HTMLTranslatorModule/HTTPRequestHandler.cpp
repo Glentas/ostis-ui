@@ -1,44 +1,42 @@
 #include "keynodes/HTMLTranslatorKeynodes.hpp"
-#include "sc-agents-common/utils/IteratorUtils.hpp"
-#include "sc-memory/sc_memory.hpp"
+#include "sc-memory/sc_agent_context.hpp"
 #include <HTTPRequestHandler.hpp>
-
-#include <sc-memory/sc_agent.hpp>
+#include "UILib.hpp"
+#include <memory>
 
 namespace htmlTranslationModule
 {
-
-void HTTPRequestHandler::RetrieveCurrentUIHandler(httplib::Request const & req, httplib::Response & res)
+void HTTPRequestHandler::RetrieveCurrentUIHandler(
+    httplib::Request const & req,
+    httplib::Response & res)
 {
-  // TODO: use user-specific current model
-  ScAgentContext * context = new ScAgentContext();
+    SC_LOG_INFO("NEW_BINARY_LOADED: " + std::string(__TIMESTAMP__));
+    
+    auto context = std::make_unique<ScAgentContext>();
 
-  ScAddr const currentModel =
-      utils::IteratorUtils::getAnyFromSet(context, HTMLTranslatorKeynodes::concept_current_ostis_ui_model);
-  if (!context->IsElement(currentModel))
-  {
-    res.set_content("Error: current ui model is not found.", "text/html");
-    return;
-  }
+    try
+    {
+        auto result = UILib::InvokeVisualAdaptation(*context, "paragraph", 1.5);
+        SC_LOG_INFO("Visual adaptation completed successfully");
+    }
+    catch (std::exception const & e)
+    {
+        SC_LOG_ERROR("Adaptation failed: " + std::string(e.what()));
+    }
 
-  ScAction action = context->GenerateAction(HTMLTranslatorKeynodes::action_translate_sc_to_html);
-  action.SetArguments(currentModel);
-  action.InitiateAndWait();
+    auto htmlOpt = UILib::GetHTMLForModel(
+        *context,
+        "concept_current_ostis_ui_model",  //Идентификатор модели
+        500);                               // Таймаут
 
-  ScStructure translationResult = action.GetResult();
-  ScAddr translationResultLink = utils::IteratorUtils::getAnyFromSet(context, translationResult);
-  if (!context->IsElement(translationResultLink))
-  {
-    res.set_content("Error: translation result is invalid.", "text/html");
-  }
-  else
-  {
-    std::string result;
-    context->GetLinkContent(translationResultLink, result);
-    // TODO: should we retrieve the link format rather than hardcode it?
-    // current solution is more performant
-    res.set_content(result, "text/html");
-  }
+    if (!htmlOpt.has_value())
+    {
+        SC_LOG_ERROR("Failed to retrieve HTML for current UI model");
+        res.set_content("Error: failed to generate UI HTML.", "text/html");
+        return;
+    }
+    
+
+    res.set_content(htmlOpt.value(), "text/html");
 }
-
 }  // namespace htmlTranslationModule

@@ -21,6 +21,14 @@ public:
   static inline ScKeynode const concept_current_ostis_ui_model{
       "concept_current_ostis_ui_model",
       ScType::ConstNodeClass};
+  
+  static inline ScKeynode const action_reorder_ui_components{
+    "action_reorder_ui_components", 
+    ScType::ConstNodeClass};
+
+static inline ScKeynode const action_apply_visual_adaptation{
+    "action_apply_visual_adaptation", 
+    ScType::ConstNodeClass};
 
   static inline ScKeynode const _root_ui_obj{"_root_ui_obj", ScType::VarNodeClass};
 
@@ -37,6 +45,19 @@ public:
   static inline ScKeynode const nrel_inclusion{"nrel_inclusion", ScType::ConstNodeNonRole};
 
   static inline ScKeynode const rrel_specific_realisation{"rrel_specific_realisation", ScType::ConstNodeRole};
-};
+  
+  static inline ScKeynode const concept_user_profile{"concept_user_profile", ScType::ConstNodeClass};
 
-}  // namespace htmlTranslationModule
+  static inline ScKeynode const concept_adaptation{"concept_adaptation", ScType::ConstNodeClass};
+
+  static inline ScKeynode const nrel_has_adaptation{"nrel_has_adaptation", ScType::ConstNodeNonRole};
+
+  static inline ScKeynode const nrel_adaptation_agent{"nrel_adaptation_agent", ScType::ConstNodeNonRole};
+
+  static inline ScKeynode const nrel_adaptation_multiplier{"nrel_adaptation_multiplier", ScType::ConstNodeNonRole};
+
+  static inline ScKeynode const action_adapt_ui_for_user{"action_adapt_ui_for_user", ScType::ConstNodeClass};
+
+
+};  // namespace htmlTranslationModule
+}
