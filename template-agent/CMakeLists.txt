@@ -1,11 +1,15 @@
 set(SPECIFIED_TEMPLATE_AGENT_SOURCES
     "renderer/TemplateActionGenerator.cpp"
     "renderer/JsonToXMLAgent.cpp"
+    "renderer/XMLToJsonAgent.cpp"
+    "SpecifiedStringTemplateModule.cpp"
 )
 set(SPECIFIED_TEMPLATE_AGENT_HEADERS
-    "renderer/TemplateActionGenerator.hpp"
-    "renderer/JsonToXMLAgent.hpp"
     "keynodes/SpecifiedStringTemplateKeynodes.hpp"
+    "SpecifiedStringTemplateModule.hpp"
+    "renderer/JsonToXMLAgent.hpp"
+    "renderer/XMLToJsonAgent.hpp"
+    "renderer/TemplateActionGenerator.hpp"
 )
 
 add_library( 

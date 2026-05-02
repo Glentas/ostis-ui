@@ -1,0 +1,16 @@
+@string_template = [<sp-button color="{{ color }}">label</sp-button>];;
+@string_template => nrel_system_identifier: [string_template];;
+
+@string_template_expected_result = [<sp-button color="FCBA03">label</sp-button>];;
+@string_template_expected_result => nrel_system_identifier: [string_template_expected_result];;
+
+replacement_values
+-> rrel_1: button;;
+
+button
+<- concept_button (* => nrel_html_template: @string_template;; *);
+<- color_fcba03;;
+
+color_fcba03
+<- concept_color;
+=> nrel_hex: [FCBA03];;

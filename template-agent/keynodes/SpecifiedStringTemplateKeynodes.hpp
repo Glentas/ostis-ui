@@ -17,6 +17,8 @@ class SpecifiedStringTemplateKeynodes : public ScKeynodes
 
   static inline ScKeynode const action_generate_template{"action_generate_template"};
 
+  static inline ScKeynode const action_translate_XML_to_json{"action_translate_XML_to_json"};
+
   static inline ScKeynode const action_translate_json_to_XML{"action_translate_json_to_XML"};
 
   static inline ScKeynode const nrel_html_parameter_id{"nrel_html_parameter_id", ScType::ConstNodeNonRole};

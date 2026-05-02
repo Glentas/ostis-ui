@@ -1,12 +1,16 @@
 button_action_template =
 [*
-	action_translate_json_to_XML _-> _action_node;;
+	action_translate_XML_to_json _-> _action_node;;
 	action_initiated _-> _action_node;;
 	_action_node _-> rrel_1:: _param;;
 *];;
 @arc_param = (_action_node _-> _param);;
 
-@string_template_expected_result = [<age>30</age><city>New York</city><name>John</name>];;
+@string_template_expected_result = [{
+  "age": 30,
+  "city": "New York",
+  "name": "John"
+}];;
 @string_template_expected_result => nrel_system_identifier: [string_template_expected_result];;
 
 
@@ -24,11 +28,7 @@ input_param_node -> @arc_param;;
 
 component_tuple_node -> rrel_1: text_field;;
 
-@string_result = [{
-					"name": "John",
-					"age": 30,
-					"city": "New York"
-						}];;
+@string_result = [<age>30</age><city>New York</city><name>John</name>];;
 @string_result  => nrel_system_identifier: [result];;
 
 
