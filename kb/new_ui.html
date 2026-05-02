@@ -1,57 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Format converter</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
-  </head>
-  <body>
-    <p 
-      style="
-        width: 100%;
-        height: auto;
-        color: #90563d;
-        font-size: 16px;
-        font-family: 'Arial';
-        text-align: center;
-        background-color: #fbd9b7;
-        padding: 20px;
-        margin: 20px;
-        line-height: 1.5;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px #dd622d;
-        border: 4px solid #d8a269;
-        border-radius: 10px;
-      "
-    >
-    My text.
-    </p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <title>Format converter</title>
+        <style>
+            body {
+                margin: 0;
+                min-height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+      <p 
+          style="
+              width: 100%;
+              height: auto;
+              color: #90563d;
+              font-size: 16px;
+              font-family: 'Arial';
+              text-align: center;
+              background-color: #fbd9b7;
+              padding: 20px;
+              margin: 20px;
+              line-height: 1.5;
+              font-weight: 600;
+              text-shadow: 1px 1px 2px #dd622d;
+              border: 4px solid #d8a269;
+              border-radius: 10px;
+          "
+      >
+      My text.
+      </p>
+      <button 
+          type="button" 
+          id="superCoolBtn"
+          style="
+              width: 100%;
+              height: auto;
+              font-size: 16px;
+              font-family: 'Arial';
+              text-align: center;
+              padding: 20px;
+              margin: 20px;
+              line-height: 1.5;
+              font-weight: 600;
+              border-radius: 10px;
+          "
+      >
+      Paste
+          <script type="importmap">
+              {
+                "imports": {
+                  "ts-sc-client": "https://cdn.jsdelivr.net/npm/ts-sc-client@0.5.0/+esm"
+                }
+              }
+          </script>
+          <script type="module">
+              import sc from "ts-sc-client";
+              const { ScClient, ScConstruction, ScType, ScAddr } = sc;
 
-    <textarea
-      id="inputData"
-      placeholder="Input data..."
-      style="
-        width: 100%;
-        height: auto;
-        padding: 20px;
-        margin: 20px;
-        font-family: monospace;
-        font-size: 14px;
-        border: 4px solid #cccccc;
-        border-radius: 10px;
-        background: #ffffff;
-        resize: vertical;
-      "
-    >
-    </textarea>
-  </body>
+              const client = new ScClient('https://localhost:8090');
+
+              client.addEventListener("open", () => {
+                  console.log("Подключено к sc-серверу");
+              });
+
+              client.addEventListener("error", (error) => {
+                  console.error("Ошибка подключения:", error);
+              });
+              const construction = new ScConstruction();
+
+              construction.generateNode(ScType.ConstNode, agent);
+              construction.generateNode(ScType.ConstNode, actionNode);
+
+              const action_generate_template = "action_generate_template";
+              const action_initiated = "action_initiated";
+              const button_id = "superCoolBtn";
+              const rrel_1 = "rrel_1";
+              const keynodes = [
+                { id: action_generate_template, type: ScType.ConstNodeClass },
+                { id: action_initiated, type: ScType.ConstNodeClass },
+                { id: button_id, type: ScType.ConstNode }
+              ];
+              const res = await client.resolveKeynodes(keynodes);
+
+              construction.generateConnector(
+                ScType.ConstPermPosArc,
+                res[action_generate_template],
+                actionNode
+              );
+              construction.generateConnector(
+                ScType.ConstPermPosArc,
+                res[action_initiated],
+                actionNode
+              );
+              construction.generateConnector(
+                ScType.ConstPermPosArc,
+                actionNode,
+                res[button_id],
+                "_arc"
+              );
+              construction.generateConnector(
+                ScType.ConstPermPosArc,
+                res[rrel_1],
+                "_arc"
+              );
+              await client.generateElements(construction);
+          </script>
+      </button>
+      <textarea
+          id="inputData"
+          placeholder="Input data..."
+          style="
+              width: 100%;
+              height: auto;
+              padding: 20px;
+              margin: 20px;
+              font-family: monospace;
+              font-size: 14px;
+              border: 4px solid #cccccc;
+              border-radius: 10px;
+              background: #ffffff;
+              resize: vertical;
+          "
+      >
+      </textarea>
+    </body>
 </html>
