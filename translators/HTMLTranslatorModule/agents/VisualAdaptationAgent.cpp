@@ -1,121 +1,192 @@
 #include <sc-memory/sc_action.hpp>
 #include <sc-memory/sc_result.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
+
 #include "keynodes/HTMLTranslatorKeynodes.hpp"
 #include "VisualAdaptationAgent.hpp"
+#include "html-translator/HTMLTranslator.hpp"
 #include "parameter-retriever/ParameterRetriever.hpp"
+
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
 #include <cmath>
-#include <iomanip>
 
 namespace htmlTranslationModule
 {
 
-// Универсальная функция очистки CSS-значения от мусора БЗ
-bool IsScalableProperty(const std::string& id)
+// ===================================================================
+static bool IsScalableProperty(const std::string & id)
 {
     static const std::vector<std::string> prefixes = {
-        "width", "height", "fz", "font-size", "margin", "padding", 
-        "line-height", "border-width", "border-radius", "top", "left", "bottom", "right"
+        "fz", "font-size", "width", "height", "margin", "padding",
+        "line-height", "border-radius"
     };
-
-    for (const auto& p : prefixes) {
+    for (const auto & p : prefixes)
         if (id.find(p) == 0) return true;
-    }
     return false;
 }
 
-// Основная умная функция парсинга
-std::string ScaleCssValue(const std::string& value, double multiplier)
+static std::string SanitizeCssValue(const std::string & raw)
 {
-    if (value.empty() || std::abs(multiplier - 1.0) < 0.001) 
-        return value;
+    std::string v = raw;
 
-    std::string v = value;
-    // trim
-    v.erase(0, v.find_first_not_of(" \t\r\n"));
-    v.erase(v.find_last_not_of(" \t\r\n") + 1);
+    // Убираем пробелы, кавычки, точку с запятой
+    v.erase(std::remove_if(v.begin(), v.end(), [](unsigned char c) {
+        return c == '"' || c == '\'' || c == ';';
+    }), v.end());
 
-    if (v == "auto" || v == "none" || v.find_first_of(":#(") == 0) 
-        return value;
+    // Убираем float: префикс
+    if (v.size() >= 6 && v.compare(0, 6, "float:") == 0)
+        v = v.substr(6);
 
-    std::stringstream ss(v);
+    return v;
+}
+
+// ===================================================================
+static std::string ScaleCssValue(const std::string & rawValue, double multiplier)
+{
+    if (std::abs(multiplier - 1.0) < 0.001)
+        return rawValue;
+
+    std::string v = rawValue;
+
+    v.erase(std::remove_if(v.begin(), v.end(), [](unsigned char c) {
+        return std::isspace(c) || c == '"' || c == '\'' || c == ';';
+    }), v.end());
+
+    if (v.size() >= 6 && v.compare(0, 6, "float:") == 0)
+        v = v.substr(6);
+
+    if (v.empty() || v == "auto" || v == "none" || v[0] == '#' ||
+        v.find("rgb") == 0 || v.find("hsl") == 0)
+        return rawValue;
+
+    // Защита от процентов — не масштабируем
+    if (v.back() == '%')
+        return rawValue;
+
+    // Защита от calc(), var() и т.п.
+    if (v.find('(') != std::string::npos)
+        return rawValue;
+
+    std::istringstream ss(v);
     double num = 0.0;
     std::string unit;
 
-    if (!(ss >> num)) return value;
-
+    if (!(ss >> num)) return rawValue;
     ss >> unit;
 
-    double newNum = num * multiplier;
+    double newValue = num * multiplier;
 
     std::ostringstream oss;
-    if (newNum == std::floor(newNum) && newNum < 1000) {
-        oss << static_cast<long long>(newNum);
-    } else {
-        oss << std::fixed << std::setprecision(2) << newNum;
-    }
+    if (std::floor(newValue) == newValue)
+        oss << static_cast<long long>(newValue);
+    else
+        oss << std::fixed << std::setprecision(2) << newValue;
     oss << unit;
 
     return oss.str();
 }
 
+// ===================================================================
+static void InvalidateHTMLCache(ScAgentContext & ctx, ScAddr component)
+{
+    ScAddr cached = utils::IteratorUtils::getAnyByOutRelation(
+        &ctx, component, HTMLTranslatorKeynodes::nrel_html_representation);
 
+    if (cached.IsValid())
+        ctx.EraseElement(cached);
+
+    ScIterator3Ptr it = ctx.CreateIterator3(ScType::Unknown, ScType::ConstPermPosArc, component);
+    while (it->Next())
+    {
+        ScAddr parent = it->Get(0);
+        ScAddr arc    = it->Get(1);
+
+        if (ctx.CheckConnector(HTMLTranslatorKeynodes::nrel_inclusion, arc, ScType::ConstPermPosArc))
+            InvalidateHTMLCache(ctx, parent);
+    }
+}
+
+// ===================================================================
 ScResult VisualAdaptationAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-    auto const [component, multiplierLink] = action.GetArguments<2>();
-    if (!component.IsValid()) {
+    ScAddr component = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_1);
+    ScAddr multiplierLink = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_2);
+
+    SC_LOG_INFO("VisualAdaptationAgent: component hash = " + std::to_string(component.Hash()));
+    SC_LOG_INFO("VisualAdaptationAgent: multiplierLink hash = " + std::to_string(multiplierLink.Hash()));
+
+    if (!component.IsValid())
+    {
         SC_LOG_ERROR("VisualAdaptationAgent: component is invalid.");
         return action.FinishUnsuccessfully();
     }
 
     double multiplier = 1.0;
-    if (multiplierLink.IsValid()) {
-        std::string multiplierStr;
-        m_context.GetLinkContent(multiplierLink, multiplierStr);
-        try {
-            multiplier = std::stod(multiplierStr);
-        } catch (...) {
-            SC_LOG_WARNING("VisualAdaptationAgent: failed to parse multiplier '" + multiplierStr + "', using 1.0");
-        }
-    }
-
-    if (std::abs(multiplier - 1.0) < 0.001) {
-        return action.FinishSuccessfully(); // ничего не делаем
-    }
-
-    SC_LOG_INFO("VisualAdaptation: Applying multiplier " + std::to_string(multiplier) + " to component.");
-
-    StringScAddrMap parameters = ParameterRetriever::GetNestedUIComponents(m_context, component);
-
-    for (auto const& [id, paramAddr] : parameters)
+    if (multiplierLink.IsValid())
     {
-        // Расширили список, но будем проверять внутри
-        if (!IsScalableProperty(id)) continue;
-
-        ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(
-            &m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
-
-        if (!valueLink.IsValid() || !m_context.GetElementType(valueLink).IsLink()) {
-            continue;
-        }
-
-        std::string currentValueStr;
-        m_context.GetLinkContent(valueLink, currentValueStr);
-
-        std::string newValueStr = ScaleCssValue(currentValueStr, multiplier);
-
-        if (newValueStr != currentValueStr) {
-            SC_LOG_INFO("VisualAdaptation: " + id + " : " + currentValueStr + " → " + newValueStr);
-            m_context.SetLinkContent(valueLink, newValueStr);
+        std::string s;
+        m_context.GetLinkContent(multiplierLink, s);
+        try { multiplier = std::stod(s); }
+        catch (...)
+        {
+            SC_LOG_WARNING("VisualAdaptationAgent: failed to parse multiplier, using 1.0");
         }
     }
-    SC_LOG_INFO("Visual adaptation completed successfully");
+
+    SC_LOG_INFO("VisualAdaptationAgent: multiplier = " + std::to_string(multiplier));
+
+    auto parameters = ParameterRetriever::GetNestedUIComponents(m_context, component);
+
+    for (auto const & [id, paramAddr] : parameters)
+{
+    ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
+
+    if (!valueLink.IsValid() || !m_context.GetElementType(valueLink).IsLink())
+        continue;
+
+    std::string currentValue;
+    m_context.GetLinkContent(valueLink, currentValue);
+
+    std::string newValue = SanitizeCssValue(currentValue); // ← всегда чистим
+
+    if (IsScalableProperty(id))
+        newValue = ScaleCssValue(newValue, multiplier);    // ← масштабируем только нужные
+
+    if (newValue != currentValue)
+    {
+        m_context.SetLinkContent(valueLink, newValue);
+        SC_LOG_INFO("VisualAdaptationAgent: " + id + " : " + currentValue + " → " + newValue);
+    }
+}
+
+    InvalidateHTMLCache(m_context, component);
+    SC_LOG_INFO("VisualAdaptationAgent: done.");
+
+    try
+    {
+        ScAddr newRepr = HTMLTranslator::RegenerateHTMLRepresentation(m_context, component);
+        if (newRepr.IsValid())
+            SC_LOG_INFO("VisualAdaptationAgent: HTML regenerated successfully.");
+        else
+            SC_LOG_WARNING("VisualAdaptationAgent: HTML regeneration returned invalid link.");
+    }
+    catch (std::exception const & e)
+    {
+        SC_LOG_ERROR("VisualAdaptationAgent: HTML regeneration failed: " + std::string(e.what()));
+    }
+
     return action.FinishSuccessfully();
 }
 
-ScAddr VisualAdaptationAgent::GetActionClass() const {
+ScAddr VisualAdaptationAgent::GetActionClass() const
+{
     return HTMLTranslatorKeynodes::action_apply_visual_adaptation;
 }
 
