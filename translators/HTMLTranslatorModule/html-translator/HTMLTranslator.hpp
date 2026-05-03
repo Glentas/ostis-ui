@@ -20,10 +20,7 @@ using StringScAddrMap = std::map<std::string, ScAddr>;
 class HTMLTranslator
 {
 public:
-  static ScAddr TranslateScToHTML(
-    ScAgentContext & context, 
-    ScAddr const & uiComponent, 
-    bool forceRegenerate = false);
+  static ScAddr TranslateScToHTML(ScAgentContext & context, ScAddr const & rootUiElement);
   static ScAddr GetUIComponentHTMLTemplate(ScAgentContext & context, ScAddr const & uiComponent);
   static ScAddr GetAnswerLink(
       ScAgentContext & context,
