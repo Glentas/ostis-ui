@@ -23,7 +23,7 @@ RUN conan profile detect && \
     conan remote add ostis-ai https://conan.ostis.net/artifactory/api/conan/ostis-ai-library && \
     conan install . -s build_type=Release --build=missing
 
-# 👇 Генерация токена
+# Генерация токена
 ARG BUILD_TOKEN
 RUN if [ -z "$BUILD_TOKEN" ]; then \
         BUILD_TOKEN="auto-$(date +%s)"; \
@@ -33,7 +33,7 @@ RUN if [ -z "$BUILD_TOKEN" ]; then \
 # 👇 Копируем исходники
 COPY . .
 
-# 👇 ПРИНУДИТЕЛЬНАЯ ПЕРЕКОМПИЛЯЦИЯ (БЕЗ УДАЛЕНИЯ CONAN)
+# ПРИНУДИТЕЛЬНАЯ ПЕРЕКОМПИЛЯЦИЯ (БЕЗ УДАЛЕНИЯ CONAN)
 RUN \
     # 1. Удаляем ТОЛЬКО CMake-кэш, сохраняем Conan toolchain!
     rm -rf build/Release/CMakeCache.txt build/Release/CMakeFiles/ && \

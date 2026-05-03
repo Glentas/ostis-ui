@@ -16,7 +16,11 @@
       "name": "release-conan",
       "displayName": "Release config (Conan)",
       "description": "Release config (Conan dependencies used)",
-      "inherits": "conan-release"
+      "inherits": "conan-release",
+      "cacheVariables": {
+        "BUILD_TOKEN": { "type": "STRING", "value": "$env{BUILD_TOKEN}" },
+        "GENERATED_INCLUDE_DIR": { "type": "PATH", "value": "${sourceDir}/generated" }
+      }
     },
     {
       "name": "release-with-tests-conan",

@@ -1,11 +1,19 @@
 set(SPECIFIED_TEMPLATE_AGENT_SOURCES
+    "agent/SpecifiedStringTemplateAgent.cpp"
+    "renderer/StringTemplateRenderer.cpp"
     "renderer/TemplateActionGenerator.cpp"
+    "renderer/TemplateActionGenerator.hpp"
     "renderer/JsonToXMLAgent.cpp"
+    "renderer/JsonToXMLAgent.hpp"
+    "renderer/XMLToJsonAgent.cpp"
+    "renderer/XMLToJsonAgent.hpp"
+    "SpecifiedStringTemplateModule.cpp"
 )
 set(SPECIFIED_TEMPLATE_AGENT_HEADERS
-    "renderer/TemplateActionGenerator.hpp"
-    "renderer/JsonToXMLAgent.hpp"
+    "agent/SpecifiedStringTemplateAgent.hpp"
     "keynodes/SpecifiedStringTemplateKeynodes.hpp"
+    "renderer/StringTemplateRenderer.hpp"
+    "SpecifiedStringTemplateModule.hpp"
 )
 
 add_library( 
@@ -18,11 +26,13 @@ target_include_directories(ostis-specified-template-agent
 )
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
+find_package(inja REQUIRED)
 
 target_link_libraries(ostis-specified-template-agent
     LINK_PUBLIC sc-machine::sc-memory
     LINK_PUBLIC sc-machine::sc-agents-common
     LINK_PRIVATE nlohmann_json::nlohmann_json
+    LINK_PRIVATE pantor::inja
 )
 
 if(${SC_BUILD_TESTS})

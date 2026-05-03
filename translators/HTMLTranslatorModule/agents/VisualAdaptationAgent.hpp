@@ -10,4 +10,4 @@ public:
     ScResult DoProgram(ScActionInitiatedEvent const & event, ScAction & action) override;
     ScAddr GetActionClass() const override;
 };
-}  // namespace htmlTranslationModule
+} // namespace htmlTranslationModule

@@ -233,7 +233,7 @@ void HTMLTranslator::InsertParameterValue(
     std::string const & parameterValue)
 {
     //Надёжная замена всех вхождений {parameterID} на parameterValue
-    std::string const placeholder = "{" + parameterID + "}";
+    std::string const placeholder = "{{" + parameterID + "}}";
     size_t pos = 0;
     
     while ((pos = componentTemplateString.find(placeholder, pos)) != std::string::npos)
