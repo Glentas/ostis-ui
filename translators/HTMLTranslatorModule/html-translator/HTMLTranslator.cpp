@@ -37,7 +37,7 @@ ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const 
 
   if (context.IsElement(answerHTMLLink))
   {
-    context.EraseElement(answerHTMLLink);
+    return answerHTMLLink;
   }
 
   // We are getting specific template for given ui component

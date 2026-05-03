@@ -55,11 +55,9 @@ ScResult HTMLTranslatorAgent::DoProgram(ScActionInitiatedEvent const & event, Sc
   // Returns ScLink with html representation of given UI component
   ScAddr answerHTMLLink = HTMLTranslator::TranslateScToHTML(m_context, rootUiElement);
 
-  // Create agent answer and finish agent work старая рабочая версия
-  //ScStructure structAddr = m_context.GenerateStructure();
-  //structAddr << answerHTMLLink;
-  //action.SetResult(structAddr);
-  //новая нерабочая версия
+  // Create agent answer and finish agent work
+
+  //новая рабочая версия
   ScStructure structAddr = m_context.GenerateStructure();
   ScAddr arcAddr = m_context.GenerateConnector(ScType::ConstCommonArc, rootUiElement, answerHTMLLink);
   ScAddr arcToArcAddr = m_context.GenerateConnector(
