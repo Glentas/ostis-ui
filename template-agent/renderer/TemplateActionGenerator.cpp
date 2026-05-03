@@ -24,18 +24,19 @@ namespace specifiedStringTemplateModule
 
 ScResult GenerateTemplateAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {    
-    auto [button] = action.GetArguments<1>();
+    auto [buttonAddr] = action.GetArguments<1>();
     SC_LOG_INFO("GenerateTemplateAgent started");
     
-    std::string button_id;
-    m_context.GetLinkContent(button, button_id);
-    ScAddr buttonAddr = m_context.SearchElementBySystemIdentifier(button_id); // ищем элемент по полученному идентификатору
 
     if (!buttonAddr.IsValid())
     {
-        SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Button node not found: " + button_id);
+        SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, "Button node not found: ");
     }
 
+    std::string button_id;
+    button_id = m_context.GetElementSystemIdentifier(buttonAddr);
+    SC_LOG_INFO("Наша кнопка " + button_id);
+    SC_LOG_INFO(m_context.GetElementType(buttonAddr));
 
     ScAddr const variablesSetAddr = IteratorUtils::getAnyByOutRelation( // берем узел связывающий шаблон действия кнопки и параметры
         &m_context, buttonAddr, SpecifiedStringTemplateKeynodes::nrel_action_template);
@@ -45,7 +46,7 @@ ScResult GenerateTemplateAgent::DoProgram(ScActionInitiatedEvent const & event, 
     if (!variablesSetAddr.IsValid())
     {
         SC_THROW_EXCEPTION(utils::ExceptionItemNotFound, 
-            "nrel_action_template not found for button: " + button_id);
+            "nrel_action_template not found for button: ");
     }
 
 

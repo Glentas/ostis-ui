@@ -179,23 +179,23 @@ void AdaptationManagerAgent::ApplyAdaptationToComponent(
     std::string const & multiplier)
 {
     SC_LOG_INFO("AdaptationManager: Applying adaptation agent.");
-
-    // Запускаем агент адаптации для этого компонента
+    
     ScAction adaptationAction = context.GenerateAction(adaptationAgent);
 
-    // Если multiplier есть, передаём его как второй аргумент
     if (!multiplier.empty())
     {
         ScAddr multiplierLink = context.GenerateLink();
         context.SetLinkContent(multiplierLink, multiplier);
+        
+        // ✅ Передаем аргументы через запятую, БЕЗ фигурных скобок
         adaptationAction.SetArguments(component, multiplierLink);
     }
     else
     {
+        // ✅ Один аргумент тоже передается без скобок
         adaptationAction.SetArguments(component);
     }
 
-    // Запускаем и ждём завершения
     adaptationAction.InitiateAndWait();
 
     if (!adaptationAction.IsFinishedSuccessfully())

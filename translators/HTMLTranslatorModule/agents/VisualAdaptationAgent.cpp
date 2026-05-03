@@ -113,62 +113,75 @@ static void InvalidateHTMLCache(ScAgentContext & ctx, ScAddr component)
 // ===================================================================
 ScResult VisualAdaptationAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
+    // 1. Безопасное извлечение аргументов через роли rrel_1 и rrel_2
     ScAddr component = utils::IteratorUtils::getAnyByOutRelation(
         &m_context, action, ScKeynodes::rrel_1);
+
     ScAddr multiplierLink = utils::IteratorUtils::getAnyByOutRelation(
         &m_context, action, ScKeynodes::rrel_2);
 
     SC_LOG_INFO("VisualAdaptationAgent: component hash = " + std::to_string(component.Hash()));
-    SC_LOG_INFO("VisualAdaptationAgent: multiplierLink hash = " + std::to_string(multiplierLink.Hash()));
+    if (multiplierLink.IsValid())
+        SC_LOG_INFO("VisualAdaptationAgent: multiplierLink hash = " + std::to_string(multiplierLink.Hash()));
 
+    // 2. Валидация обязательного аргумента
     if (!component.IsValid())
     {
         SC_LOG_ERROR("VisualAdaptationAgent: component is invalid.");
         return action.FinishUnsuccessfully();
     }
 
+    // 3. Чтение множителя (опционально) с защитой от InvalidParams
     double multiplier = 1.0;
     if (multiplierLink.IsValid())
     {
-        std::string s;
-        m_context.GetLinkContent(multiplierLink, s);
-        try { multiplier = std::stod(s); }
-        catch (...)
+        // 🔑 КРИТИЧНО: проверяем тип элемента перед вызовом GetLinkContent
+        if (m_context.GetElementType(multiplierLink).IsLink())
         {
-            SC_LOG_WARNING("VisualAdaptationAgent: failed to parse multiplier, using 1.0");
+            std::string s;
+            m_context.GetLinkContent(multiplierLink, s);
+            try { multiplier = std::stod(s); }
+            catch (...)
+            {
+                SC_LOG_WARNING("VisualAdaptationAgent: failed to parse multiplier, using 1.0");
+            }
+        }
+        else
+        {
+            SC_LOG_WARNING("VisualAdaptationAgent: multiplier argument is not a sc-link. Using default 1.0");
         }
     }
 
     SC_LOG_INFO("VisualAdaptationAgent: multiplier = " + std::to_string(multiplier));
 
+    // 4. Применение адаптации к CSS-параметрам компонента
     auto parameters = ParameterRetriever::GetNestedUIComponents(m_context, component);
-
     for (auto const & [id, paramAddr] : parameters)
-{
-    ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(
-        &m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
-
-    if (!valueLink.IsValid() || !m_context.GetElementType(valueLink).IsLink())
-        continue;
-
-    std::string currentValue;
-    m_context.GetLinkContent(valueLink, currentValue);
-
-    std::string newValue = SanitizeCssValue(currentValue); // ← всегда чистим
-
-    if (IsScalableProperty(id))
-        newValue = ScaleCssValue(newValue, multiplier);    // ← масштабируем только нужные
-
-    if (newValue != currentValue)
     {
-        m_context.SetLinkContent(valueLink, newValue);
-        SC_LOG_INFO("VisualAdaptationAgent: " + id + " : " + currentValue + " → " + newValue);
+        ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(
+            &m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
+
+        if (!valueLink.IsValid() || !m_context.GetElementType(valueLink).IsLink())
+            continue;
+
+        std::string currentValue;
+        m_context.GetLinkContent(valueLink, currentValue);
+
+        std::string newValue = SanitizeCssValue(currentValue);
+        if (IsScalableProperty(id))
+            newValue = ScaleCssValue(newValue, multiplier);
+
+        if (newValue != currentValue)
+        {
+            m_context.SetLinkContent(valueLink, newValue);
+            SC_LOG_INFO("VisualAdaptationAgent: " + id + " : " + currentValue + " → " + newValue);
+        }
     }
-}
 
+    // 5. Инвалидация кэша и перегенерация HTML
     InvalidateHTMLCache(m_context, component);
-    SC_LOG_INFO("VisualAdaptationAgent: done.");
 
+    SC_LOG_INFO("VisualAdaptationAgent: adaptation applied, regenerating HTML.");
     try
     {
         ScAddr newRepr = HTMLTranslator::RegenerateHTMLRepresentation(m_context, component);

@@ -20,33 +20,32 @@ using namespace utils;
 
 namespace htmlTranslationModule
 {
-ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const & uiComponent)
+ScAddr HTMLTranslator::TranslateScToHTML(
+    ScAgentContext & context, 
+    ScAddr const & uiComponent,
+    bool forceRegenerate)  // ← Добавлен параметр
 {
-  if (!context.IsElement(uiComponent))
-  {
-    SC_LOG_ERROR("HTMLTranslator: given UI element is invalid.");
-    throw utils::ScException(utils::ExceptionInvalidParams("HTMLTranslator: given UI element is invalid.", ""));
-  }
+    if (!context.IsElement(uiComponent))
+    {
+        SC_LOG_ERROR("HTMLTranslator: given UI element is invalid.");
+        throw utils::ScException(utils::ExceptionInvalidParams("HTMLTranslator: given UI element is invalid.", ""));
+    }
 
-  // If element already has html translation - return it
-  //
-  // TODO: we need mechanism that will allow us to regenerate component (some
-  // bool flag?)
-  ScAddr answerHTMLLink =
-      IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
+    // Если НЕ форсируем регенерацию и есть кэш — возвращаем его
+    if (!forceRegenerate)
+    {
+        ScAddr answerHTMLLink =
+            IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
+        if (context.IsElement(answerHTMLLink))
+        {
+            return answerHTMLLink;
+        }
+    }
 
-  if (context.IsElement(answerHTMLLink))
-  {
+    // Если форсируем или кэша нет — генерируем заново
+    ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
+    ScAddr answerHTMLLink = GetAnswerLink(context, uiComponent, componentHTMLTemplateLink);
     return answerHTMLLink;
-  }
-
-  // We are getting specific template for given ui component
-  ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
-
-  // This link should contain fully translated html document
-  answerHTMLLink = GetAnswerLink(context, uiComponent, componentHTMLTemplateLink);
-
-  return answerHTMLLink;
 }
 
 ScAddr HTMLTranslator::RegenerateHTMLRepresentation(ScAgentContext & context, ScAddr const & uiComponent)
