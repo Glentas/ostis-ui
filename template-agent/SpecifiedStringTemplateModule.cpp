@@ -5,10 +5,18 @@
  */
 
 #include "agent/SpecifiedStringTemplateAgent.hpp"
+#include "renderer/StringTemplateRenderer.hpp"
+#include "renderer/TemplateActionGenerator.hpp"
+#include "renderer/JsonToXMLAgent.hpp"
+#include "renderer/XMLToJsonAgent.hpp"
 
 #include "SpecifiedStringTemplateModule.hpp"
 
 using namespace specifiedStringTemplateModule;
 
 SC_MODULE_REGISTER(SpecifiedStringTemplateModule)
-  ->Agent<SpecifiedStringTemplateAgent>();
+  ->Agent<SpecifiedStringTemplateAgent>()
+  ->Agent<GenerateTemplateAgent>()
+  ->Agent<JsonToXMLAgent>()
+  ->Agent<XMLToJsonAgent>();
+

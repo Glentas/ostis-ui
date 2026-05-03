@@ -58,6 +58,13 @@ static inline ScKeynode const action_apply_visual_adaptation{
 
   static inline ScKeynode const action_adapt_ui_for_user{"action_adapt_ui_for_user", ScType::ConstNodeClass};
 
+  static inline ScKeynode const action_switch_theme{"action_switch_theme", ScType::ConstNodeClass};
+
+  static inline ScKeynode const nrel_theme_name{"nrel_theme_name", ScType::ConstNodeNonRole};
+
+  static inline ScKeynode const nrel_css_param_id{"nrel_css_param_id", ScType::ConstNodeNonRole};
+
+  static inline ScKeynode const nrel_css_param_value{"nrel_css_param_value", ScType::ConstNodeNonRole};
 
 };  // namespace htmlTranslationModule
 }

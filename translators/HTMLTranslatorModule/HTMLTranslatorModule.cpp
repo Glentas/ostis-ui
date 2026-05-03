@@ -4,6 +4,7 @@
 #include "agents/HTMLTranslatorAgent.hpp"
 #include "HTMLTranslatorModule.hpp"
 #include "agents/VisualAdaptationAgent.hpp"
+#include "agents/ThemeSwitcherAgent.hpp"
 
 using namespace htmlTranslationModule;
 
@@ -27,5 +28,6 @@ void HTMLTranslatorModule::Shutdown(ScMemoryContext * context)
 
 SC_MODULE_REGISTER(HTMLTranslatorModule)
     ->Agent<HTMLTranslatorAgent>()
-    ->Agent<VisualAdaptationAgent>();
+    ->Agent<VisualAdaptationAgent>()
+    ->Agent<ThemeSwitcherAgent>();
 // FORCE REBUILD: 04/30/2026 09:43:03
