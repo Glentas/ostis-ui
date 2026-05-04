@@ -1,104 +1,205 @@
 #include <sc-memory/sc_action.hpp>
 #include <sc-memory/sc_result.hpp>
 #include <sc-agents-common/utils/IteratorUtils.hpp>
+
 #include "keynodes/HTMLTranslatorKeynodes.hpp"
 #include "VisualAdaptationAgent.hpp"
+#include "html-translator/HTMLTranslator.hpp"
 #include "parameter-retriever/ParameterRetriever.hpp"
+
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <cmath>
 
 namespace htmlTranslationModule
 {
 
-// Универсальная функция очистки CSS-значения от мусора БЗ
-static std::string cleanCssValue(const std::string& raw) {
-    std::string cleaned = raw;
-    // Удаляем кавычки, пробелы, табы, переносы строк
-    cleaned.erase(std::remove_if(cleaned.begin(), cleaned.end(), [](unsigned char c) {
-        return std::isspace(c) || c == '"' || c == '\'' || c == '\n' || c == '\r' || c == '\t';
-    }), cleaned.end());
-    
-    // Удаляем артефактный префикс "float:"
-    if (cleaned.size() >= 6 && cleaned.substr(0, 6) == "float:") {
-        cleaned = cleaned.substr(6);
-    }
-    return cleaned;
+// ===================================================================
+static bool IsScalableProperty(const std::string & id)
+{
+    static const std::vector<std::string> prefixes = {
+        "fz", "font-size", "width", "height", "margin", "padding",
+        "line-height", "border-radius"
+    };
+    for (const auto & p : prefixes)
+        if (id.find(p) == 0) return true;
+    return false;
 }
 
+static std::string SanitizeCssValue(const std::string & raw)
+{
+    std::string v = raw;
+
+    // Убираем пробелы, кавычки, точку с запятой
+    v.erase(std::remove_if(v.begin(), v.end(), [](unsigned char c) {
+        return c == '"' || c == '\'' || c == ';';
+    }), v.end());
+
+    // Убираем float: префикс
+    if (v.size() >= 6 && v.compare(0, 6, "float:") == 0)
+        v = v.substr(6);
+
+    return v;
+}
+
+// ===================================================================
+static std::string ScaleCssValue(const std::string & rawValue, double multiplier)
+{
+    if (std::abs(multiplier - 1.0) < 0.001)
+        return rawValue;
+
+    std::string v = rawValue;
+
+    v.erase(std::remove_if(v.begin(), v.end(), [](unsigned char c) {
+        return std::isspace(c) || c == '"' || c == '\'' || c == ';';
+    }), v.end());
+
+    if (v.size() >= 6 && v.compare(0, 6, "float:") == 0)
+        v = v.substr(6);
+
+    if (v.empty() || v == "auto" || v == "none" || v[0] == '#' ||
+        v.find("rgb") == 0 || v.find("hsl") == 0)
+        return rawValue;
+
+    // Защита от процентов — не масштабируем
+    if (v.back() == '%')
+        return rawValue;
+
+    // Защита от calc(), var() и т.п.
+    if (v.find('(') != std::string::npos)
+        return rawValue;
+
+    std::istringstream ss(v);
+    double num = 0.0;
+    std::string unit;
+
+    if (!(ss >> num)) return rawValue;
+    ss >> unit;
+
+    double newValue = num * multiplier;
+
+    std::ostringstream oss;
+    if (std::floor(newValue) == newValue)
+        oss << static_cast<long long>(newValue);
+    else
+        oss << std::fixed << std::setprecision(2) << newValue;
+    oss << unit;
+
+    return oss.str();
+}
+
+// ===================================================================
+static void InvalidateHTMLCache(ScAgentContext & ctx, ScAddr component)
+{
+    ScAddr cached = utils::IteratorUtils::getAnyByOutRelation(
+        &ctx, component, HTMLTranslatorKeynodes::nrel_html_representation);
+
+    if (cached.IsValid())
+        ctx.EraseElement(cached);
+
+    ScIterator3Ptr it = ctx.CreateIterator3(ScType::Unknown, ScType::ConstPermPosArc, component);
+    while (it->Next())
+    {
+        ScAddr parent = it->Get(0);
+        ScAddr arc    = it->Get(1);
+
+        if (ctx.CheckConnector(HTMLTranslatorKeynodes::nrel_inclusion, arc, ScType::ConstPermPosArc))
+            InvalidateHTMLCache(ctx, parent);
+    }
+}
+
+// ===================================================================
 ScResult VisualAdaptationAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-    SC_LOG_INFO("ХОХОХЕХЕ");
-    
-    auto const [component, multiplierLink] = action.GetArguments<2>();
-    if (!component.IsValid()) {
+    // 1. Безопасное извлечение аргументов через роли rrel_1 и rrel_2
+    ScAddr component = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_1);
+
+    ScAddr multiplierLink = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_2);
+
+    SC_LOG_INFO("VisualAdaptationAgent: component hash = " + std::to_string(component.Hash()));
+    if (multiplierLink.IsValid())
+        SC_LOG_INFO("VisualAdaptationAgent: multiplierLink hash = " + std::to_string(multiplierLink.Hash()));
+
+    // 2. Валидация обязательного аргумента
+    if (!component.IsValid())
+    {
         SC_LOG_ERROR("VisualAdaptationAgent: component is invalid.");
         return action.FinishUnsuccessfully();
     }
 
+    // 3. Чтение множителя (опционально) с защитой от InvalidParams
     double multiplier = 1.0;
-    if (multiplierLink.IsValid()) {
-        std::string multiplierStr;
-        m_context.GetLinkContent(multiplierLink, multiplierStr);
-        try { multiplier = std::stod(multiplierStr); } 
-        catch (...) { SC_LOG_WARNING("Invalid multiplier, using 1.0"); }
-    }
-
-    SC_LOG_INFO("VisualAdaptation: Applying multiplier " + std::to_string(multiplier));
-
-    StringScAddrMap parameters = ParameterRetriever::GetNestedUIComponents(m_context, component);
-
-    for (auto const & [id, paramAddr] : parameters) {
-        if (id.find("fz") == 0 || id.find("width") == 0 || id.find("height") == 0 ||
-            id.find("margin") == 0 || id.find("padding") == 0 ||
-            id.find("line-height") == 0 || id.find("font-weight") == 0)
+    if (multiplierLink.IsValid())
+    {
+        // 🔑 КРИТИЧНО: проверяем тип элемента перед вызовом GetLinkContent
+        if (m_context.GetElementType(multiplierLink).IsLink())
         {
-            ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(&m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
-            if (!m_context.IsElement(valueLink) || !m_context.GetElementType(valueLink).IsLink()) continue;
-
-            std::string currentValueStr;
-            m_context.GetLinkContent(valueLink, currentValueStr);
-            std::string cleanValue = cleanCssValue(currentValueStr);
-
-            if (cleanValue.empty()) continue;
-
-            try {
-                size_t pos = 0;
-                double value = std::stod(cleanValue, &pos);
-                std::string unit = cleanValue.substr(pos);
-
-                // Дополнительная зачистка юнита от спецсимволов
-                unit.erase(std::remove_if(unit.begin(), unit.end(), [](unsigned char c) {
-                    return c == '"' || c == '\'' || c == '=' || c == ';' || std::isspace(c);
-                }), unit.end());
-
-                double newValue = value * multiplier;
-                std::ostringstream numSs;
-                numSs << std::fixed << std::setprecision(1) << newValue;
-                std::string numStr = numSs.str();
-
-                // Убираем лишние нули (2.0 -> 2)
-                if (numStr.find('.') != std::string::npos) {
-                    numStr.erase(numStr.find_last_not_of('0') + 1, std::string::npos);
-                    if (!numStr.empty() && numStr.back() == '.') numStr.pop_back();
-                }
-
-                std::string finalValue = numStr + unit;
-                m_context.SetLinkContent(valueLink, finalValue);
-                SC_LOG_INFO("VisualAdaptation: Updated " + id + " -> " + finalValue);
-            } 
-            catch (...) {
-                // чтобы не сломать валидный CSS. Логируем и пропускаем.
-                SC_LOG_WARNING("VisualAdaptation: Non-numeric " + id + " ('" + cleanValue + "'). Keeping original.");
+            std::string s;
+            m_context.GetLinkContent(multiplierLink, s);
+            try { multiplier = std::stod(s); }
+            catch (...)
+            {
+                SC_LOG_WARNING("VisualAdaptationAgent: failed to parse multiplier, using 1.0");
             }
         }
+        else
+        {
+            SC_LOG_WARNING("VisualAdaptationAgent: multiplier argument is not a sc-link. Using default 1.0");
+        }
+    }
+
+    SC_LOG_INFO("VisualAdaptationAgent: multiplier = " + std::to_string(multiplier));
+
+    // 4. Применение адаптации к CSS-параметрам компонента
+    auto parameters = ParameterRetriever::GetNestedUIComponents(m_context, component);
+    for (auto const & [id, paramAddr] : parameters)
+    {
+        ScAddr valueLink = utils::IteratorUtils::getAnyByOutRelation(
+            &m_context, paramAddr, HTMLTranslatorKeynodes::nrel_html_representation);
+
+        if (!valueLink.IsValid() || !m_context.GetElementType(valueLink).IsLink())
+            continue;
+
+        std::string currentValue;
+        m_context.GetLinkContent(valueLink, currentValue);
+
+        std::string newValue = SanitizeCssValue(currentValue);
+        if (IsScalableProperty(id))
+            newValue = ScaleCssValue(newValue, multiplier);
+
+        if (newValue != currentValue)
+        {
+            m_context.SetLinkContent(valueLink, newValue);
+            SC_LOG_INFO("VisualAdaptationAgent: " + id + " : " + currentValue + " → " + newValue);
+        }
+    }
+
+    // 5. Инвалидация кэша и перегенерация HTML
+    InvalidateHTMLCache(m_context, component);
+
+    SC_LOG_INFO("VisualAdaptationAgent: adaptation applied, regenerating HTML.");
+    try
+    {
+        ScAddr newRepr = HTMLTranslator::RegenerateHTMLRepresentation(m_context, component);
+        if (newRepr.IsValid())
+            SC_LOG_INFO("VisualAdaptationAgent: HTML regenerated successfully.");
+        else
+            SC_LOG_WARNING("VisualAdaptationAgent: HTML regeneration returned invalid link.");
+    }
+    catch (std::exception const & e)
+    {
+        SC_LOG_ERROR("VisualAdaptationAgent: HTML regeneration failed: " + std::string(e.what()));
     }
 
     return action.FinishSuccessfully();
 }
 
-ScAddr VisualAdaptationAgent::GetActionClass() const {
+ScAddr VisualAdaptationAgent::GetActionClass() const
+{
     return HTMLTranslatorKeynodes::action_apply_visual_adaptation;
 }
 

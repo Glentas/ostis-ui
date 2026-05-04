@@ -4,15 +4,19 @@
  * (See accompanying file COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include "agent/SpecifiedStringTemplateAgent.hpp"
+#include "renderer/StringTemplateRenderer.hpp"
+#include "renderer/TemplateActionGenerator.hpp"
 #include "renderer/JsonToXMLAgent.hpp"
 #include "renderer/XMLToJsonAgent.hpp"
-#include "renderer/TemplateActionGenerator.hpp"
 
 #include "SpecifiedStringTemplateModule.hpp"
 
 using namespace specifiedStringTemplateModule;
 
 SC_MODULE_REGISTER(SpecifiedStringTemplateModule)
+
+    ->Agent<SpecifiedStringTemplateAgent>()
+    ->Agent<GenerateTemplateAgent>()
     ->Agent<JsonToXMLAgent>()
-    ->Agent<XMLToJsonAgent>()
-    ->Agent<GenerateTemplateAgent>();
+    ->Agent<XMLToJsonAgent>();

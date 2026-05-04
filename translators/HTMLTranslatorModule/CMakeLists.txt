@@ -8,6 +8,7 @@ set(HTML_TRANSLATOR_SOURCES
     "agents/VisualAdaptationAgent.cpp"
     "HTTPServer.cpp"
     "HTTPRequestHandler.cpp"
+    "agents/ThemeSwitcherAgent.cpp"
 )
 
 set(HTML_TRANSLATOR_HEADERS
@@ -21,6 +22,7 @@ set(HTML_TRANSLATOR_HEADERS
     "agents/VisualAdaptationAgent.hpp"
     "HTTPServer.hpp"
     "HTTPRequestHandler.hpp"
+    "agents/ThemeSwitcherAgent.hpp"
 )
 
 add_library(ostis-ui-html-translator
