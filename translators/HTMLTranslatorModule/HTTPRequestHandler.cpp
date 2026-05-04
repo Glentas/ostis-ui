@@ -16,7 +16,7 @@ void HTTPRequestHandler::RetrieveCurrentUIHandler(
 
     try
     {
-        auto result = UILib::InvokeVisualAdaptation(*context, "paragraph", 1.5);
+        auto result = UILib::InvokeVisualAdaptation(*context, "button1", 1.5);
         SC_LOG_INFO("Visual adaptation completed successfully");
     }
     catch (std::exception const & e)
