@@ -26,7 +26,7 @@ void HTTPRequestHandler::RetrieveCurrentUIHandler(
 
     auto htmlOpt = UILib::GetHTMLForModel(
         *context,
-        "concept_current_ostis_ui_model",  //Идентификатор модели
+        "translator_model",  //Идентификатор модели
         500);                               // Таймаут
 
     if (!htmlOpt.has_value())
