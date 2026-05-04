@@ -32,14 +32,16 @@ ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const 
   //
   // TODO: we need mechanism that will allow us to regenerate component (some
   // bool flag?)
-  ScAddr answerHTMLLink =
-      IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
 
-  if (context.IsElement(answerHTMLLink))
-  {
-    return answerHTMLLink;
-  }
+  // ScAddr answerHTMLLink =
+  //     IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
 
+  // if (context.IsElement(answerHTMLLink))
+  // {
+  //   return answerHTMLLink;
+  // }
+
+  ScAddr answerHTMLLink;
   // We are getting specific template for given ui component
   ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
 
@@ -87,8 +89,8 @@ ScAddr HTMLTranslator::RegenerateHTMLRepresentation(ScAgentContext & context, Sc
   ScAddr newLink = context.GenerateLink();
   context.SetLinkContent(newLink, componentTemplateString);
 
-  ScAddr arcAddr = context.GenerateConnector(ScType::CommonArc, uiComponent, newLink);
-  context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+  // ScAddr arcAddr = context.GenerateConnector(ScType::CommonArc, uiComponent, newLink);
+  // context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
 
   SC_LOG_DEBUG("HTMLTranslator: new HTML representation created for component.");
   return newLink;
@@ -165,8 +167,8 @@ ScAddr HTMLTranslator::GetAnswerLink(
   context.SetLinkContent(linkWithHTMLRepresentation, componentTemplateString);
 
   // Generating html representation
-  ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, uiComponent, linkWithHTMLRepresentation);
-  context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+  // ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, uiComponent, linkWithHTMLRepresentation);
+  // context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
 
   if (!context.IsElement(linkWithHTMLRepresentation))
   {
