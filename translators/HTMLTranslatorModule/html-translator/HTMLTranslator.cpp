@@ -56,25 +56,25 @@ ScAddr HTMLTranslator::RegenerateHTMLRepresentation(ScAgentContext & context, Sc
     SC_LOG_ERROR("HTMLTranslator: given UI element is invalid.");
     throw utils::ScException(utils::ExceptionInvalidParams("HTMLTranslator: given UI element is invalid.", ""));
   }
- 
+
   ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
- 
+
   std::string componentTemplateString;
   context.GetLinkContent(componentHTMLTemplateLink, componentTemplateString);
- 
+
   // Получаем дочерние компоненты с их актуальными ID (уже после свапа)
   StringScAddrMap nestedComponents = ParameterRetriever::GetNestedUIComponents(context, uiComponent);
   StringStringMap representations = GetNestedComponentsHTMLRepresentation(context, nestedComponents);
- 
+
   for (auto const & [id, repr] : representations)
   {
     InsertParameterValue(componentTemplateString, id, repr);
   }
- 
+
   // Проверяем, есть ли уже существующая ссылка с HTML-представлением
   ScAddr existingRepr =
       IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
- 
+
   if (context.IsElement(existingRepr))
   {
     // Обновляем содержимое существующей ссылки — кэш не нужно удалять
@@ -82,18 +82,17 @@ ScAddr HTMLTranslator::RegenerateHTMLRepresentation(ScAgentContext & context, Sc
     SC_LOG_DEBUG("HTMLTranslator: HTML representation updated for component.");
     return existingRepr;
   }
- 
+
   // Ссылки ещё нет — создаём
   ScAddr newLink = context.GenerateLink();
   context.SetLinkContent(newLink, componentTemplateString);
- 
+
   ScAddr arcAddr = context.GenerateConnector(ScType::CommonArc, uiComponent, newLink);
   context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
- 
+
   SC_LOG_DEBUG("HTMLTranslator: new HTML representation created for component.");
   return newLink;
 }
-
 
 ScAddr HTMLTranslator::GetUIComponentHTMLTemplate(ScAgentContext & context, ScAddr const & uiComponent)
 {
@@ -182,44 +181,40 @@ StringStringMap HTMLTranslator::GetNestedComponentsHTMLRepresentation(
     StringScAddrMap const & nestedComponents)
 {
   StringStringMap IDsAndRepresentations;
-  
+
   for (auto const & [ID, parameterAddr] : nestedComponents)
   {
     // Запускаем рекурсивный агент
     ScAction action = context.GenerateAction(HTMLTranslatorKeynodes::action_translate_sc_to_html);
     action.SetArguments(parameterAddr);
     action.InitiateAndWait();
-    
+
     ScStructure translationResult = action.GetResult();
-    
+
     // Ищем sc-link в структуре
     ScAddr translationResultLink;
-    
-    ScIterator3Ptr it = context.CreateIterator3(
-        translationResult, 
-        ScType::ConstPermPosArc, 
-        ScType::Unknown);
-    
+
+    ScIterator3Ptr it = context.CreateIterator3(translationResult, ScType::ConstPermPosArc, ScType::Unknown);
+
     while (it->Next() && !translationResultLink.IsValid())
     {
       ScAddr candidate = it->Get(2);
       ScType candidateType = context.GetElementType(candidate);
-      
+
       // используем IsLink()
       if (candidateType.IsLink())
       {
         translationResultLink = candidate;
       }
     }
-    
+
     // Финальная проверка
     if (!translationResultLink.IsValid())
     {
       SC_LOG_ERROR("HTMLTranslator: result does not contain a valid sc-link for id=" + ID);
-      throw utils::ScException(
-          utils::ExceptionItemNotFound("HTMLTranslator: translation result has no sc-link.", ""));
+      throw utils::ScException(utils::ExceptionItemNotFound("HTMLTranslator: translation result has no sc-link.", ""));
     }
-    
+
     std::string representation;
     context.GetLinkContent(translationResultLink, representation);
     IDsAndRepresentations[ID] = representation;
@@ -232,47 +227,45 @@ void HTMLTranslator::InsertParameterValue(
     std::string const & parameterID,
     std::string const & parameterValue)
 {
-    //Надёжная замена всех вхождений {parameterID} на parameterValue
-    std::string const placeholder = "{" + parameterID + "}";
-    size_t pos = 0;
-    
-    while ((pos = componentTemplateString.find(placeholder, pos)) != std::string::npos)
-    {
-        componentTemplateString.replace(pos, placeholder.length(), parameterValue);
-        pos += parameterValue.length();  // Продвигаемся после вставленного значения
-    }
+  // Надёжная замена всех вхождений {parameterID} на parameterValue
+  std::string const placeholder = "{{" + parameterID + "}}";
+  size_t pos = 0;
+
+  while ((pos = componentTemplateString.find(placeholder, pos)) != std::string::npos)
+  {
+    componentTemplateString.replace(pos, placeholder.length(), parameterValue);
+    pos += parameterValue.length();  // Продвигаемся после вставленного значения
+  }
 }
 
-ScAddr HTMLTranslator::RegenerateHTMLRepresentationWithParents(
-    ScAgentContext & context,
-    ScAddr const & uiComponent)
+ScAddr HTMLTranslator::RegenerateHTMLRepresentationWithParents(ScAgentContext & context, ScAddr const & uiComponent)
 {
-    // 1. Сначала перегенерируем кэш для текущего компонента
-    ScAddr currentRepr = RegenerateHTMLRepresentation(context, uiComponent);
-    
-    // 2. Находим всех родителей через отношение nrel_inclusion
-    //    Шаблон: parent ==nrel_inclusion==> child (наш компонент)
-    ScAddr const nrelInclusion = HTMLTranslatorKeynodes::nrel_inclusion;
-    
-    ScIterator3Ptr parentIt = context.CreateIterator3(
-        ScType::Unknown,              // родитель (источник)
-        ScType::ConstPermPosArc,      // тип дуги
-        uiComponent);                 // текущий компонент (цель)
-    
-    while (parentIt->Next())
+  // 1. Сначала перегенерируем кэш для текущего компонента
+  ScAddr currentRepr = RegenerateHTMLRepresentation(context, uiComponent);
+
+  // 2. Находим всех родителей через отношение nrel_inclusion
+  //    Шаблон: parent ==nrel_inclusion==> child (наш компонент)
+  ScAddr const nrelInclusion = HTMLTranslatorKeynodes::nrel_inclusion;
+
+  ScIterator3Ptr parentIt = context.CreateIterator3(
+      ScType::Unknown,          // родитель (источник)
+      ScType::ConstPermPosArc,  // тип дуги
+      uiComponent);             // текущий компонент (цель)
+
+  while (parentIt->Next())
+  {
+    ScAddr parent = parentIt->Get(0);
+    ScAddr arc = parentIt->Get(1);  // дуга: parent -> uiComponent
+
+    // Проверяем, что дуга помечена nrel_inclusion
+    if (context.CheckConnector(nrelInclusion, arc, ScType::ConstPermPosArc))
     {
-        ScAddr parent = parentIt->Get(0);
-        ScAddr arc = parentIt->Get(1);  // дуга: parent -> uiComponent
-        
-        // Проверяем, что дуга помечена nrel_inclusion
-        if (context.CheckConnector(nrelInclusion, arc, ScType::ConstPermPosArc))
-        {
-            // Рекурсивно обновляем кэш для родителя
-            RegenerateHTMLRepresentationWithParents(context, parent);
-        }
+      // Рекурсивно обновляем кэш для родителя
+      RegenerateHTMLRepresentationWithParents(context, parent);
     }
-    
-    return currentRepr;
+  }
+
+  return currentRepr;
 }
 
 }  // namespace htmlTranslationModule

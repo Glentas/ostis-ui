@@ -63,7 +63,7 @@
                 import sc from "ts-sc-client";
                 const { ScClient, ScConstruction, ScType, ScAddr } = sc;
 
-                const client = new ScClient("https://localhost:8090");
+                const client = new ScClient(new WebSocket('https://localhost:8080'));
 
                 client.addEventListener("open", () => {
                     console.log("Подключено к sc-серверу");
