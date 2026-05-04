@@ -32,6 +32,7 @@ ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const 
   //
   // TODO: we need mechanism that will allow us to regenerate component (some
   // bool flag?)
+
   ScAddr answerHTMLLink =
       IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
 
