@@ -20,7 +20,7 @@ namespace htmlTranslationModule
 static bool IsScalableProperty(const std::string & id)
 {
     static const std::vector<std::string> prefixes = {
-        "fz", "font-size", "width", "height", "margin", "padding",
+        "font_size_id", "font-size", "width", "height", "margin", "padding",
         "line-height", "border-radius"
     };
     for (const auto & p : prefixes)
