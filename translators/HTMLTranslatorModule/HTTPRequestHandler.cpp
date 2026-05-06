@@ -16,7 +16,7 @@ void HTTPRequestHandler::RetrieveCurrentUIHandler(
 
     try
     {
-        auto result = UILib::InvokeVisualAdaptation(*context, "paragraph", 1.5);
+        auto result = UILib::InvokeVisualAdaptation(*context, "paragraph_rivaking", 1.5);
         SC_LOG_INFO("Visual adaptation completed successfully");
     }
     catch (std::exception const & e)
@@ -26,7 +26,7 @@ void HTTPRequestHandler::RetrieveCurrentUIHandler(
 
     auto htmlOpt = UILib::GetHTMLForModel(
         *context,
-        "concept_current_ostis_ui_model",  //Идентификатор модели
+        "translator_model",  //Идентификатор модели
         500);                               // Таймаут
 
     if (!htmlOpt.has_value())

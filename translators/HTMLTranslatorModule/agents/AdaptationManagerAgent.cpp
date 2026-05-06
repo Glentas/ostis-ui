@@ -14,8 +14,13 @@ namespace htmlTranslationModule
 
 ScResult AdaptationManagerAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-    // 1. Получаем аргументы: профиль пользователя + корневой компонент
-    auto const [userProfile, rootComponent] = action.GetArguments<2>();
+    ScAddr userProfile = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_1);
+    ScAddr rootComponent = utils::IteratorUtils::getAnyByOutRelation(
+        &m_context, action, ScKeynodes::rrel_2);
+
+    SC_LOG_INFO("AdaptationManager: userProfile hash = " + std::to_string(userProfile.Hash()));
+    SC_LOG_INFO("AdaptationManager: rootComponent hash = " + std::to_string(rootComponent.Hash()));
 
     if (!userProfile.IsValid() || !rootComponent.IsValid())
     {
@@ -179,26 +184,26 @@ void AdaptationManagerAgent::ApplyAdaptationToComponent(
     std::string const & multiplier)
 {
     SC_LOG_INFO("AdaptationManager: Applying adaptation agent.");
-    
+
+    // Запускаем агент адаптации для этого компонента
     ScAction adaptationAction = context.GenerateAction(adaptationAgent);
 
+    // Если multiplier есть, передаём его как второй аргумент
     if (!multiplier.empty())
     {
         ScAddr multiplierLink = context.GenerateLink();
         context.SetLinkContent(multiplierLink, multiplier);
-        
-        // ✅ Передаем аргументы через запятую, БЕЗ фигурных скобок
         adaptationAction.SetArguments(component, multiplierLink);
     }
     else
     {
-        // ✅ Один аргумент тоже передается без скобок
         adaptationAction.SetArguments(component);
     }
 
+    // Запускаем и ждём завершения
     adaptationAction.InitiateAndWait();
 
-    if (!adaptationAction.IsFinishedSuccessfully())
+    if (adaptationAction.IsFinishedUnsuccessfully ())
     {
         SC_LOG_WARNING("AdaptationManager: Adaptation agent finished unsuccessfully.");
     }

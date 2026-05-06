@@ -88,8 +88,8 @@ ScAddr HTMLTranslator::RegenerateHTMLRepresentation(ScAgentContext & context, Sc
   ScAddr newLink = context.GenerateLink();
   context.SetLinkContent(newLink, componentTemplateString);
 
-  // ScAddr arcAddr = context.GenerateConnector(ScType::CommonArc, uiComponent, newLink);
-  // context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+  ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, uiComponent, newLink);
+  context.GenerateConnector(ScType::ConstPermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
 
   SC_LOG_DEBUG("HTMLTranslator: new HTML representation created for component.");
   return newLink;
@@ -166,8 +166,13 @@ ScAddr HTMLTranslator::GetAnswerLink(
   context.SetLinkContent(linkWithHTMLRepresentation, componentTemplateString);
 
   // Generating html representation
+<<<<<<< HEAD
   // ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, uiComponent, linkWithHTMLRepresentation);
   // context.GenerateConnector(ScType::PermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+=======
+  ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, uiComponent, linkWithHTMLRepresentation);
+  context.GenerateConnector(ScType::ConstPermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+>>>>>>> branch_for_merge
 
   if (!context.IsElement(linkWithHTMLRepresentation))
   {
