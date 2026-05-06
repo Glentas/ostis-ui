@@ -33,15 +33,14 @@ ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const 
   // TODO: we need mechanism that will allow us to regenerate component (some
   // bool flag?)
 
-  // ScAddr answerHTMLLink =
-  //     IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
+  ScAddr answerHTMLLink =
+      IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
 
-  // if (context.IsElement(answerHTMLLink))
-  // {
-  //   return answerHTMLLink;
-  // }
+  if (context.IsElement(answerHTMLLink))
+  {
+    return answerHTMLLink;
+  }
 
-  ScAddr answerHTMLLink;
   // We are getting specific template for given ui component
   ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
 
