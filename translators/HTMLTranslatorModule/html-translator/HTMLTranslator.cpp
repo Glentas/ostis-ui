@@ -5,94 +5,43 @@
  */
 
 #include "HTMLTranslator.hpp"
-#include "parameter-retriever/ParameterRetriever.hpp"
+#include "utils/ParameterRetriever.hpp"
+#include "keynodes/HTMLTranslatorKeynodes.hpp"
 
 #include <cstddef>
-#include <sc-agents-common/utils/IteratorUtils.hpp>
+#include <string>
+#include <format>
 
-#include <keynodes/HTMLTranslatorKeynodes.hpp>
+#include <sc-agents-common/utils/IteratorUtils.hpp>
 #include <sc-memory/sc_addr.hpp>
 #include <sc-memory/sc_debug.hpp>
 #include <sc-memory/sc_type.hpp>
 #include <sc-memory/utils/sc_logger.hpp>
-#include <string>
 
 using namespace utils;
 
 namespace htmlTranslationModule
 {
-ScAddr HTMLTranslator::TranslateScToHTML(ScAgentContext & context, ScAddr const & uiComponent)
+ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const & interfaceNode)
 {
-  if (!context.IsElement(uiComponent))
+  if (!context.IsElement(interfaceNode))
   {
-    SC_LOG_ERROR("HTMLTranslator: given UI element is invalid.");
-    throw utils::ScException(utils::ExceptionInvalidParams("HTMLTranslator: given UI element is invalid.", ""));
-  }
-
-  // If element already has html translation - return it
-  //
-  // TODO: we need mechanism that will allow us to regenerate component (some
-  // bool flag?)
-  ScAddr answerHTMLLink =
-      IteratorUtils::getAnyByOutRelation(&context, uiComponent, HTMLTranslatorKeynodes::nrel_html_representation);
-
-  if (context.IsElement(answerHTMLLink))
-  {
-    return answerHTMLLink;
+    auto const message = std::format(
+        "{}: given '{},{}' interface node is invalid.",
+        className,
+        interfaceNode.GetRealAddr().seg,
+        interfaceNode.GetRealAddr().offset);
+    SC_LOG_ERROR(message);
+    throw utils::ScException(utils::ExceptionInvalidParams(message, ""));
   }
 
   // We are getting specific template for given ui component
-  ScAddr componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, uiComponent);
+  auto const componentHTMLTemplateLink = GetUIComponentHTMLTemplate(context, interfaceNode);
 
-  // This link should contain fully translated html document
-  answerHTMLLink = GetAnswerLink(context, uiComponent, componentHTMLTemplateLink);
+  // This link must contain fully translated html document
+  auto const answerHTMLLink = GetAnswerLink(context, interfaceNode, componentHTMLTemplateLink);
 
   return answerHTMLLink;
-}
-
-ScAddr HTMLTranslator::GetUIComponentHTMLTemplate(ScAgentContext & context, ScAddr const & uiComponent)
-{
-  ScAddr componentHTMLTemplateLink;
-  std::string const componentHTMLTemplateLinkAlias = "_component_html_template_link";
-
-  ScTemplate componentHTMLTemplate;
-
-  //
-  // component = = = = = => template_link_for_component
-  //                ^
-  //                |
-  //
-  //                |
-  //
-  //                |
-  //
-  //        nrel_html_template
-  //
-  // Search for an HTML template for this component
-  componentHTMLTemplate.Quintuple(
-      uiComponent,
-      ScType::VarCommonArc,
-      ScType::VarNodeLink >> componentHTMLTemplateLinkAlias,
-      ScType::VarPermPosArc,
-      HTMLTranslatorKeynodes::nrel_html_template);
-
-  // Search only the first template result
-  context.SearchByTemplateInterruptibly(
-      componentHTMLTemplate,
-      [&componentHTMLTemplateLinkAlias, &componentHTMLTemplateLink](ScTemplateSearchResultItem const & item)
-      {
-        item.Get(componentHTMLTemplateLinkAlias, componentHTMLTemplateLink);
-        return ScTemplateSearchRequest::STOP;
-      });
-
-  if (!context.IsElement(componentHTMLTemplateLink))
-  {
-    SC_LOG_ERROR("HTMLTranslator: nrel_html_template not found.");
-    throw utils::ScException(
-        utils::ExceptionItemNotFound("HTMLTranslator: html template for element is not found.", ""));
-  }
-
-  return componentHTMLTemplateLink;
 }
 
 ScAddr HTMLTranslator::GetAnswerLink(

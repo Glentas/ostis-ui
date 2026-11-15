@@ -2,7 +2,7 @@ set(HTML_TRANSLATOR_SOURCES
 	"HTMLTranslatorModule.cpp"
 	"agents/HTMLTranslatorAgent.cpp"
     "html-translator/HTMLTranslator.cpp"
-    "parameter-retriever/ParameterRetriever.cpp"
+    "utils/ParameterRetriever.cpp"
     "HTTPServer.cpp"
     "HTTPRequestHandler.cpp"
 )
@@ -12,7 +12,7 @@ set(HTML_TRANSLATOR_HEADERS
     "keynodes/HTMLTranslatorKeynodes.hpp"
     "agents/HTMLTranslatorAgent.hpp"
     "html-translator/HTMLTranslator.hpp"
-    "parameter-retriever/ParameterRetriever.hpp"
+    "utils/ParameterRetriever.hpp"
     "HTTPServer.hpp"
     "HTTPRequestHandler.hpp"
 )

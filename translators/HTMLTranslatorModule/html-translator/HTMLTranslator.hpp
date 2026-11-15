@@ -11,6 +11,7 @@
 #include <sc-memory/sc_memory.hpp>
 #include <map>
 #include <string>
+#include <string_view>
 
 namespace htmlTranslationModule
 {
@@ -20,7 +21,7 @@ using StringScAddrMap = std::map<std::string, ScAddr>;
 class HTMLTranslator
 {
 public:
-  static ScAddr TranslateScToHTML(ScAgentContext & context, ScAddr const & rootUiElement);
+  static ScAddr TranslateSCToHTML(ScAgentContext & context, ScAddr const & rootUiElement);
   static ScAddr GetUIComponentHTMLTemplate(ScAgentContext & context, ScAddr const & uiComponent);
   static ScAddr GetAnswerLink(
       ScAgentContext & context,
@@ -33,6 +34,9 @@ public:
       std::string & componentTemplateString,
       std::string const & parameterID,
       std::string const & parameterValue);
+
+private:
+  constexpr inline static std::string_view className = "HTMLTranslator";
 };
 
 }  // namespace htmlTranslationModule

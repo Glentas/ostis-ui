@@ -43,16 +43,16 @@ namespace htmlTranslationModule
 {
 ScResult HTMLTranslatorAgent::DoProgram(ScActionInitiatedEvent const & event, ScAction & action)
 {
-  auto const [rootUiElement] = action.GetArguments<1>();
+  auto const [interfaceNode] = action.GetArguments<1>();
 
-  if (!rootUiElement.IsValid())
+  if (!interfaceNode.IsValid())
   {
     SC_LOG_ERROR("Given UI element is invalid.");
     return action.FinishUnsuccessfully();
   }
 
   // Returns ScLink with html representation of given UI component
-  ScAddr answerHTMLLink = HTMLTranslator::TranslateScToHTML(m_context, rootUiElement);
+  ScAddr answerHTMLLink = HTMLTranslator::TranslateSCToHTML(m_context, interfaceNode);
 
   // Create agent answer and finish agent work
   ScStructure structAddr = m_context.GenerateStructure();

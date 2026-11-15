@@ -110,105 +110,97 @@ Build KB:
 
 - ```/path/to/ui_libs/build/Release/lib/``` - location with dynamic ostis-ui libs. Library name is ```libostis-ui-html-translator.so```.
 
-# Whole idea behind this realisation
+# Specs
 
-## Recursive realisation of ui components
+## Example of abstract SC model in the knowledge base
 
-Let's think of each UI component as of self-sustainable component. Which means that button, whole div container, whole ui html document, script with javascript code or single color value (#000022) for some paragraph are equal and have the same structure.
+![model](docs/example.png)
 
-Now that we can treat this components equally we can easily design recursive model.
+## Current supported catalogue of the components and params
 
-For example:
-We start from root - our whole document Its template may look like this:
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    {{general_head1}}
-  </head>
-  <body>
-    {{custom_body1}}
-  </body>
-</html>
-```
-We can see that there are 2 parameters: *general_head1* and *custom_body1*.
-Model, designed in SCg, leads us for value for these parameters.
+### Names in SC
 
-Lucky for us *general_head1* already have had HTML representation:
+| What | SC |
+|---|---|
+| interface | `concept_ui_interface` |
+| root of component types | `concept_ui_object` |
+| `components` | `nrel_ui_has_component` |
+| `contains` | `nrel_ui_contains` |
+| id | `nrel_ui_id` |
+| property value | `nrel_ui_value` |
+| inclusion of a type in `concept_ui_object` | `nrel_inclusion` |
 
-```html
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Format converter</title>
-<style>
-  body {
-    margin: 0;
-    min-height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-</style>
-```
+### Component types
 
-Now we can complete part of our root document:
+| id | Class |
+|---|---|
+| `image` | `concept_ui_image` |
+| `sound` | `concept_ui_sound` |
+| `text` | `concept_ui_text` |
+| `divider` | `concept_ui_divider` |
+| `spacer` | `concept_ui_spacer` |
+| `menu` | `concept_ui_menu` |
+| `menu_bar` | `concept_ui_menu_bar` |
+| `list` | `concept_ui_list` |
+| `scroll` | `concept_ui_scroll` |
+| `window` | `concept_ui_window` |
+| `text_field` | `concept_ui_text_field` |
+| `text_area` | `concept_ui_text_area` |
+| `slider` | `concept_ui_slider` |
+| `select` | `concept_ui_select` |
+| `button` | `concept_ui_button` |
+| `menu_item` | `concept_ui_menu_item` |
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Format converter</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
-  </head>
-  <body>
-    {{custom_body1}}
-  </body>
-</html>
-```
+### Properties
 
-However *custom_body1* doesn't have completed HTML representation. It only has, well, template again:
-```html
-{{paragraph_of_mine_yeah}}
-{{textarea_of_mine_yeah}}
-```
+| Key | Class |
+|---|---|
+| `name` | `concept_ui_name` |
+| `x` | `concept_ui_x` |
+| `y` | `concept_ui_y` |
+| `width` | `concept_ui_width` |
+| `height` | `concept_ui_height` |
+| `order` | `concept_ui_order` |
+| `visible` | `concept_ui_visible` |
+| `enabled` | `concept_ui_enabled` |
+| `opacity` | `concept_ui_opacity` |
+| `text_value` | `concept_ui_text_value` |
+| `tooltip` | `concept_ui_tooltip` |
+| `action_id` | `concept_ui_action_id` |
+| `background_color` | `concept_ui_background_color` |
+| `color` | `concept_ui_color` |
+| `border_color` | `concept_ui_border_color` |
+| `border_width` | `concept_ui_border_width` |
+| `border_style` | `concept_ui_border_style` |
+| `corner_radius` | `concept_ui_corner_radius` |
+| `font_size` | `concept_ui_font_size` |
+| `font_weight` | `concept_ui_font_weight` |
+| `text_align` | `concept_ui_text_align` |
+| `padding` | `concept_ui_padding` |
+| `margin` | `concept_ui_margin` |
+| `min_width` | `concept_ui_min_width` |
+| `min_height` | `concept_ui_min_height` |
+| `max_width` | `concept_ui_max_width` |
+| `max_height` | `concept_ui_max_height` |
 
-Now we need to find *paragraph_of_mine_yeah* and *textarea_of_mine_yeah* elements in database and insert them in this template.
+### Default values
 
-As You can see this gives us simple recucursive task.
-But You may be wondering: "When does recursion stops? What if lower elements don't have HTML representation? How will recursion stop?"
-
-Well, You see, the standart for this model **requires** that all component-leaves must have HTML representation.
-Look at example below:
-
-```html
-<textarea
-  id={{textarea_id1}}
-  placeholder="{{placeholder1}}
-  style="
-    width: {{width1}};
-    height: {{height1}};
-    padding: {{padding2}};
-    font-family: {{ff2}};
-    font-size: {{fz2}};
-    border: {{brd2}};
-    border-radius: {{brd_radius1}};
-    background: {{bg1}};
-    resize: {{resize1}};
-    margin: {{margin1}};
-  "
->
-</textarea>
-```
-
-*width: {{width1}}*, *height: {{height1}}*, ... are in fact component-leaves. So they do have HTML represenation by default: *100%*, *auto*, ...
-
+| Property | Value |
+|---|---|
+| `x`, `y` | `24` |
+| `order` | `1` |
+| `visible` | `true` |
+| `enabled` | `true` |
+| `opacity` | `1` |
+| `text_value`, `tooltip`, `action_id` | `""` |
+| `background_color` | `#f4f4f4` |
+| `color` | `#1a1a1a` |
+| `border_color` | `#6f6f6f` |
+| `border_width` | `1` |
+| `border_style` | `solid` |
+| `corner_radius` | `0` |
+| `font_size` | `13` |
+| `font_weight` | `normal` |
+| `text_align` | `left` |
+| `padding`, `margin` | `0` |
+| `min_width`, `min_height`, `max_width`, `max_height` | `0` |
