@@ -19,10 +19,6 @@ if(${SC_BUILD_TESTS})
     find_package(GTest REQUIRED)
 endif()
 
-if(${SC_CLANG_FORMAT_CODE})
-    include(${CMAKE_MODULE_PATH}/ClangFormat.cmake)
-endif()
-
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM AND ${AUTO_CCACHE})
     message(STATUS "Using ${CCACHE_PROGRAM} as compiler launcher")
@@ -32,7 +28,4 @@ endif()
 
 find_package(sc-machine REQUIRED)
 
-add_subdirectory(action-interpreter)
-add_subdirectory(model-generators)
 add_subdirectory(translators)
-add_subdirectory(template-agent)

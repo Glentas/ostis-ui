@@ -16,31 +16,30 @@
 #include "utils.hpp"
 
 using namespace htmlTranslationModule;
-namespace htmlTranslatorAgentTest {
+
+namespace htmlTranslatorAgentTest
+{
 ScsLoader loader;
 std::string const TEST_FILES_DIR_PATH = "../test-structures/";
 std::string const TEST_KB_DIR_PATH = "../test-structures/kb";
 size_t const WAIT_TIME = 1000;
 using HTMLTranslatorAgentTest = ScMemoryTest;
 
-void TestHTMLTranslatorAgent(ScAgentContext &context,
-                             std::string const &scsTestFileName) {
+void TestHTMLTranslatorAgent(ScAgentContext & context, std::string const & scsTestFileName)
+{
   context.SubscribeAgent<HTMLTranslatorAgent>();
 
   loader.loadScsFile(context, TEST_FILES_DIR_PATH + scsTestFileName);
   loadKB(context, loader, TEST_KB_DIR_PATH);
 
   // Call the agent, get and validate result
-  ScAddr actionNode =
-      context.SearchElementBySystemIdentifier("test_action_node");
+  ScAddr actionNode = context.SearchElementBySystemIdentifier("test_action_node");
   EXPECT_TRUE(context.IsElement(actionNode));
 
-  ScAddr rootUiElement = utils::IteratorUtils::getAnyByOutRelation(
-      &context, actionNode, ScKeynodes::rrel_1);
+  ScAddr rootUiElement = utils::IteratorUtils::getAnyByOutRelation(&context, actionNode, ScKeynodes::rrel_1);
   EXPECT_TRUE(context.IsElement(rootUiElement));
 
-  ScAction action = context.GenerateAction(
-      HTMLTranslatorKeynodes::action_translate_sc_node_to_html);
+  ScAction action = context.GenerateAction(HTMLTranslatorKeynodes::action_translate_sc_to_html);
   action.SetArguments(rootUiElement);
   action.InitiateAndWait();
 
@@ -55,20 +54,18 @@ void TestHTMLTranslatorAgent(ScAgentContext &context,
   EXPECT_NE(resultLinkContent, "");
 
   // Check if the result is correct
-  ScAddr stringTemplateExpectedResult =
-      utils::IteratorUtils::getAnyByOutRelation(
-          &context, actionNode,
-          context.ResolveElementSystemIdentifier("rrel_expected_result"));
+  ScAddr stringTemplateExpectedResult = utils::IteratorUtils::getAnyByOutRelation(
+      &context, actionNode, context.ResolveElementSystemIdentifier("rrel_expected_result"));
   std::string stringTemplateExpectedResultContent;
-  context.GetLinkContent(stringTemplateExpectedResult,
-                         stringTemplateExpectedResultContent);
+  context.GetLinkContent(stringTemplateExpectedResult, stringTemplateExpectedResultContent);
   EXPECT_EQ(stringTemplateExpectedResultContent, resultLinkContent);
 
   context.UnsubscribeAgent<HTMLTranslatorAgent>();
 }
 
-TEST_F(HTMLTranslatorAgentTest, TranslateUi) {
+TEST_F(HTMLTranslatorAgentTest, TranslateUi)
+{
   TestHTMLTranslatorAgent(*m_ctx, "test_translate_text_output.scs");
 }
 
-} // namespace htmlTranslatorAgentTest
+}  // namespace htmlTranslatorAgentTest

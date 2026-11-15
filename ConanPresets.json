@@ -5,7 +5,9 @@
     },
     "configurePresets": [],
     "include": [
-        "build/Release/generators/CMakePresets.json",
-        "build/Debug/generators/CMakePresets.json"
-    ]
+        "build/Debug/generators/CMakePresets.json",
+        "build/Release/generators/CMakePresets.json"
+    ],
+    "buildPresets": [],
+    "testPresets": []
 }

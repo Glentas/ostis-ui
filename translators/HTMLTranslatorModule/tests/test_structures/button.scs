@@ -1,0 +1,10 @@
+test_action_node
+<- question;
+<- action_evaluate_specified_string_template;
+-> rrel_1: [new section];;
+
+button
+<- concept_button (* => nrel_html_template: [<sp-button color="{{ color }}" >label</sp-button>];; *);
+<- color_fcba03 (* <- concept_color;; => nrel_hex: [fcba03];; *);;
+
+@expected_result = [<sp-button color="fcba03" >label</sp-button>];;

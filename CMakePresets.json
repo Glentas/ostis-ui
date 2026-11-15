@@ -7,7 +7,7 @@
       "displayName": "Debug config (Conan)",
       "description": "Debug config with tests (Conan dependencies used)",
       "inherits": "conan-debug",
-      "installDir": "${sourceDir}/build/Debug/install",
+      "installDir": "${sourceDir}/.build/Debug/install",
       "cacheVariables": {
         "SC_BUILD_TESTS": true
       }
