@@ -8,18 +8,18 @@ The project uses Conan to manage dependencies.
 Create venv, activate it and install conan.
 
 ```bash
-python3 -m venv .venv
+python -m venv .venv
 source .venv/bin/activate
-pip3 install conan
+pip install conan
 ```
 #### 2. Clone Repository
 
 First, clone the repository containing the ostis-ui:
 
 ```bash
-git clone git@github.com:Glentas/ostis-ui.git
+git clone https://github.com/Glentas/ostis-ui.git
 cd ostis-ui
-git checkout demo
+git switch feature/SCS_to_HTML
 ```
 
 #### 3. Install Dependencies with Conan

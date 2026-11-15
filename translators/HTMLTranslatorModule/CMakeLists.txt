@@ -3,6 +3,8 @@ set(HTML_TRANSLATOR_SOURCES
 	"agents/HTMLTranslatorAgent.cpp"
     "html-translator/HTMLTranslator.cpp"
     "utils/ParameterRetriever.cpp"
+    "utils/HTMLTagMapper.cpp"
+    "utils/AbstractUIModel.cpp"
     "HTTPServer.cpp"
     "HTTPRequestHandler.cpp"
 )
@@ -13,6 +15,8 @@ set(HTML_TRANSLATOR_HEADERS
     "agents/HTMLTranslatorAgent.hpp"
     "html-translator/HTMLTranslator.hpp"
     "utils/ParameterRetriever.hpp"
+    "utils/HTMLTagMapper.hpp"
+    "utils/AbstractUIModel.hpp"
     "HTTPServer.hpp"
     "HTTPRequestHandler.hpp"
 )

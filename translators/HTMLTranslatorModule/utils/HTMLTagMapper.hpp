@@ -6,123 +6,94 @@
 
 #pragma once
 
-#include "keynodes/HTMLTranslatorKeynodes.hpp"
-
-#include <cstdint>
 #include <map>
 #include <string_view>
 #include <unordered_map>
 
 #include <sc-memory/sc_keynodes.hpp>
 
+#include "AbstractUIModel.hpp"
+#include "keynodes/HTMLTranslatorKeynodes.hpp"
+
 namespace htmlTranslationModule
 {
 class HTMLTagMapper
 {
 public:
-  enum class ComponentTypes : std::uint8_t
+  struct ScKeynodeComparator
   {
-    Image,
-    Sound,
-    Text,
-    Divider,
-    Spacer,
-    Menu,
-    MenuBar,
-    List,
-    Scroll,
-    Window,
-    TextField,
-    TextArea,
-    Slider,
-    Select,
-    Button,
-    MenuItem
-  };
-  enum class ComponentParams : std::uint8_t
-  {
-    Name,
-    X,
-    Y,
-    Width,
-    Height,
-    Order,
-    Visible,
-    Enabled,
-    Opacity,
-    TextValue,
-    Tooltip,
-    ActionId,
-    BackgroundColor,
-    Color,
-    BorderColor,
-    BorderWidth,
-    BorderStyle,
-    CornerRadius,
-    FontSize,
-    FontWeight,
-    TextAlign,
-    Padding,
-    Margin,
-    MinWidth,
-    MinHeight,
-    MaxWidth,
-    MaxHeight
+    bool operator()(ScKeynode const & a, ScKeynode const & b) const noexcept
+    {
+      auto const addrA = a.GetRealAddr();
+      auto const addrB = b.GetRealAddr();
+
+      if (addrA.seg != addrB.seg)
+        return addrA.seg < addrB.seg;
+
+      return addrA.offset < addrB.offset;
+    }
   };
 
-  static std::map<ScKeynode, ComponentTypes> const & GetComponentTypeByKeynodeClass()
+  static std::map<ScKeynode, ComponentTypes, ScKeynodeComparator> const & GetComponentTypeByKeynodeClass()
   {
-    static std::map<ScKeynode, ComponentTypes> const componentTypeByKeynodeClass = {
-        {HTMLTranslatorKeynodes::concept_ui_image, ComponentTypes::Image},
-        {HTMLTranslatorKeynodes::concept_ui_sound, ComponentTypes::Sound},
-        {HTMLTranslatorKeynodes::concept_ui_text, ComponentTypes::Text},
-        {HTMLTranslatorKeynodes::concept_ui_divider, ComponentTypes::Divider},
-        {HTMLTranslatorKeynodes::concept_ui_spacer, ComponentTypes::Spacer},
-        {HTMLTranslatorKeynodes::concept_ui_menu, ComponentTypes::Menu},
-        {HTMLTranslatorKeynodes::concept_ui_menu_bar, ComponentTypes::MenuBar},
-        {HTMLTranslatorKeynodes::concept_ui_list, ComponentTypes::List},
-        {HTMLTranslatorKeynodes::concept_ui_scroll, ComponentTypes::Scroll},
-        {HTMLTranslatorKeynodes::concept_ui_window, ComponentTypes::Window},
-        {HTMLTranslatorKeynodes::concept_ui_text_field, ComponentTypes::TextField},
-        {HTMLTranslatorKeynodes::concept_ui_text_area, ComponentTypes::TextArea},
-        {HTMLTranslatorKeynodes::concept_ui_slider, ComponentTypes::Slider},
-        {HTMLTranslatorKeynodes::concept_ui_select, ComponentTypes::Select},
-        {HTMLTranslatorKeynodes::concept_ui_button, ComponentTypes::Button},
-        {HTMLTranslatorKeynodes::concept_ui_menu_item, ComponentTypes::MenuItem}};
-    return componentTypeByKeynodeClass;
+    static auto const componentTypeByKeynode = std::map<ScKeynode, ComponentTypes, ScKeynodeComparator>(
+        {{HTMLTranslatorKeynodes::concept_ui_image, ComponentTypes::Image},
+         {HTMLTranslatorKeynodes::concept_ui_sound, ComponentTypes::Sound},
+         {HTMLTranslatorKeynodes::concept_ui_text, ComponentTypes::Text},
+         {HTMLTranslatorKeynodes::concept_ui_divider, ComponentTypes::Divider},
+         {HTMLTranslatorKeynodes::concept_ui_spacer, ComponentTypes::Spacer},
+         {HTMLTranslatorKeynodes::concept_ui_menu, ComponentTypes::Menu},
+         {HTMLTranslatorKeynodes::concept_ui_menu_bar, ComponentTypes::MenuBar},
+         {HTMLTranslatorKeynodes::concept_ui_list, ComponentTypes::List},
+         {HTMLTranslatorKeynodes::concept_ui_scroll, ComponentTypes::Scroll},
+         {HTMLTranslatorKeynodes::concept_ui_window, ComponentTypes::Window},
+         {HTMLTranslatorKeynodes::concept_ui_text_field, ComponentTypes::TextField},
+         {HTMLTranslatorKeynodes::concept_ui_text_area, ComponentTypes::TextArea},
+         {HTMLTranslatorKeynodes::concept_ui_slider, ComponentTypes::Slider},
+         {HTMLTranslatorKeynodes::concept_ui_select, ComponentTypes::Select},
+         {HTMLTranslatorKeynodes::concept_ui_button, ComponentTypes::Button},
+         {HTMLTranslatorKeynodes::concept_ui_menu_item, ComponentTypes::MenuItem}});
+    return componentTypeByKeynode;
   }
 
-  static std::map<ScKeynode, ComponentParams> const & GetComponentParamByKeynodeClass()
+  static std::map<ScKeynode, ComponentParams, ScKeynodeComparator> const & GetComponentParamByKeynodeClass()
   {
-    static std::map<ScKeynode, ComponentParams> const componentParamByKeynodeClass = {
-        {HTMLTranslatorKeynodes::concept_ui_name, ComponentParams::Name},
-        {HTMLTranslatorKeynodes::concept_ui_x, ComponentParams::X},
-        {HTMLTranslatorKeynodes::concept_ui_y, ComponentParams::Y},
-        {HTMLTranslatorKeynodes::concept_ui_width, ComponentParams::Width},
-        {HTMLTranslatorKeynodes::concept_ui_height, ComponentParams::Height},
-        {HTMLTranslatorKeynodes::concept_ui_order, ComponentParams::Order},
-        {HTMLTranslatorKeynodes::concept_ui_visible, ComponentParams::Visible},
-        {HTMLTranslatorKeynodes::concept_ui_enabled, ComponentParams::Enabled},
-        {HTMLTranslatorKeynodes::concept_ui_opacity, ComponentParams::Opacity},
-        {HTMLTranslatorKeynodes::concept_ui_text_value, ComponentParams::TextValue},
-        {HTMLTranslatorKeynodes::concept_ui_tooltip, ComponentParams::Tooltip},
-        {HTMLTranslatorKeynodes::concept_ui_action_id, ComponentParams::ActionId},
-        {HTMLTranslatorKeynodes::concept_ui_background_color, ComponentParams::BackgroundColor},
-        {HTMLTranslatorKeynodes::concept_ui_color, ComponentParams::Color},
-        {HTMLTranslatorKeynodes::concept_ui_border_color, ComponentParams::BorderColor},
-        {HTMLTranslatorKeynodes::concept_ui_border_width, ComponentParams::BorderWidth},
-        {HTMLTranslatorKeynodes::concept_ui_border_style, ComponentParams::BorderStyle},
-        {HTMLTranslatorKeynodes::concept_ui_corner_radius, ComponentParams::CornerRadius},
-        {HTMLTranslatorKeynodes::concept_ui_font_size, ComponentParams::FontSize},
-        {HTMLTranslatorKeynodes::concept_ui_font_weight, ComponentParams::FontWeight},
-        {HTMLTranslatorKeynodes::concept_ui_text_align, ComponentParams::TextAlign},
-        {HTMLTranslatorKeynodes::concept_ui_padding, ComponentParams::Padding},
-        {HTMLTranslatorKeynodes::concept_ui_margin, ComponentParams::Margin},
-        {HTMLTranslatorKeynodes::concept_ui_min_width, ComponentParams::MinWidth},
-        {HTMLTranslatorKeynodes::concept_ui_min_height, ComponentParams::MinHeight},
-        {HTMLTranslatorKeynodes::concept_ui_max_width, ComponentParams::MaxWidth},
-        {HTMLTranslatorKeynodes::concept_ui_max_height, ComponentParams::MaxHeight}};
-    return componentParamByKeynodeClass;
+    static auto const componentParamByKeynode = std::map<ScKeynode, ComponentParams, ScKeynodeComparator>(
+        {{HTMLTranslatorKeynodes::concept_ui_name, ComponentParams::Name},
+         {HTMLTranslatorKeynodes::concept_ui_x, ComponentParams::X},
+         {HTMLTranslatorKeynodes::concept_ui_y, ComponentParams::Y},
+         {HTMLTranslatorKeynodes::concept_ui_width, ComponentParams::Width},
+         {HTMLTranslatorKeynodes::concept_ui_height, ComponentParams::Height},
+         {HTMLTranslatorKeynodes::concept_ui_order, ComponentParams::Order},
+         {HTMLTranslatorKeynodes::concept_ui_visible, ComponentParams::Visible},
+         {HTMLTranslatorKeynodes::concept_ui_enabled, ComponentParams::Enabled},
+         {HTMLTranslatorKeynodes::concept_ui_opacity, ComponentParams::Opacity},
+         {HTMLTranslatorKeynodes::concept_ui_text_value, ComponentParams::TextValue},
+         {HTMLTranslatorKeynodes::concept_ui_tooltip, ComponentParams::Tooltip},
+         {HTMLTranslatorKeynodes::concept_ui_action_id, ComponentParams::ActionId},
+         {HTMLTranslatorKeynodes::concept_ui_background_color, ComponentParams::BackgroundColor},
+         {HTMLTranslatorKeynodes::concept_ui_color, ComponentParams::Color},
+         {HTMLTranslatorKeynodes::concept_ui_border_color, ComponentParams::BorderColor},
+         {HTMLTranslatorKeynodes::concept_ui_border_width, ComponentParams::BorderWidth},
+         {HTMLTranslatorKeynodes::concept_ui_border_style, ComponentParams::BorderStyle},
+         {HTMLTranslatorKeynodes::concept_ui_corner_radius, ComponentParams::CornerRadius},
+         {HTMLTranslatorKeynodes::concept_ui_font_size, ComponentParams::FontSize},
+         {HTMLTranslatorKeynodes::concept_ui_font_weight, ComponentParams::FontWeight},
+         {HTMLTranslatorKeynodes::concept_ui_text_align, ComponentParams::TextAlign},
+         {HTMLTranslatorKeynodes::concept_ui_padding, ComponentParams::Padding},
+         {HTMLTranslatorKeynodes::concept_ui_margin, ComponentParams::Margin},
+         {HTMLTranslatorKeynodes::concept_ui_min_width, ComponentParams::MinWidth},
+         {HTMLTranslatorKeynodes::concept_ui_min_height, ComponentParams::MinHeight},
+         {HTMLTranslatorKeynodes::concept_ui_max_width, ComponentParams::MaxWidth},
+         {HTMLTranslatorKeynodes::concept_ui_max_height, ComponentParams::MaxHeight}});
+    return componentParamByKeynode;
+  };
+
+  static std::map<ScKeynode, LinkType, ScKeynodeComparator> const & GetLinkTypeByKeynodeClass()
+  {
+    static auto const linkTypeByKeynode = std::map<ScKeynode, LinkType, ScKeynodeComparator>(
+        {{HTMLTranslatorKeynodes::nrel_ui_contains, LinkType::Contains}});
+    return linkTypeByKeynode;
   };
 
   static inline std::unordered_map<ComponentTypes, std::string_view> const HTMLTemplateByComponentType = {
@@ -166,5 +137,51 @@ public:
       {ComponentParams::MinHeight, R"(min-height: {};)"},
       {ComponentParams::MaxWidth, R"(max-width: {};)"},
       {ComponentParams::MaxHeight, R"(max-height: {};)"}};
+
+  static constexpr inline std::string_view HTMLBodyTemplate = R"(
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Format converter</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        order: 1;
+        visibility: visible;
+        opacity: 1;
+
+        background-color: #f4f4f4;
+        color: #1a1a1a;
+
+        border-color: #6f6f6f;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0;
+
+        font-size: 13px;
+        font-weight: normal;
+        text-align: left;
+
+        padding: 0;
+        margin: 0;
+
+        min-width: 0;
+        min-height: 0;
+
+        max-width: none;
+        max-height: none;
+      }
+    </style>
+  </head>
+  {}
+  <body>
+  )";
 };
 }  // namespace htmlTranslationModule
