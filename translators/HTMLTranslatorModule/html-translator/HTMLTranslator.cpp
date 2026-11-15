@@ -32,7 +32,7 @@ ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const 
         interfaceNode.GetRealAddr().seg,
         interfaceNode.GetRealAddr().offset);
     SC_LOG_ERROR(message);
-    throw utils::ScException(utils::ExceptionInvalidParams(message, ""));
+    throw utils::ScException(utils::ExceptionInvalidParams("", message));
   }
 
   // We are getting specific template for given ui component
@@ -55,8 +55,8 @@ ScAddr HTMLTranslator::GetAnswerLink(
   context.GetLinkContent(componentHTMLTemplateLink, componentTemplateString);
 
   // What nested components do we have
-  StringScAddrMap nestedComponents = ParameterRetriever::GetNestedUIComponents(context, uiComponent);
-
+  auto params = ParameterRetriever::GetUIComponentParams(context, uiComponent);
+  auto nestedComponents = StringScAddrMap();
   // Get theirs html representation
   StringStringMap IDsAndRepresentations = GetNestedComponentsHTMLRepresentation(context, nestedComponents);
 

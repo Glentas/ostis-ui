@@ -6,25 +6,29 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
+#include <string>
+#include <string_view>
+
 #include <sc-memory/sc_addr.hpp>
 #include <sc-memory/sc_agent.hpp>
 #include <sc-memory/sc_memory.hpp>
-#include <string>
+
+#include "utils/AbstractUIModel.hpp"
 
 using namespace utils;
 
 namespace htmlTranslationModule
 {
 
-using StringScAddrMap = std::map<std::string, ScAddr>;
-
 class ParameterRetriever
 {
 public:
-  static StringScAddrMap GetNestedUIComponents(ScAgentContext & context, ScAddr const & uiComponent);
+  static std::unordered_map<ParamType, std::string> GetUIComponentParams(ScAgentContext & context, ScAddr const & uiComponent);
+  static ScAddrSet GetUIComponentRawParams(ScAgentContext & context, ScAddr const & uiComponent);
 
-  static ScTemplate GetComponentClassTemplate(ScAgentContext & context, ScAddr const & uiComponent);
+private:
+  static constexpr inline std::string_view className = "ParameterRetriever";
 };
 
 }  // namespace htmlTranslationModule
