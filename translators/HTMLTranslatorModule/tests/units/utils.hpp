@@ -6,10 +6,7 @@
 
 #pragma once
 
-#include <filesystem>
-
 #include <sc-builder/scs_loader.hpp>
-
 #include <sc-memory/sc_agent.hpp>
 
-void loadKB(ScAgentContext & context, ScsLoader & loader, std::filesystem::path const & path);
+void loadKB(ScAgentContext & context, ScsLoader & loader);

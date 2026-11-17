@@ -18,13 +18,6 @@ public:
   static inline ScKeynode const concept_current_ostis_ui_model{
       "concept_current_ostis_ui_model",
       ScType::ConstNodeClass};
-  static inline ScKeynode const _root_ui_obj{"_root_ui_obj", ScType::VarNodeClass};
-  static inline ScKeynode const _ui_obj{"_ui_obj", ScType::VarNodeClass};
-  static inline ScKeynode const nrel_html_template{"nrel_html_template", ScType::ConstNodeNonRole};
-  static inline ScKeynode const nrel_html_parameter_id{"nrel_html_parameter_id", ScType::ConstNodeNonRole};
-  static inline ScKeynode const nrel_html_representation{"nrel_html_representation", ScType::ConstNodeNonRole};
-  static inline ScKeynode const nrel_sc_template{"nrel_sc_template", ScType::ConstNodeNonRole};
-  static inline ScKeynode const rrel_specific_realisation{"rrel_specific_realisation", ScType::ConstNodeRole};
 
   // отношения
   static inline ScKeynode const nrel_inclusion{"nrel_inclusion", ScType::ConstNodeNonRole};

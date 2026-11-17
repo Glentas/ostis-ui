@@ -1,0 +1,168 @@
+// отношения
+nrel_inclusion
+<- sc_node_non_role_relation;;
+
+nrel_ui_contains
+<- sc_node_non_role_relation;;
+
+nrel_ui_has_component
+<- sc_node_non_role_relation;;
+
+nrel_ui_id
+<- sc_node_non_role_relation;;
+
+nrel_ui_value
+<- sc_node_non_role_relation;;
+
+// типы
+concept_ui_interface
+<- sc_node_class;;
+
+concept_ui_object
+<- sc_node_class;;
+
+concept_ui_image
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_image;;
+
+concept_ui_sound
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_sound;;
+
+concept_ui_text
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_text;;
+
+concept_ui_divider
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_divider;;
+
+concept_ui_spacer
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_spacer;;
+
+concept_ui_menu
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_menu;;
+
+concept_ui_menu_bar
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_menu_bar;;
+
+concept_ui_list
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_list;;
+
+concept_ui_scroll
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_scroll;;
+
+concept_ui_window
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_window;;
+
+concept_ui_text_field
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_text_field;;
+
+concept_ui_text_area
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_text_area;;
+
+concept_ui_slider
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_slider;;
+
+concept_ui_select
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_select;;
+
+concept_ui_button
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_button;;
+
+concept_ui_menu_item
+<- sc_node_class;;
+concept_ui_object => nrel_inclusion: concept_ui_menu_item;;
+
+// свойства
+concept_ui_name
+<- sc_node_class;;
+
+concept_ui_x
+<- sc_node_class;;
+
+concept_ui_y
+<- sc_node_class;;
+
+concept_ui_width
+<- sc_node_class;;
+
+concept_ui_height
+<- sc_node_class;;
+
+concept_ui_order
+<- sc_node_class;;
+
+concept_ui_visible
+<- sc_node_class;;
+
+concept_ui_enabled
+<- sc_node_class;;
+
+concept_ui_opacity
+<- sc_node_class;;
+
+concept_ui_text_value
+<- sc_node_class;;
+
+concept_ui_tooltip
+<- sc_node_class;;
+
+concept_ui_action_id
+<- sc_node_class;;
+
+concept_ui_background_color
+<- sc_node_class;;
+
+concept_ui_color
+<- sc_node_class;;
+
+concept_ui_border_color
+<- sc_node_class;;
+
+concept_ui_border_width
+<- sc_node_class;;
+
+concept_ui_border_style
+<- sc_node_class;;
+
+concept_ui_corner_radius
+<- sc_node_class;;
+
+concept_ui_font_size
+<- sc_node_class;;
+
+concept_ui_font_weight
+<- sc_node_class;;
+
+concept_ui_text_align
+<- sc_node_class;;
+
+concept_ui_padding
+<- sc_node_class;;
+
+concept_ui_margin
+<- sc_node_class;;
+
+concept_ui_min_width
+<- sc_node_class;;
+
+concept_ui_min_height
+<- sc_node_class;;
+
+concept_ui_max_width
+<- sc_node_class;;
+
+concept_ui_max_height
+<- sc_node_class;;

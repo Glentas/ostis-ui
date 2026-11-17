@@ -12,7 +12,7 @@
 
 namespace htmlTranslationModule
 {
-enum class ComponentType : std::uint8_t
+enum class UIComponentType : std::uint8_t
 {
   Image,
   Sound,
@@ -31,7 +31,7 @@ enum class ComponentType : std::uint8_t
   Button,
   MenuItem
 };
-enum class ParamType : std::uint8_t
+enum class UIParamType : std::uint8_t
 {
   Name,
   X,
@@ -61,7 +61,7 @@ enum class ParamType : std::uint8_t
   MaxWidth,
   MaxHeight
 };
-enum class LinkType : std::uint8_t
+enum class UILinkType : std::uint8_t
 {
   Contains
 };
@@ -69,14 +69,13 @@ enum class LinkType : std::uint8_t
 struct UIComponent
 {
   std::string ID;
-  ComponentType Type;
-  std::unordered_map<ComponentType, std::string> Params;
+  UIComponentType Type;
+  std::unordered_map<UIParamType, std::string> Params;
 };
 
 struct UILink
 {
-  std::string ID;
-  LinkType Type;
+  UILinkType Type;
   std::string Source;
   std::string Target;
 };

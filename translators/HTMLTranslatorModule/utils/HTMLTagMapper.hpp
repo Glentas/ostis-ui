@@ -19,109 +19,109 @@ namespace htmlTranslationModule
 class HTMLTagMapper
 {
 public:
-  static std::unordered_map<ScKeynode::HashType, ComponentType> const & GetComponentTypeByKeynodeHash()
+  static std::unordered_map<ScKeynode::HashType, UIComponentType> const & GetUIComponentTypeByKeynodeHash()
   {
-    static auto const componentTypeByKeynodeHash = std::unordered_map<ScKeynode::HashType, ComponentType>(
-        {{HTMLTranslatorKeynodes::concept_ui_image.Hash(), ComponentType::Image},
-         {HTMLTranslatorKeynodes::concept_ui_sound.Hash(), ComponentType::Sound},
-         {HTMLTranslatorKeynodes::concept_ui_text.Hash(), ComponentType::Text},
-         {HTMLTranslatorKeynodes::concept_ui_divider.Hash(), ComponentType::Divider},
-         {HTMLTranslatorKeynodes::concept_ui_spacer.Hash(), ComponentType::Spacer},
-         {HTMLTranslatorKeynodes::concept_ui_menu.Hash(), ComponentType::Menu},
-         {HTMLTranslatorKeynodes::concept_ui_menu_bar.Hash(), ComponentType::MenuBar},
-         {HTMLTranslatorKeynodes::concept_ui_list.Hash(), ComponentType::List},
-         {HTMLTranslatorKeynodes::concept_ui_scroll.Hash(), ComponentType::Scroll},
-         {HTMLTranslatorKeynodes::concept_ui_window.Hash(), ComponentType::Window},
-         {HTMLTranslatorKeynodes::concept_ui_text_field.Hash(), ComponentType::TextField},
-         {HTMLTranslatorKeynodes::concept_ui_text_area.Hash(), ComponentType::TextArea},
-         {HTMLTranslatorKeynodes::concept_ui_slider.Hash(), ComponentType::Slider},
-         {HTMLTranslatorKeynodes::concept_ui_select.Hash(), ComponentType::Select},
-         {HTMLTranslatorKeynodes::concept_ui_button.Hash(), ComponentType::Button},
-         {HTMLTranslatorKeynodes::concept_ui_menu_item.Hash(), ComponentType::MenuItem}});
-    return componentTypeByKeynodeHash;
+    static auto const UIComponentTypeByKeynodeHash = std::unordered_map<ScKeynode::HashType, UIComponentType>(
+        {{HTMLTranslatorKeynodes::concept_ui_image.Hash(), UIComponentType::Image},
+         {HTMLTranslatorKeynodes::concept_ui_sound.Hash(), UIComponentType::Sound},
+         {HTMLTranslatorKeynodes::concept_ui_text.Hash(), UIComponentType::Text},
+         {HTMLTranslatorKeynodes::concept_ui_divider.Hash(), UIComponentType::Divider},
+         {HTMLTranslatorKeynodes::concept_ui_spacer.Hash(), UIComponentType::Spacer},
+         {HTMLTranslatorKeynodes::concept_ui_menu.Hash(), UIComponentType::Menu},
+         {HTMLTranslatorKeynodes::concept_ui_menu_bar.Hash(), UIComponentType::MenuBar},
+         {HTMLTranslatorKeynodes::concept_ui_list.Hash(), UIComponentType::List},
+         {HTMLTranslatorKeynodes::concept_ui_scroll.Hash(), UIComponentType::Scroll},
+         {HTMLTranslatorKeynodes::concept_ui_window.Hash(), UIComponentType::Window},
+         {HTMLTranslatorKeynodes::concept_ui_text_field.Hash(), UIComponentType::TextField},
+         {HTMLTranslatorKeynodes::concept_ui_text_area.Hash(), UIComponentType::TextArea},
+         {HTMLTranslatorKeynodes::concept_ui_slider.Hash(), UIComponentType::Slider},
+         {HTMLTranslatorKeynodes::concept_ui_select.Hash(), UIComponentType::Select},
+         {HTMLTranslatorKeynodes::concept_ui_button.Hash(), UIComponentType::Button},
+         {HTMLTranslatorKeynodes::concept_ui_menu_item.Hash(), UIComponentType::MenuItem}});
+    return UIComponentTypeByKeynodeHash;
   }
 
-  static std::unordered_map<ScKeynode::HashType, ParamType> const & GetParamTypeByKeynodeHash()
+  static std::unordered_map<ScKeynode::HashType, UIParamType> const & GetUIParamTypeByKeynodeHash()
   {
-    static auto const paramTypeByKeynodeHash = std::unordered_map<ScKeynode::HashType, ParamType>(
-        {{HTMLTranslatorKeynodes::concept_ui_name.Hash(), ParamType::Name},
-         {HTMLTranslatorKeynodes::concept_ui_x.Hash(), ParamType::X},
-         {HTMLTranslatorKeynodes::concept_ui_y.Hash(), ParamType::Y},
-         {HTMLTranslatorKeynodes::concept_ui_width.Hash(), ParamType::Width},
-         {HTMLTranslatorKeynodes::concept_ui_height.Hash(), ParamType::Height},
-         {HTMLTranslatorKeynodes::concept_ui_order.Hash(), ParamType::Order},
-         {HTMLTranslatorKeynodes::concept_ui_visible.Hash(), ParamType::Visible},
-         {HTMLTranslatorKeynodes::concept_ui_enabled.Hash(), ParamType::Enabled},
-         {HTMLTranslatorKeynodes::concept_ui_opacity.Hash(), ParamType::Opacity},
-         {HTMLTranslatorKeynodes::concept_ui_text_value.Hash(), ParamType::TextValue},
-         {HTMLTranslatorKeynodes::concept_ui_tooltip.Hash(), ParamType::Tooltip},
-         {HTMLTranslatorKeynodes::concept_ui_action_id.Hash(), ParamType::ActionId},
-         {HTMLTranslatorKeynodes::concept_ui_background_color.Hash(), ParamType::BackgroundColor},
-         {HTMLTranslatorKeynodes::concept_ui_color.Hash(), ParamType::Color},
-         {HTMLTranslatorKeynodes::concept_ui_border_color.Hash(), ParamType::BorderColor},
-         {HTMLTranslatorKeynodes::concept_ui_border_width.Hash(), ParamType::BorderWidth},
-         {HTMLTranslatorKeynodes::concept_ui_border_style.Hash(), ParamType::BorderStyle},
-         {HTMLTranslatorKeynodes::concept_ui_corner_radius.Hash(), ParamType::CornerRadius},
-         {HTMLTranslatorKeynodes::concept_ui_font_size.Hash(), ParamType::FontSize},
-         {HTMLTranslatorKeynodes::concept_ui_font_weight.Hash(), ParamType::FontWeight},
-         {HTMLTranslatorKeynodes::concept_ui_text_align.Hash(), ParamType::TextAlign},
-         {HTMLTranslatorKeynodes::concept_ui_padding.Hash(), ParamType::Padding},
-         {HTMLTranslatorKeynodes::concept_ui_margin.Hash(), ParamType::Margin},
-         {HTMLTranslatorKeynodes::concept_ui_min_width.Hash(), ParamType::MinWidth},
-         {HTMLTranslatorKeynodes::concept_ui_min_height.Hash(), ParamType::MinHeight},
-         {HTMLTranslatorKeynodes::concept_ui_max_width.Hash(), ParamType::MaxWidth},
-         {HTMLTranslatorKeynodes::concept_ui_max_height.Hash(), ParamType::MaxHeight}});
-    return paramTypeByKeynodeHash;
+    static auto const UIParamTypeByKeynodeHash = std::unordered_map<ScKeynode::HashType, UIParamType>(
+        {{HTMLTranslatorKeynodes::concept_ui_name.Hash(), UIParamType::Name},
+         {HTMLTranslatorKeynodes::concept_ui_x.Hash(), UIParamType::X},
+         {HTMLTranslatorKeynodes::concept_ui_y.Hash(), UIParamType::Y},
+         {HTMLTranslatorKeynodes::concept_ui_width.Hash(), UIParamType::Width},
+         {HTMLTranslatorKeynodes::concept_ui_height.Hash(), UIParamType::Height},
+         {HTMLTranslatorKeynodes::concept_ui_order.Hash(), UIParamType::Order},
+         {HTMLTranslatorKeynodes::concept_ui_visible.Hash(), UIParamType::Visible},
+         {HTMLTranslatorKeynodes::concept_ui_enabled.Hash(), UIParamType::Enabled},
+         {HTMLTranslatorKeynodes::concept_ui_opacity.Hash(), UIParamType::Opacity},
+         {HTMLTranslatorKeynodes::concept_ui_text_value.Hash(), UIParamType::TextValue},
+         {HTMLTranslatorKeynodes::concept_ui_tooltip.Hash(), UIParamType::Tooltip},
+         {HTMLTranslatorKeynodes::concept_ui_action_id.Hash(), UIParamType::ActionId},
+         {HTMLTranslatorKeynodes::concept_ui_background_color.Hash(), UIParamType::BackgroundColor},
+         {HTMLTranslatorKeynodes::concept_ui_color.Hash(), UIParamType::Color},
+         {HTMLTranslatorKeynodes::concept_ui_border_color.Hash(), UIParamType::BorderColor},
+         {HTMLTranslatorKeynodes::concept_ui_border_width.Hash(), UIParamType::BorderWidth},
+         {HTMLTranslatorKeynodes::concept_ui_border_style.Hash(), UIParamType::BorderStyle},
+         {HTMLTranslatorKeynodes::concept_ui_corner_radius.Hash(), UIParamType::CornerRadius},
+         {HTMLTranslatorKeynodes::concept_ui_font_size.Hash(), UIParamType::FontSize},
+         {HTMLTranslatorKeynodes::concept_ui_font_weight.Hash(), UIParamType::FontWeight},
+         {HTMLTranslatorKeynodes::concept_ui_text_align.Hash(), UIParamType::TextAlign},
+         {HTMLTranslatorKeynodes::concept_ui_padding.Hash(), UIParamType::Padding},
+         {HTMLTranslatorKeynodes::concept_ui_margin.Hash(), UIParamType::Margin},
+         {HTMLTranslatorKeynodes::concept_ui_min_width.Hash(), UIParamType::MinWidth},
+         {HTMLTranslatorKeynodes::concept_ui_min_height.Hash(), UIParamType::MinHeight},
+         {HTMLTranslatorKeynodes::concept_ui_max_width.Hash(), UIParamType::MaxWidth},
+         {HTMLTranslatorKeynodes::concept_ui_max_height.Hash(), UIParamType::MaxHeight}});
+    return UIParamTypeByKeynodeHash;
   };
 
-  static std::unordered_map<ScKeynode::HashType, LinkType> const & GetLinkTypeByKeynodeClass()
+  static std::unordered_map<ScKeynode::HashType, UILinkType> const & GetUILinkTypeByKeynodeClass()
   {
-    static auto const linkTypeByKeynode = std::unordered_map<ScKeynode::HashType, LinkType>(
-        {{HTMLTranslatorKeynodes::nrel_ui_contains.Hash(), LinkType::Contains}});
-    return linkTypeByKeynode;
+    static auto const UILinkTypeByKeynode = std::unordered_map<ScKeynode::HashType, UILinkType>(
+        {{HTMLTranslatorKeynodes::nrel_ui_contains.Hash(), UILinkType::Contains}});
+    return UILinkTypeByKeynode;
   };
 
-  static inline std::unordered_map<ComponentType, std::string_view> const HTMLTemplateByComponentType = {
-      {ComponentType::Image, R"(<img style="{}" src="{}" alt="">)"},
-      {ComponentType::Sound, R"(<audio style="{}" src="{}" controls></audio>)"},
-      {ComponentType::Text, R"(<p style="{}">{}</p>)"},
-      {ComponentType::Divider, R"(<hr style="{}">)"},
-      {ComponentType::Spacer, R"(<div style="{}"></div>)"},
-      {ComponentType::Menu, R"(<nav style="{}">{}</nav>)"},
-      {ComponentType::MenuBar, R"(<div role="menubar" style="{}">{}</div>)"},
-      {ComponentType::List, R"(<ul style="{}">{}</ul>)"},
-      {ComponentType::Scroll, R"(<div style="{};overflow:auto">{}</div>)"},
-      {ComponentType::Window, R"(<section role="dialog" style="{}">{}</section>)"},
-      {ComponentType::TextField, R"(<input type="text" style="{}" value="{}">)"},
-      {ComponentType::TextArea, R"(<textarea style="{}">{}</textarea>)"},
-      {ComponentType::Slider, R"(<input type="range" style="{}" value="{}">)"},
-      {ComponentType::Select, R"(<select style="{}">{}</select>)"},
-      {ComponentType::Button, R"(<button type="button" style="{}">{}</button>)"},
-      {ComponentType::MenuItem, R"(<li role="menuitem" style="{}">{}</li>)"}};
+  static inline std::unordered_map<UIComponentType, std::string_view> const HTMLTemplateByUIComponentType = {
+      {UIComponentType::Image, R"(<img style="{}" src="{}" alt="">)"},
+      {UIComponentType::Sound, R"(<audio style="{}" src="{}" controls></audio>)"},
+      {UIComponentType::Text, R"(<p style="{}">{}</p>)"},
+      {UIComponentType::Divider, R"(<hr style="{}">)"},
+      {UIComponentType::Spacer, R"(<div style="{}"></div>)"},
+      {UIComponentType::Menu, R"(<nav style="{}">{}</nav>)"},
+      {UIComponentType::MenuBar, R"(<div role="menubar" style="{}">{}</div>)"},
+      {UIComponentType::List, R"(<ul style="{}">{}</ul>)"},
+      {UIComponentType::Scroll, R"(<div style="{};overflow:auto">{}</div>)"},
+      {UIComponentType::Window, R"(<section role="dialog" style="{}">{}</section>)"},
+      {UIComponentType::TextField, R"(<input type="text" style="{}" value="{}">)"},
+      {UIComponentType::TextArea, R"(<textarea style="{}">{}</textarea>)"},
+      {UIComponentType::Slider, R"(<input type="range" style="{}" value="{}">)"},
+      {UIComponentType::Select, R"(<select style="{}">{}</select>)"},
+      {UIComponentType::Button, R"(<button type="button" style="{}">{}</button>)"},
+      {UIComponentType::MenuItem, R"(<li role="menuitem" style="{}">{}</li>)"}};
 
-  static inline std::unordered_map<ParamType, std::string_view> const HTMLTemplateByParamType = {
-      {ParamType::X, R"(left: {};)"},
-      {ParamType::Y, R"(top: {};)"},
-      {ParamType::Width, R"(width: {};)"},
-      {ParamType::Height, R"(height: {};)"},
-      {ParamType::Order, R"(order: {};)"},
-      {ParamType::Visible, R"(visibility: {};)"},
-      {ParamType::Opacity, R"(opacity: {};)"},
-      {ParamType::BackgroundColor, R"(background-color: {};)"},
-      {ParamType::Color, R"(color: {};)"},
-      {ParamType::BorderColor, R"(border-color: {};)"},
-      {ParamType::BorderWidth, R"(border-width: {};)"},
-      {ParamType::BorderStyle, R"(border-style: {};)"},
-      {ParamType::CornerRadius, R"(border-radius: {};)"},
-      {ParamType::FontSize, R"(font-size: {};)"},
-      {ParamType::FontWeight, R"(font-weight: {};)"},
-      {ParamType::TextAlign, R"(text-align: {};)"},
-      {ParamType::Padding, R"(padding: {};)"},
-      {ParamType::Margin, R"(margin: {};)"},
-      {ParamType::MinWidth, R"(min-width: {};)"},
-      {ParamType::MinHeight, R"(min-height: {};)"},
-      {ParamType::MaxWidth, R"(max-width: {};)"},
-      {ParamType::MaxHeight, R"(max-height: {};)"}};
+  static inline std::unordered_map<UIParamType, std::string_view> const HTMLTemplateByUIParamType = {
+      {UIParamType::X, R"(left: {};)"},
+      {UIParamType::Y, R"(top: {};)"},
+      {UIParamType::Width, R"(width: {};)"},
+      {UIParamType::Height, R"(height: {};)"},
+      {UIParamType::Order, R"(order: {};)"},
+      {UIParamType::Visible, R"(visibility: {};)"},
+      {UIParamType::Opacity, R"(opacity: {};)"},
+      {UIParamType::BackgroundColor, R"(background-color: {};)"},
+      {UIParamType::Color, R"(color: {};)"},
+      {UIParamType::BorderColor, R"(border-color: {};)"},
+      {UIParamType::BorderWidth, R"(border-width: {};)"},
+      {UIParamType::BorderStyle, R"(border-style: {};)"},
+      {UIParamType::CornerRadius, R"(border-radius: {};)"},
+      {UIParamType::FontSize, R"(font-size: {};)"},
+      {UIParamType::FontWeight, R"(font-weight: {};)"},
+      {UIParamType::TextAlign, R"(text-align: {};)"},
+      {UIParamType::Padding, R"(padding: {};)"},
+      {UIParamType::Margin, R"(margin: {};)"},
+      {UIParamType::MinWidth, R"(min-width: {};)"},
+      {UIParamType::MinHeight, R"(min-height: {};)"},
+      {UIParamType::MaxWidth, R"(max-width: {};)"},
+      {UIParamType::MaxHeight, R"(max-height: {};)"}};
 
   static constexpr inline std::string_view HTMLBodyTemplate = R"(
   <!DOCTYPE html>

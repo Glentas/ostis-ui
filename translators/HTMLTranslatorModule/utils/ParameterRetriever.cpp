@@ -25,24 +25,24 @@ using namespace utils;
 namespace htmlTranslationModule
 {
 
-std::unordered_map<ParamType, std::string> ParameterRetriever::GetUIComponentParams(
+std::unordered_map<UIParamType, std::string> ParameterRetriever::GetUIComponentParams(
     ScAgentContext & context,
     ScAddr const & uiComponent)
 {
-  std::unordered_map<ParamType, std::string> params;
+  std::unordered_map<UIParamType, std::string> params;
 
-  auto const rawParams = GetUIComponentRawParams(context, uiComponent);
+  auto const rawUIParams = GetUIComponentRawParams(context, uiComponent);
 
-  auto constexpr componentParamLinkAlias = "_ui_param_link";
-  auto constexpr componentParamClassAlias = "_ui_param_class";
+  auto constexpr uiComponentParamLinkAlias = "_ui_param_link";
+  auto constexpr uiComponentParamClassAlias = "_ui_param_class";
 
-  for (auto const & param : rawParams)
+  for (auto const & uiParam : rawUIParams)
   {
     ScTemplate componentParamTemplate;
     //
     // uiParamClass - - - - - -> uiParam
     //
-    componentParamTemplate.Triple(componentParamClassAlias, ScType::VarPermPosArc, param);
+    componentParamTemplate.Triple(uiComponentParamClassAlias, ScType::VarPermPosArc, uiParam);
 
     //
     // uiParam = = = = = => _param_content_link
@@ -56,9 +56,9 @@ std::unordered_map<ParamType, std::string> ParameterRetriever::GetUIComponentPar
     //          nrel_ui_value
     //
     componentParamTemplate.Quintuple(
-        param,
+        uiParam,
         ScType::VarCommonArc,
-        componentParamLinkAlias,
+        uiComponentParamLinkAlias,
         ScType::VarPermPosArc,
         HTMLTranslatorKeynodes::nrel_ui_value);
 
@@ -66,17 +66,16 @@ std::unordered_map<ParamType, std::string> ParameterRetriever::GetUIComponentPar
     {
       context.SearchByTemplateInterruptibly(
           componentParamTemplate,
-          [&componentParamLinkAlias, &componentParamClassAlias, &params, &context](
-              ScTemplateSearchResultItem const & item)
+          [&](ScTemplateSearchResultItem const & item)
           {
-            ScAddr paramValue;
-            ScAddr paramType;
-            item.Get(componentParamLinkAlias, paramValue);
-            item.Get(componentParamClassAlias, paramType);
-            auto type = HTMLTagMapper::GetParamTypeByKeynodeHash().at(paramType.Hash());
+            ScAddr uiParamValue;
+            ScAddr uiParamType;
+            item.Get(uiComponentParamLinkAlias, uiParamValue);
+            item.Get(uiComponentParamClassAlias, uiParamType);
+            auto type = HTMLTagMapper::GetUIParamTypeByKeynodeHash().at(uiParamType.Hash());
             std::string value;
-            context.GetLinkContent(paramValue, value);
-            params.emplace(type, value);
+            context.GetLinkContent(uiParamValue, value);
+            params.emplace(type, std::move(value));
             return ScTemplateSearchRequest::STOP;
           });
     }
@@ -90,17 +89,17 @@ std::unordered_map<ParamType, std::string> ParameterRetriever::GetUIComponentPar
   return params;
 }
 
-ScAddrSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & context, ScAddr const & uiComponent)
+ScAddrUnorderedSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & context, ScAddr const & uiComponent)
 {
-  ScAddrSet rawParams;
+  ScAddrUnorderedSet rawUIParams;
 
-  ScTemplate componentRawParamTemplate;
-  auto constexpr componentParamAlias = "_ui_param";
+  ScTemplate rawUIParamTemplate;
+  auto constexpr uiParamAlias = "_ui_param";
 
   //
   // uiParam - - - - - -> uiComponent
   //
-  componentRawParamTemplate.Triple(componentParamAlias, ScType::VarPermPosArc, uiComponent);
+  rawUIParamTemplate.Triple(uiParamAlias, ScType::VarPermPosArc, uiComponent);
 
   //
   // uiParam = = = = = => _param_content_link
@@ -113,8 +112,8 @@ ScAddrSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & context, 
   //
   //          nrel_ui_value
   //
-  componentRawParamTemplate.Quintuple(
-      componentParamAlias,
+  rawUIParamTemplate.Quintuple(
+      uiParamAlias,
       ScType::VarCommonArc,
       ScType::VarNodeLink,
       ScType::VarPermPosArc,
@@ -123,12 +122,12 @@ ScAddrSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & context, 
   try
   {
     context.SearchByTemplate(
-        componentRawParamTemplate,
-        [&componentParamAlias, &rawParams](ScTemplateSearchResultItem const & item)
+        rawUIParamTemplate,
+        [&](ScTemplateSearchResultItem const & item)
         {
           ScAddr uiParam;
-          item.Get(componentParamAlias, uiParam);
-          rawParams.insert(std::move(uiParam));
+          item.Get(uiParamAlias, uiParam);
+          rawUIParams.insert(std::move(uiParam));
         });
   }
   catch (utils::ExceptionInvalidState const & e)
@@ -137,6 +136,6 @@ ScAddrSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & context, 
     SC_LOG_ERROR(message);
     throw e;
   }
-  return rawParams;
+  return rawUIParams;
 }
 }  // namespace htmlTranslationModule

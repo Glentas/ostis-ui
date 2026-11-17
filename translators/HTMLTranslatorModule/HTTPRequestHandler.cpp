@@ -35,8 +35,6 @@ void HTTPRequestHandler::RetrieveCurrentUIHandler(httplib::Request const & req, 
   {
     std::string result;
     context->GetLinkContent(translationResultLink, result);
-    // TODO: should we retrieve the link format rather than hardcode it?
-    // current solution is more performant
     res.set_content(result, "text/html");
   }
 }

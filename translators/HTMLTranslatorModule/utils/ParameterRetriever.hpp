@@ -24,8 +24,12 @@ namespace htmlTranslationModule
 class ParameterRetriever
 {
 public:
-  static std::unordered_map<ParamType, std::string> GetUIComponentParams(ScAgentContext & context, ScAddr const & uiComponent);
-  static ScAddrSet GetUIComponentRawParams(ScAgentContext & context, ScAddr const & uiComponent);
+  static std::unordered_map<UIParamType, std::string> GetUIComponentParams(
+      ScAgentContext & context,
+      ScAddr const & uiComponent);
+
+private:
+  static ScAddrUnorderedSet GetUIComponentRawParams(ScAgentContext & context, ScAddr const & uiComponent);
 
 private:
   static constexpr inline std::string_view className = "ParameterRetriever";

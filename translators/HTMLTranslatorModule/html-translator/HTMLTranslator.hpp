@@ -6,34 +6,31 @@
 
 #pragma once
 
+#include <string_view>
+#include <vector>
+
 #include <sc-memory/sc_addr.hpp>
 #include <sc-memory/sc_agent.hpp>
 #include <sc-memory/sc_memory.hpp>
-#include <map>
-#include <string>
-#include <string_view>
+
+#include "utils/AbstractUIModel.hpp"
 
 namespace htmlTranslationModule
 {
-using StringStringMap = std::map<std::string, std::string>;
-using StringScAddrMap = std::map<std::string, ScAddr>;
-
 class HTMLTranslator
 {
 public:
-  static ScAddr TranslateSCToHTML(ScAgentContext & context, ScAddr const & rootUiElement);
-  static ScAddr GetUIComponentHTMLTemplate(ScAgentContext & context, ScAddr const & uiComponent);
-  static ScAddr GetAnswerLink(
+  static ScAddr TranslateSCToHTML(ScAgentContext & context, ScAddr const & interfaceNode);
+
+private:
+  static ScAddrUnorderedSet GetUIComponents(ScAgentContext & context, ScAddr const & interfaceNode);
+  static std::vector<std::pair<ScAddr, ScAddr>> GetUIComponentLinks(
       ScAgentContext & context,
-      ScAddr const & uiElement,
-      ScAddr const & componentHTMLTemplateLink);
-  static StringStringMap GetNestedComponentsHTMLRepresentation(
+      ScAddrUnorderedSet const & uiComponents);
+  static std::vector<std::pair<ScAddr, UIComponent>> ResolveUIComponents(
       ScAgentContext & context,
-      StringScAddrMap const & nestedComponents);
-  static void InsertParameterValue(
-      std::string & componentTemplateString,
-      std::string const & parameterID,
-      std::string const & parameterValue);
+      ScAddrUnorderedSet const & uiComponents);
+  static UIComponentType ResolveComponentType(ScAgentContext & context, ScAddr const & uiComponent);
 
 private:
   constexpr inline static std::string_view className = "HTMLTranslator";
