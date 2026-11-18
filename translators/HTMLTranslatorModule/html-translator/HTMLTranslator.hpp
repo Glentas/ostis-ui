@@ -24,13 +24,22 @@ public:
 
 private:
   static ScAddrUnorderedSet GetUIComponents(ScAgentContext & context, ScAddr const & interfaceNode);
-  static std::vector<std::pair<ScAddr, ScAddr>> GetUIComponentLinks(
+  static std::vector<std::pair<ScAddr, ScAddr>> GetUILinks(
       ScAgentContext & context,
       ScAddrUnorderedSet const & uiComponents);
   static std::vector<std::pair<ScAddr, UIComponent>> ResolveUIComponents(
       ScAgentContext & context,
       ScAddrUnorderedSet const & uiComponents);
-  static UIComponentType ResolveComponentType(ScAgentContext & context, ScAddr const & uiComponent);
+  static UIComponentType ResolveUIComponentType(ScAgentContext & context, ScAddr const & uiComponent);
+  static std::vector<UILink> ResolveUILinks(
+      ScAgentContext & context,
+      std::vector<std::pair<ScAddr, ScAddr>> const & uiLinks,
+      std::vector<std::pair<ScAddr, UIComponent>> const & resolvedUIComponents);
+  static std::string RecursiveBuild(
+      std::string const & id,
+      std::vector<UIComponent> const & uiComponents,
+      std::vector<UILink> const & uiLinks);
+  static std::string BuildHTML(std::vector<UIComponent> && uiComponents, std::vector<UILink> && uiLinks);
 
 private:
   constexpr inline static std::string_view className = "HTMLTranslator";

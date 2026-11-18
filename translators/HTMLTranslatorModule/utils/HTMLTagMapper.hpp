@@ -123,7 +123,10 @@ public:
       {UIParamType::MaxWidth, R"(max-width: {};)"},
       {UIParamType::MaxHeight, R"(max-height: {};)"}};
 
-  static constexpr inline std::string_view HTMLBodyTemplate = R"(
+  static inline std::string GetFullHTML(std::string const & body)
+  {
+    return
+        R"(
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -165,8 +168,12 @@ public:
       }
     </style>
   </head>
-  {}
-  <body>
+  <body>)"
+        + body +
+        R"(
+  </body>
+  </html>
   )";
+  }
 };
 }  // namespace htmlTranslationModule

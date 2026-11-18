@@ -6,7 +6,8 @@
 
 #include "HTMLTranslator.hpp"
 
-#include "utils/AbstractUIModel.hpp"
+#include <algorithm>
+#include <stdexcept>
 #include <string>
 #include <format>
 
@@ -17,9 +18,12 @@
 #include <sc-memory/sc_type.hpp>
 #include <sc-memory/utils/sc_logger.hpp>
 
+#include "keynodes/HTMLTranslatorKeynodes.hpp"
+#include "utils/AbstractUIModel.hpp"
 #include "utils/ParameterRetriever.hpp"
 #include "utils/HTMLTagMapper.hpp"
-#include "keynodes/HTMLTranslatorKeynodes.hpp"
+#include <unordered_map>
+#include <utility>
 
 namespace htmlTranslationModule
 {
@@ -36,9 +40,23 @@ ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const 
     throw utils::ScException(utils::ExceptionInvalidParams("", message));
   }
   auto uiComponents = GetUIComponents(context, interfaceNode);
-  auto uiComponentLinks = GetUIComponentLinks(context, uiComponents);
-  auto resolvedUIComponents = ResolveUIComponents(context, uiComponents);
-  auto const answerHTMLLink = ScAddr();
+  auto uiLinks = GetUILinks(context, uiComponents);
+  auto mappedUIComponents = ResolveUIComponents(context, uiComponents);
+  auto resolvedUILinks = ResolveUILinks(context, uiLinks, mappedUIComponents);
+  auto resolvedUIComponents = std::vector<UIComponent>();
+  resolvedUIComponents.resize(mappedUIComponents.size());
+  std::transform(
+      mappedUIComponents.begin(),
+      mappedUIComponents.end(),
+      resolvedUIComponents.begin(),
+      [](std::pair<ScAddr, UIComponent> const & p)
+      {
+        return p.second;
+      });
+  auto result = BuildHTML(std::move(resolvedUIComponents), std::move(resolvedUILinks));
+  auto final_html = HTMLTagMapper::GetFullHTML(result);
+  std::cout << final_html << "\n";
+  auto const answerHTMLLink = context.GenerateLink();
 
   return answerHTMLLink;
 }
@@ -88,12 +106,12 @@ ScAddrUnorderedSet HTMLTranslator::GetUIComponents(ScAgentContext & context, ScA
   return uniqueUIComponents;
 }
 
-std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUIComponentLinks(
+std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUILinks(
     ScAgentContext & context,
     ScAddrUnorderedSet const & uiComponents)
 {
   // TODO: set instead of vector
-  std::vector<std::pair<ScAddr, ScAddr>> uiComponentLinks;
+  std::vector<std::pair<ScAddr, ScAddr>> uiLinks;
 
   for (auto const & source : uiComponents)
   {
@@ -122,7 +140,7 @@ std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUIComponentLinks(
           {
             ScAddr target;
             item.Get(targetAlias, target);
-            uiComponentLinks.emplace_back(source, std::move(target));
+            uiLinks.emplace_back(source, std::move(target));
           });
     }
     catch (utils::ExceptionInvalidState const & e)
@@ -132,7 +150,7 @@ std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUIComponentLinks(
       throw e;
     }
   }
-  return uiComponentLinks;
+  return uiLinks;
 }
 
 std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::ResolveUIComponents(
@@ -143,7 +161,7 @@ std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::ResolveUIComponents(
 
   for (auto const & uiComponent : uiComponents)
   {
-    auto type = ResolveComponentType(context, uiComponent);
+    auto type = ResolveUIComponentType(context, uiComponent);
     auto params = ParameterRetriever::GetUIComponentParams(context, uiComponent);
     constexpr auto uiComponentClassAlias = "_ui_component_class", uiComponentIDAlias = "_ui_component_id";
     ScTemplate uiComponentTemplate;
@@ -188,7 +206,7 @@ std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::ResolveUIComponents(
   return resolvedUIComponents;
 }
 
-UIComponentType HTMLTranslator::ResolveComponentType(ScAgentContext & context, ScAddr const & uiComponent)
+UIComponentType HTMLTranslator::ResolveUIComponentType(ScAgentContext & context, ScAddr const & uiComponent)
 {
   constexpr auto uiComponentClassAlias = "_candidate";
   ScTemplate uiComponentTemplate;
@@ -244,5 +262,113 @@ UIComponentType HTMLTranslator::ResolveComponentType(ScAgentContext & context, S
     }
   }
   return type;
+}
+
+std::vector<UILink> HTMLTranslator::ResolveUILinks(
+    ScAgentContext & context,
+    std::vector<std::pair<ScAddr, ScAddr>> const & uiLinks,
+    std::vector<std::pair<ScAddr, UIComponent>> const & resolvedUIComponents)
+{
+  std::vector<UILink> resolvedUILinks;
+  auto getID = [&](ScAddr const & node)
+  {
+    auto searcher = [&](std::pair<ScAddr, UIComponent> const & p)
+    {
+      if (p.first == node)
+      {
+        return true;
+      }
+      return false;
+    };
+    auto res_it = std::find_if(resolvedUIComponents.cbegin(), resolvedUIComponents.cend(), searcher);
+    if (res_it == resolvedUIComponents.cend())
+    {
+      throw std::runtime_error("Link's corresponding node is not found");
+    }
+    return res_it->second.ID;
+  };
+  for (auto const & l : uiLinks)
+  {
+    UILink uiLink;
+    uiLink.Source = getID(l.first);
+    uiLink.Target = getID(l.second);
+    resolvedUILinks.emplace_back(std::move(uiLink));
+  }
+  return resolvedUILinks;
+}
+
+std::string HTMLTranslator::RecursiveBuild(
+    std::string const & id,
+    std::vector<UIComponent> const & uiComponents,
+    std::vector<UILink> const & uiLinks)
+{
+  std::string result;
+  auto generateParams = [](std::unordered_map<UIParamType, std::string> const & params)
+  {
+    std::string str_representation;
+    for (auto const & [type, value] : params)
+    {
+      auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
+      if (paramTemplateIT != HTMLTagMapper::HTMLTemplateByUIParamType.cend())
+      {
+        str_representation += std::vformat(paramTemplateIT->second, std::make_format_args(value));
+        continue;
+      }
+      SC_LOG(utils::ScLogLevel::Info, "Encountered attribute that is unsupported in HTML, safely continue");
+    }
+    return str_representation;
+  };
+  auto getChildren = [&](std::string const & id)
+  {
+    std::vector<std::string> childrenIDs;
+    for (auto const & l : uiLinks)
+    {
+      if (l.Source == id)
+      {
+        childrenIDs.emplace_back(l.Target);
+      }
+    }
+    return childrenIDs;
+  };
+
+  auto children = getChildren(id);
+  std::string placeholder;
+  for (auto const & c : children)
+  {
+    placeholder += RecursiveBuild(c, uiComponents, uiLinks);
+  }
+  auto component = std::find_if(
+      uiComponents.begin(),
+      uiComponents.end(),
+      [id = id](UIComponent const & c)
+      {
+        return c.ID == id;
+      });
+
+  auto componentTemplate = HTMLTagMapper::HTMLTemplateByUIComponentType.at(component->Type);
+  auto params = generateParams(component->Params);
+  // TODO: check special templates for img, sound, etc
+  result = std::vformat(componentTemplate, std::make_format_args(params, placeholder));
+  return result;
+}
+
+std::string HTMLTranslator::BuildHTML(std::vector<UIComponent> && uiComponents, std::vector<UILink> && uiLinks)
+{
+  auto root = std::find_if(
+                  uiComponents.begin(),
+                  uiComponents.end(),
+                  [&](UIComponent const & c)
+                  {
+                    for (auto const & l : uiLinks)
+                    {
+                      if (l.Target == c.ID)
+                      {
+                        return false;
+                      }
+                    }
+                    return true;
+                  })
+                  ->ID;
+  return RecursiveBuild(root, uiComponents, uiLinks);
 }
 }  // namespace htmlTranslationModule
