@@ -10,6 +10,8 @@
 #include <stdexcept>
 #include <string>
 #include <format>
+#include <unordered_map>
+#include <utility>
 
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 #include <sc-memory/sc_addr.hpp>
@@ -22,8 +24,6 @@
 #include "utils/AbstractUIModel.hpp"
 #include "utils/ParameterRetriever.hpp"
 #include "utils/HTMLTagMapper.hpp"
-#include <unordered_map>
-#include <utility>
 
 namespace htmlTranslationModule
 {
@@ -53,11 +53,18 @@ ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const 
       {
         return p.second;
       });
-  auto result = BuildHTML(std::move(resolvedUIComponents), std::move(resolvedUILinks));
-  auto final_html = HTMLTagMapper::GetFullHTML(result);
-  std::cout << final_html << "\n";
-  auto const answerHTMLLink = context.GenerateLink();
-
+  auto resultBody = BuildHTML(std::move(resolvedUIComponents), std::move(resolvedUILinks));
+  auto finalHtml = HTMLTagMapper::GetFullHTML(resultBody);
+  auto answerHTMLLink = context.GenerateLink();
+  context.SetLinkContent(answerHTMLLink, finalHtml);
+  ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, interfaceNode, answerHTMLLink);
+  context.GenerateConnector(ScType::ConstPermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
+  if (!context.IsElement(answerHTMLLink))
+  {
+    auto const message = std::format("{}: given result link is invalid.", className);
+    SC_LOG_ERROR(message);
+    throw utils::ScException(utils::ExceptionInvalidParams("", message));
+  }
   return answerHTMLLink;
 }
 
@@ -302,16 +309,56 @@ std::string HTMLTranslator::RecursiveBuild(
     std::vector<UIComponent> const & uiComponents,
     std::vector<UILink> const & uiLinks)
 {
-  std::string result;
-  auto generateParams = [](std::unordered_map<UIParamType, std::string> const & params)
+  std::string result, placeholder;
+
+  auto generateParams = [&placeholder](std::unordered_map<UIParamType, std::string> const & params)
   {
     std::string str_representation;
     for (auto const & [type, value] : params)
     {
+      if (type == UIParamType::TextValue)
+      {
+        placeholder += "\n" + value;
+        continue;
+      }
+      auto processedValue = value;
+      if (type == UIParamType::Visible)
+      {
+        processedValue = (value == "true") ? "visible" : "hidden";
+      }
+      auto NeedsPx = [](UIParamType type)
+      {
+        switch (type)
+        {
+        case UIParamType::X:
+        case UIParamType::Y:
+        case UIParamType::Width:
+        case UIParamType::Height:
+        case UIParamType::MinWidth:
+        case UIParamType::MinHeight:
+        case UIParamType::MaxWidth:
+        case UIParamType::MaxHeight:
+        case UIParamType::Padding:
+        case UIParamType::Margin:
+        case UIParamType::BorderWidth:
+        case UIParamType::CornerRadius:
+        case UIParamType::FontSize:
+          return true;
+        default:
+          return false;
+        }
+      };
+      if (NeedsPx(type))
+      {
+        processedValue += "px";
+      }
+
       auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
+
       if (paramTemplateIT != HTMLTagMapper::HTMLTemplateByUIParamType.cend())
       {
-        str_representation += std::vformat(paramTemplateIT->second, std::make_format_args(value));
+        str_representation +=
+            "  " + std::vformat(paramTemplateIT->second, std::make_format_args(processedValue)) + "\n";
         continue;
       }
       SC_LOG(utils::ScLogLevel::Info, "Encountered attribute that is unsupported in HTML, safely continue");
@@ -332,10 +379,10 @@ std::string HTMLTranslator::RecursiveBuild(
   };
 
   auto children = getChildren(id);
-  std::string placeholder;
+
   for (auto const & c : children)
   {
-    placeholder += RecursiveBuild(c, uiComponents, uiLinks);
+    placeholder += RecursiveBuild(c, uiComponents, uiLinks) + "\n";
   }
   auto component = std::find_if(
       uiComponents.begin(),
@@ -344,7 +391,10 @@ std::string HTMLTranslator::RecursiveBuild(
       {
         return c.ID == id;
       });
-
+  if (component->Type == UIComponentType::Select)
+  {
+    auto n = 2 + 2;
+  }
   auto componentTemplate = HTMLTagMapper::HTMLTemplateByUIComponentType.at(component->Type);
   auto params = generateParams(component->Params);
   // TODO: check special templates for img, sound, etc
@@ -354,21 +404,23 @@ std::string HTMLTranslator::RecursiveBuild(
 
 std::string HTMLTranslator::BuildHTML(std::vector<UIComponent> && uiComponents, std::vector<UILink> && uiLinks)
 {
-  auto root = std::find_if(
-                  uiComponents.begin(),
-                  uiComponents.end(),
-                  [&](UIComponent const & c)
-                  {
-                    for (auto const & l : uiLinks)
-                    {
-                      if (l.Target == c.ID)
-                      {
-                        return false;
-                      }
-                    }
-                    return true;
-                  })
-                  ->ID;
-  return RecursiveBuild(root, uiComponents, uiLinks);
+  std::string result;
+  for (auto const & c : uiComponents)
+  {
+    bool isRoot = true;
+    for (auto const & l : uiLinks)
+    {
+      if (l.Target == c.ID)
+      {
+        isRoot = false;
+        break;
+      }
+    }
+    if (isRoot)
+    {
+      result += RecursiveBuild(c.ID, uiComponents, uiLinks) + "\n";
+    }
+  };
+  return result;
 }
 }  // namespace htmlTranslationModule

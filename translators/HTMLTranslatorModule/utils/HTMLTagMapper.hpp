@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <string>
 #include <string_view>
 #include <unordered_map>
 
@@ -82,29 +83,29 @@ public:
   };
 
   static inline std::unordered_map<UIComponentType, std::string_view> const HTMLTemplateByUIComponentType = {
-      {UIComponentType::Image, R"(<img style="{}" src="{}" alt="">)"},
-      {UIComponentType::Sound, R"(<audio style="{}" src="{}" controls></audio>)"},
-      {UIComponentType::Text, R"(<p style="{}">{}</p>)"},
-      {UIComponentType::Divider, R"(<hr style="{}">)"},
-      {UIComponentType::Spacer, R"(<div style="{}"></div>)"},
-      {UIComponentType::Menu, R"(<nav style="{}">{}</nav>)"},
-      {UIComponentType::MenuBar, R"(<div role="menubar" style="{}">{}</div>)"},
-      {UIComponentType::List, R"(<ul style="{}">{}</ul>)"},
-      {UIComponentType::Scroll, R"(<div style="{};overflow:auto">{}</div>)"},
-      {UIComponentType::Window, R"(<section role="dialog" style="{}">{}</section>)"},
-      {UIComponentType::TextField, R"(<input type="text" style="{}" value="{}">)"},
-      {UIComponentType::TextArea, R"(<textarea style="{}">{}</textarea>)"},
-      {UIComponentType::Slider, R"(<input type="range" style="{}" value="{}">)"},
-      {UIComponentType::Select, R"(<select style="{}">{}</select>)"},
-      {UIComponentType::Button, R"(<button type="button" style="{}">{}</button>)"},
-      {UIComponentType::MenuItem, R"(<li role="menuitem" style="{}">{}</li>)"}};
+      {UIComponentType::Image, "<img style=\"\n{}\" src=\"{}\" alt=\"\">"},
+      {UIComponentType::Sound, "<audio style=\"\n{}\" src=\"{}\" controls></audio>"},
+      {UIComponentType::Text, "<p style=\"\n{}\">{}</p>"},
+      {UIComponentType::Divider, "<hr style=\"\n{}\">"},
+      {UIComponentType::Spacer, "<div style=\"\n{}\"></div>"},
+      {UIComponentType::Menu, "<nav style=\"\n{}\">{}</nav>"},
+      {UIComponentType::MenuBar, "<div role=\"menubar\" style=\"\n{}\">{}</div>"},
+      {UIComponentType::List, "<ul style=\"\n{}\">{}</ul>"},
+      {UIComponentType::Scroll, "<div style=\"\noverflow:auto;{}\">{}</div>"},
+      {UIComponentType::Window, "<section role=\"dialog\" style=\"\n{}\">{}</section>"},
+      {UIComponentType::TextField, "<input type=\"text\" style=\"\n{}\" value=\"{}\">"},
+      {UIComponentType::TextArea, "<textarea style=\"\n{}\">{}</textarea>"},
+      {UIComponentType::Slider, "<input type=\"range\" style=\"\n{}\" value=\"{}\">"},
+      {UIComponentType::Select, "<select style=\"\n{}\">{}</select>"},
+      {UIComponentType::Button, "<button type=\"button\" style=\"\n{}\">{}</button>"},
+      {UIComponentType::MenuItem, "<li role=\"menuitem\" style=\"\n{}\">{}</li>"}};
 
   static inline std::unordered_map<UIParamType, std::string_view> const HTMLTemplateByUIParamType = {
       {UIParamType::X, R"(left: {};)"},
       {UIParamType::Y, R"(top: {};)"},
       {UIParamType::Width, R"(width: {};)"},
       {UIParamType::Height, R"(height: {};)"},
-      {UIParamType::Order, R"(order: {};)"},
+      {UIParamType::Order, R"(z-index: {};)"},
       {UIParamType::Visible, R"(visibility: {};)"},
       {UIParamType::Opacity, R"(opacity: {};)"},
       {UIParamType::BackgroundColor, R"(background-color: {};)"},
@@ -125,55 +126,55 @@ public:
 
   static inline std::string GetFullHTML(std::string const & body)
   {
-    return
-        R"(
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Format converter</title>
-    <style>
-      body {
-        margin: 0;
-        min-height: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    static auto script = R"(
+<script>
+  addEventListener('load', () => {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
-        order: 1;
-        visibility: visible;
-        opacity: 1;
+    for (const el of document.querySelectorAll('body *')) {
+      const r = el.getBoundingClientRect();
+      if (!r.width && !r.height) continue;
 
-        background-color: #f4f4f4;
-        color: #1a1a1a;
+      if (r.left   < minX) minX = r.left;
+      if (r.top    < minY) minY = r.top;
+      if (r.right  > maxX) maxX = r.right;
+      if (r.bottom > maxY) maxY = r.bottom;
+    }
 
-        border-color: #6f6f6f;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 0;
+    if (!isFinite(minX)) return;
 
-        font-size: 13px;
-        font-weight: normal;
-        text-align: left;
+    const w = maxX - minX;
+    const h = maxY - minY;
 
-        padding: 0;
-        margin: 0;
+    document.body.style.transform = `translate(
+      ${(innerWidth  - w) / 2 - minX}px,
+      ${(innerHeight - h) / 2 - minY}px
+    )`;
+  });
+</script>
+)";
 
-        min-width: 0;
-        min-height: 0;
-
-        max-width: none;
-        max-height: none;
-      }
-    </style>
-  </head>
-  <body>)"
-        + body +
-        R"(
-  </body>
-  </html>
-  )";
+    return std::string(R"(<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Test interface</title>
+  <style>
+    html, body { margin: 0; height: 100%; }
+    body { position: relative; }
+    body * { position: fixed; resize: none; }
+  </style>
+)") + script
+           + R"(
+</head>
+<body>
+  <div>
+)" + body + R"(
+  </div>
+</body>
+</html>
+)";
   }
 };
 }  // namespace htmlTranslationModule

@@ -4,34 +4,50 @@
  * COPYING.MIT or copy at http://opensource.org/licenses/MIT)
  */
 
+#include <filesystem>
+
+#include <fstream>
 #include <sc-builder/scs_loader.hpp>
 #include <sc-memory/test/sc_test.hpp>
 
 #include <sc-agents-common/utils/IteratorUtils.hpp>
 #include <sc-memory/sc_agent.hpp>
+#include <sc-memory/utils/sc_logger.hpp>
 
 #include "agents/HTMLTranslatorAgent.hpp"
 #include "keynodes/HTMLTranslatorKeynodes.hpp"
 
-#include "utils.hpp"
+namespace fs = std::filesystem;
 
 using namespace htmlTranslationModule;
 
 namespace htmlTranslatorAgentTest
 {
-ScsLoader loader;
-
-size_t const WAIT_TIME = 1000;
 using HTMLTranslatorAgentTest = ScMemoryTest;
+ScsLoader loader;
+auto const rootPath = fs::path(__FILE__).parent_path().parent_path();
+auto const kbFolder = "kb";
+auto const generatedFolder = "generated";
+auto const examplesFolder = "examples";
 
-void TestHTMLTranslatorAgent(ScAgentContext & context)
+void loadKB(ScAgentContext & context, ScsLoader & loader, fs::path const & kbPath)
+{
+  for (auto const & entry : fs::recursive_directory_iterator(kbPath, fs::directory_options::skip_permission_denied))
+  {
+    if (fs::is_regular_file(entry.path()) && entry.path().extension() == ".scs")
+    {
+      SC_LOG(utils::ScLogLevel::Info, std::format("Found KB entry: {}", entry.path().generic_string()));
+      loader.loadScsFile(context, entry.path());
+    }
+  }
+}
+
+void TestHTMLTranslatorAgent(ScAgentContext & context, fs::path const & path)
 {
   context.SubscribeAgent<HTMLTranslatorAgent>();
 
-  loadKB(context, loader);
-
   // Call the agent, get and validate result
-  ScAddr actionNode = context.SearchElementBySystemIdentifier("ui_mwhreyui_6");
+  ScAddr actionNode = context.SearchElementBySystemIdentifier(path.stem());
   EXPECT_TRUE(context.IsElement(actionNode));
 
   ScAction action = context.GenerateAction(HTMLTranslatorKeynodes::action_translate_sc_to_html);
@@ -46,14 +62,32 @@ void TestHTMLTranslatorAgent(ScAgentContext & context)
 
   std::string resultLinkContent;
   context.GetLinkContent(resultLink, resultLinkContent);
-  EXPECT_EQ(resultLinkContent, "");
+  EXPECT_NE(resultLinkContent, "");
+
+  {
+    auto htmlPath = rootPath / generatedFolder / (path.stem().string() + ".html");
+    std::ofstream os(htmlPath);
+    os << resultLinkContent;
+  }
 
   context.UnsubscribeAgent<HTMLTranslatorAgent>();
 }
 
 TEST_F(HTMLTranslatorAgentTest, TranslateUi)
 {
-  TestHTMLTranslatorAgent(*m_ctx);
+  loadKB(*m_ctx, loader, rootPath / kbFolder);
+  SC_LOG(utils::ScLogLevel::Info, "Loaded test KB");
+
+  for (auto const & entry :
+       fs::recursive_directory_iterator(rootPath / examplesFolder, fs::directory_options::skip_permission_denied))
+  {
+    if (fs::is_regular_file(entry.path()) && entry.path().extension() == ".scs")
+    {
+      SC_LOG(utils::ScLogLevel::Info, std::format("Found test entry: {}", entry.path().generic_string()));
+      loader.loadScsFile(*m_ctx, entry.path());
+      TestHTMLTranslatorAgent(*m_ctx, entry.path());
+    }
+  }
 }
 
 }  // namespace htmlTranslatorAgentTest

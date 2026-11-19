@@ -21,6 +21,7 @@ public:
 
   // отношения
   static inline ScKeynode const nrel_inclusion{"nrel_inclusion", ScType::ConstNodeNonRole};
+  static inline ScKeynode const nrel_html_representation{"nrel_html_representation", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_contains{"nrel_ui_contains", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_has_component{"nrel_ui_has_component", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_id{"nrel_ui_id", ScType::ConstNodeNonRole};

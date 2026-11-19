@@ -2,8 +2,6 @@ project(ostis-ui-html-translator-agent-test)
 set(HTML_TRANSLATOR_AGENT_TEST_SOURCES
     "units/HTMLTranslationAgentTest.cpp"
     "units/HTMLTranslationTest.cpp"
-    "units/utils.hpp"
-    "units/utils.cpp"
 )
 add_executable(${PROJECT_NAME} ${HTML_TRANSLATOR_AGENT_TEST_SOURCES})
 

@@ -1,11 +1,43 @@
 // Модель интерфейса ИИ-ассистента обучения Python.
-// Для каждого компонента записаны все свойства каталога;
-// значения, совпадающие с умолчаниями каталога, указаны явно.
+// Для каждого компонента записаны все 27 свойств каталога.
+// min_width/max_width равны width, min_height/max_height равны height:
+// размеры компонентов фиксированы и не подлежат растяжению.
 
-python_tutor_model <- concept_ui_interface;;
-python_tutor_model => nrel_ui_id: [python_tutor_model];;
-python_tutor_model_name <- concept_ui_name;
-    => nrel_ui_value: [ИИ-ассистент Python]; -> python_tutor_model;;
+python_education_interface <- concept_ui_interface;;
+python_education_interface => nrel_ui_id: [python_education_interface];;
+python_education_interface <- concept_ui_name;
+    => nrel_ui_value: [ИИ-ассистент Python]; -> python_education_interface;;
+
+// Корневой контейнер страницы
+wnd_root <- concept_ui_window;;
+wnd_root => nrel_ui_id: [wnd_root];;
+wnd_root_name <- concept_ui_name; => nrel_ui_value: [Страница упражнения]; -> wnd_root;;
+wnd_root_x <- concept_ui_x; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_y <- concept_ui_y; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_width <- concept_ui_width; => nrel_ui_value: [1180]; -> wnd_root;;
+wnd_root_height <- concept_ui_height; => nrel_ui_value: [800]; -> wnd_root;;
+wnd_root_order <- concept_ui_order; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_visible <- concept_ui_visible; => nrel_ui_value: [true]; -> wnd_root;;
+wnd_root_enabled <- concept_ui_enabled; => nrel_ui_value: [true]; -> wnd_root;;
+wnd_root_opacity <- concept_ui_opacity; => nrel_ui_value: [1]; -> wnd_root;;
+wnd_root_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> wnd_root;;
+wnd_root_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> wnd_root;;
+wnd_root_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> wnd_root;;
+wnd_root_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> wnd_root;;
+wnd_root_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> wnd_root;;
+wnd_root_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> wnd_root;;
+wnd_root_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_border_style <- concept_ui_border_style; => nrel_ui_value: [none]; -> wnd_root;;
+wnd_root_corner_radius <- concept_ui_corner_radius; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_font_size <- concept_ui_font_size; => nrel_ui_value: [13]; -> wnd_root;;
+wnd_root_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> wnd_root;;
+wnd_root_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> wnd_root;;
+wnd_root_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> wnd_root;;
+wnd_root_min_width <- concept_ui_min_width; => nrel_ui_value: [1180]; -> wnd_root;;
+wnd_root_min_height <- concept_ui_min_height; => nrel_ui_value: [800]; -> wnd_root;;
+wnd_root_max_width <- concept_ui_max_width; => nrel_ui_value: [1180]; -> wnd_root;;
+wnd_root_max_height <- concept_ui_max_height; => nrel_ui_value: [800]; -> wnd_root;;
 
 // Заголовок упражнения
 txt_title <- concept_ui_text;;
@@ -23,7 +55,8 @@ txt_title_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Упражнение: сумма двух чисел]; -> txt_title;;
 txt_title_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_title;;
 txt_title_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_title;;
-txt_title_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_title;;
+txt_title_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_title;;
 txt_title_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> txt_title;;
 txt_title_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_title;;
 txt_title_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_title;;
@@ -34,10 +67,10 @@ txt_title_font_weight <- concept_ui_font_weight; => nrel_ui_value: [bold]; -> tx
 txt_title_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_title;;
 txt_title_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_title;;
 txt_title_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_title;;
-txt_title_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_title;;
-txt_title_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_title;;
-txt_title_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_title;;
-txt_title_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_title;;
+txt_title_min_width <- concept_ui_min_width; => nrel_ui_value: [1132]; -> txt_title;;
+txt_title_min_height <- concept_ui_min_height; => nrel_ui_value: [32]; -> txt_title;;
+txt_title_max_width <- concept_ui_max_width; => nrel_ui_value: [1132]; -> txt_title;;
+txt_title_max_height <- concept_ui_max_height; => nrel_ui_value: [32]; -> txt_title;;
 
 // Условие задачи
 wnd_task <- concept_ui_window;;
@@ -66,10 +99,10 @@ wnd_task_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> w
 wnd_task_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> wnd_task;;
 wnd_task_padding <- concept_ui_padding; => nrel_ui_value: [8]; -> wnd_task;;
 wnd_task_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> wnd_task;;
-wnd_task_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> wnd_task;;
-wnd_task_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> wnd_task;;
-wnd_task_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> wnd_task;;
-wnd_task_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> wnd_task;;
+wnd_task_min_width <- concept_ui_min_width; => nrel_ui_value: [560]; -> wnd_task;;
+wnd_task_min_height <- concept_ui_min_height; => nrel_ui_value: [192]; -> wnd_task;;
+wnd_task_max_width <- concept_ui_max_width; => nrel_ui_value: [560]; -> wnd_task;;
+wnd_task_max_height <- concept_ui_max_height; => nrel_ui_value: [192]; -> wnd_task;;
 
 txt_task <- concept_ui_text;;
 txt_task => nrel_ui_id: [txt_task];;
@@ -86,7 +119,8 @@ txt_task_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Считайте два целых числа и выведите их сумму.]; -> txt_task;;
 txt_task_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_task;;
 txt_task_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_task;;
-txt_task_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_task;;
+txt_task_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_task;;
 txt_task_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> txt_task;;
 txt_task_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_task;;
 txt_task_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_task;;
@@ -97,10 +131,10 @@ txt_task_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> t
 txt_task_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_task;;
 txt_task_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_task;;
 txt_task_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_task;;
-txt_task_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_task;;
-txt_task_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_task;;
-txt_task_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_task;;
-txt_task_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_task;;
+txt_task_min_width <- concept_ui_min_width; => nrel_ui_value: [528]; -> txt_task;;
+txt_task_min_height <- concept_ui_min_height; => nrel_ui_value: [140]; -> txt_task;;
+txt_task_max_width <- concept_ui_max_width; => nrel_ui_value: [528]; -> txt_task;;
+txt_task_max_height <- concept_ui_max_height; => nrel_ui_value: [140]; -> txt_task;;
 
 // Редактор кода
 area_code <- concept_ui_text_area;;
@@ -118,7 +152,8 @@ area_code_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> area_cod
 area_code_tooltip <- concept_ui_tooltip;
     => nrel_ui_value: [Введите решение на Python]; -> area_code;;
 area_code_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> area_code;;
-area_code_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> area_code;;
+area_code_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> area_code;;
 area_code_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> area_code;;
 area_code_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> area_code;;
 area_code_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> area_code;;
@@ -129,10 +164,10 @@ area_code_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> 
 area_code_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> area_code;;
 area_code_padding <- concept_ui_padding; => nrel_ui_value: [4]; -> area_code;;
 area_code_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> area_code;;
-area_code_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> area_code;;
-area_code_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> area_code;;
-area_code_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> area_code;;
-area_code_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> area_code;;
+area_code_min_width <- concept_ui_min_width; => nrel_ui_value: [560]; -> area_code;;
+area_code_min_height <- concept_ui_min_height; => nrel_ui_value: [240]; -> area_code;;
+area_code_max_width <- concept_ui_max_width; => nrel_ui_value: [560]; -> area_code;;
+area_code_max_height <- concept_ui_max_height; => nrel_ui_value: [240]; -> area_code;;
 
 // Кнопка проверки
 btn_check <- concept_ui_button;;
@@ -151,7 +186,8 @@ btn_check_text_value <- concept_ui_text_value;
 btn_check_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> btn_check;;
 btn_check_action_id <- concept_ui_action_id;
     => nrel_ui_value: [action_check_solution]; -> btn_check;;
-btn_check_background_color <- concept_ui_background_color; => nrel_ui_value: [#e0e0e0]; -> btn_check;;
+btn_check_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#e0e0e0]; -> btn_check;;
 btn_check_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> btn_check;;
 btn_check_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> btn_check;;
 btn_check_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> btn_check;;
@@ -162,10 +198,10 @@ btn_check_font_weight <- concept_ui_font_weight; => nrel_ui_value: [bold]; -> bt
 btn_check_text_align <- concept_ui_text_align; => nrel_ui_value: [center]; -> btn_check;;
 btn_check_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> btn_check;;
 btn_check_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> btn_check;;
-btn_check_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> btn_check;;
-btn_check_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> btn_check;;
-btn_check_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> btn_check;;
-btn_check_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> btn_check;;
+btn_check_min_width <- concept_ui_min_width; => nrel_ui_value: [180]; -> btn_check;;
+btn_check_min_height <- concept_ui_min_height; => nrel_ui_value: [36]; -> btn_check;;
+btn_check_max_width <- concept_ui_max_width; => nrel_ui_value: [180]; -> btn_check;;
+btn_check_max_height <- concept_ui_max_height; => nrel_ui_value: [36]; -> btn_check;;
 
 // Результаты проверки
 wnd_results <- concept_ui_window;;
@@ -183,7 +219,8 @@ wnd_results_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Результаты проверки]; -> wnd_results;;
 wnd_results_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> wnd_results;;
 wnd_results_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> wnd_results;;
-wnd_results_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> wnd_results;;
+wnd_results_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> wnd_results;;
 wnd_results_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> wnd_results;;
 wnd_results_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> wnd_results;;
 wnd_results_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> wnd_results;;
@@ -194,10 +231,10 @@ wnd_results_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -
 wnd_results_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> wnd_results;;
 wnd_results_padding <- concept_ui_padding; => nrel_ui_value: [8]; -> wnd_results;;
 wnd_results_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> wnd_results;;
-wnd_results_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> wnd_results;;
-wnd_results_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> wnd_results;;
-wnd_results_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> wnd_results;;
-wnd_results_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> wnd_results;;
+wnd_results_min_width <- concept_ui_min_width; => nrel_ui_value: [560]; -> wnd_results;;
+wnd_results_min_height <- concept_ui_min_height; => nrel_ui_value: [192]; -> wnd_results;;
+wnd_results_max_width <- concept_ui_max_width; => nrel_ui_value: [560]; -> wnd_results;;
+wnd_results_max_height <- concept_ui_max_height; => nrel_ui_value: [192]; -> wnd_results;;
 
 list_results <- concept_ui_list;;
 list_results => nrel_ui_id: [list_results];;
@@ -213,7 +250,8 @@ list_results_opacity <- concept_ui_opacity; => nrel_ui_value: [1]; -> list_resul
 list_results_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> list_results;;
 list_results_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> list_results;;
 list_results_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> list_results;;
-list_results_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> list_results;;
+list_results_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> list_results;;
 list_results_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> list_results;;
 list_results_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> list_results;;
 list_results_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> list_results;;
@@ -224,10 +262,10 @@ list_results_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; 
 list_results_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> list_results;;
 list_results_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> list_results;;
 list_results_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> list_results;;
-list_results_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> list_results;;
-list_results_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> list_results;;
-list_results_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> list_results;;
-list_results_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> list_results;;
+list_results_min_width <- concept_ui_min_width; => nrel_ui_value: [528]; -> list_results;;
+list_results_min_height <- concept_ui_min_height; => nrel_ui_value: [140]; -> list_results;;
+list_results_max_width <- concept_ui_max_width; => nrel_ui_value: [528]; -> list_results;;
+list_results_max_height <- concept_ui_max_height; => nrel_ui_value: [140]; -> list_results;;
 
 txt_res1 <- concept_ui_text;;
 txt_res1 => nrel_ui_id: [txt_res1];;
@@ -244,7 +282,8 @@ txt_res1_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Тест 1: ввод 2 3 — ожидалось 5, получено 5 — пройден]; -> txt_res1;;
 txt_res1_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_res1;;
 txt_res1_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_res1;;
-txt_res1_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_res1;;
+txt_res1_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_res1;;
 txt_res1_color <- concept_ui_color; => nrel_ui_value: [#1a7f37]; -> txt_res1;;
 txt_res1_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_res1;;
 txt_res1_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_res1;;
@@ -255,10 +294,10 @@ txt_res1_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> t
 txt_res1_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_res1;;
 txt_res1_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_res1;;
 txt_res1_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_res1;;
-txt_res1_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_res1;;
-txt_res1_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_res1;;
-txt_res1_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_res1;;
-txt_res1_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_res1;;
+txt_res1_min_width <- concept_ui_min_width; => nrel_ui_value: [504]; -> txt_res1;;
+txt_res1_min_height <- concept_ui_min_height; => nrel_ui_value: [28]; -> txt_res1;;
+txt_res1_max_width <- concept_ui_max_width; => nrel_ui_value: [504]; -> txt_res1;;
+txt_res1_max_height <- concept_ui_max_height; => nrel_ui_value: [28]; -> txt_res1;;
 
 txt_res2 <- concept_ui_text;;
 txt_res2 => nrel_ui_id: [txt_res2];;
@@ -275,7 +314,8 @@ txt_res2_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Тест 2: ввод -4 9 — ожидалось 5, получено -13 — провален]; -> txt_res2;;
 txt_res2_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_res2;;
 txt_res2_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_res2;;
-txt_res2_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_res2;;
+txt_res2_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_res2;;
 txt_res2_color <- concept_ui_color; => nrel_ui_value: [#c62828]; -> txt_res2;;
 txt_res2_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_res2;;
 txt_res2_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_res2;;
@@ -286,10 +326,10 @@ txt_res2_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> t
 txt_res2_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_res2;;
 txt_res2_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_res2;;
 txt_res2_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_res2;;
-txt_res2_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_res2;;
-txt_res2_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_res2;;
-txt_res2_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_res2;;
-txt_res2_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_res2;;
+txt_res2_min_width <- concept_ui_min_width; => nrel_ui_value: [504]; -> txt_res2;;
+txt_res2_min_height <- concept_ui_min_height; => nrel_ui_value: [28]; -> txt_res2;;
+txt_res2_max_width <- concept_ui_max_width; => nrel_ui_value: [504]; -> txt_res2;;
+txt_res2_max_height <- concept_ui_max_height; => nrel_ui_value: [28]; -> txt_res2;;
 
 // Диалог с ассистентом
 wnd_dialog <- concept_ui_window;;
@@ -307,7 +347,8 @@ wnd_dialog_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Диалог с ассистентом]; -> wnd_dialog;;
 wnd_dialog_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> wnd_dialog;;
 wnd_dialog_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> wnd_dialog;;
-wnd_dialog_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> wnd_dialog;;
+wnd_dialog_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> wnd_dialog;;
 wnd_dialog_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> wnd_dialog;;
 wnd_dialog_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> wnd_dialog;;
 wnd_dialog_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> wnd_dialog;;
@@ -318,10 +359,10 @@ wnd_dialog_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; ->
 wnd_dialog_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> wnd_dialog;;
 wnd_dialog_padding <- concept_ui_padding; => nrel_ui_value: [8]; -> wnd_dialog;;
 wnd_dialog_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> wnd_dialog;;
-wnd_dialog_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> wnd_dialog;;
-wnd_dialog_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> wnd_dialog;;
-wnd_dialog_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> wnd_dialog;;
-wnd_dialog_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> wnd_dialog;;
+wnd_dialog_min_width <- concept_ui_min_width; => nrel_ui_value: [548]; -> wnd_dialog;;
+wnd_dialog_min_height <- concept_ui_min_height; => nrel_ui_value: [472]; -> wnd_dialog;;
+wnd_dialog_max_width <- concept_ui_max_width; => nrel_ui_value: [548]; -> wnd_dialog;;
+wnd_dialog_max_height <- concept_ui_max_height; => nrel_ui_value: [472]; -> wnd_dialog;;
 
 scroll_dialog <- concept_ui_scroll;;
 scroll_dialog => nrel_ui_id: [scroll_dialog];;
@@ -337,7 +378,8 @@ scroll_dialog_opacity <- concept_ui_opacity; => nrel_ui_value: [1]; -> scroll_di
 scroll_dialog_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> scroll_dialog;;
 scroll_dialog_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> scroll_dialog;;
 scroll_dialog_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> scroll_dialog;;
-scroll_dialog_background_color <- concept_ui_background_color; => nrel_ui_value: [#f2f2f2]; -> scroll_dialog;;
+scroll_dialog_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#f2f2f2]; -> scroll_dialog;;
 scroll_dialog_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> scroll_dialog;;
 scroll_dialog_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> scroll_dialog;;
 scroll_dialog_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> scroll_dialog;;
@@ -348,10 +390,10 @@ scroll_dialog_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal];
 scroll_dialog_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> scroll_dialog;;
 scroll_dialog_padding <- concept_ui_padding; => nrel_ui_value: [4]; -> scroll_dialog;;
 scroll_dialog_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> scroll_dialog;;
-scroll_dialog_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> scroll_dialog;;
-scroll_dialog_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> scroll_dialog;;
-scroll_dialog_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> scroll_dialog;;
-scroll_dialog_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> scroll_dialog;;
+scroll_dialog_min_width <- concept_ui_min_width; => nrel_ui_value: [516]; -> scroll_dialog;;
+scroll_dialog_min_height <- concept_ui_min_height; => nrel_ui_value: [300]; -> scroll_dialog;;
+scroll_dialog_max_width <- concept_ui_max_width; => nrel_ui_value: [516]; -> scroll_dialog;;
+scroll_dialog_max_height <- concept_ui_max_height; => nrel_ui_value: [300]; -> scroll_dialog;;
 
 txt_q1 <- concept_ui_text;;
 txt_q1 => nrel_ui_id: [txt_q1];;
@@ -379,10 +421,10 @@ txt_q1_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> txt
 txt_q1_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_q1;;
 txt_q1_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_q1;;
 txt_q1_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_q1;;
-txt_q1_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_q1;;
-txt_q1_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_q1;;
-txt_q1_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_q1;;
-txt_q1_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_q1;;
+txt_q1_min_width <- concept_ui_min_width; => nrel_ui_value: [492]; -> txt_q1;;
+txt_q1_min_height <- concept_ui_min_height; => nrel_ui_value: [40]; -> txt_q1;;
+txt_q1_max_width <- concept_ui_max_width; => nrel_ui_value: [492]; -> txt_q1;;
+txt_q1_max_height <- concept_ui_max_height; => nrel_ui_value: [40]; -> txt_q1;;
 
 txt_a1 <- concept_ui_text;;
 txt_a1 => nrel_ui_id: [txt_a1];;
@@ -399,7 +441,8 @@ txt_a1_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Проверьте знак операции: для суммы нужен плюс, а не минус.]; -> txt_a1;;
 txt_a1_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_a1;;
 txt_a1_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_a1;;
-txt_a1_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_a1;;
+txt_a1_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_a1;;
 txt_a1_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> txt_a1;;
 txt_a1_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_a1;;
 txt_a1_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_a1;;
@@ -410,10 +453,10 @@ txt_a1_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> txt
 txt_a1_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_a1;;
 txt_a1_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_a1;;
 txt_a1_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_a1;;
-txt_a1_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_a1;;
-txt_a1_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_a1;;
-txt_a1_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_a1;;
-txt_a1_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_a1;;
+txt_a1_min_width <- concept_ui_min_width; => nrel_ui_value: [492]; -> txt_a1;;
+txt_a1_min_height <- concept_ui_min_height; => nrel_ui_value: [88]; -> txt_a1;;
+txt_a1_max_width <- concept_ui_max_width; => nrel_ui_value: [492]; -> txt_a1;;
+txt_a1_max_height <- concept_ui_max_height; => nrel_ui_value: [88]; -> txt_a1;;
 
 area_question <- concept_ui_text_area;;
 area_question => nrel_ui_id: [area_question];;
@@ -430,9 +473,11 @@ area_question_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> area
 area_question_tooltip <- concept_ui_tooltip;
     => nrel_ui_value: [Введите вопрос ассистенту]; -> area_question;;
 area_question_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> area_question;;
-area_question_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> area_question;;
+area_question_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> area_question;;
 area_question_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> area_question;;
-area_question_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> area_question;;
+area_question_border_color <- concept_ui_border_color;
+    => nrel_ui_value: [#6f6f6f]; -> area_question;;
 area_question_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> area_question;;
 area_question_border_style <- concept_ui_border_style; => nrel_ui_value: [solid]; -> area_question;;
 area_question_corner_radius <- concept_ui_corner_radius; => nrel_ui_value: [4]; -> area_question;;
@@ -441,10 +486,10 @@ area_question_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal];
 area_question_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> area_question;;
 area_question_padding <- concept_ui_padding; => nrel_ui_value: [4]; -> area_question;;
 area_question_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> area_question;;
-area_question_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> area_question;;
-area_question_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> area_question;;
-area_question_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> area_question;;
-area_question_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> area_question;;
+area_question_min_width <- concept_ui_min_width; => nrel_ui_value: [400]; -> area_question;;
+area_question_min_height <- concept_ui_min_height; => nrel_ui_value: [96]; -> area_question;;
+area_question_max_width <- concept_ui_max_width; => nrel_ui_value: [400]; -> area_question;;
+area_question_max_height <- concept_ui_max_height; => nrel_ui_value: [96]; -> area_question;;
 
 btn_ask <- concept_ui_button;;
 btn_ask => nrel_ui_id: [btn_ask];;
@@ -457,8 +502,7 @@ btn_ask_order <- concept_ui_order; => nrel_ui_value: [15]; -> btn_ask;;
 btn_ask_visible <- concept_ui_visible; => nrel_ui_value: [true]; -> btn_ask;;
 btn_ask_enabled <- concept_ui_enabled; => nrel_ui_value: [true]; -> btn_ask;;
 btn_ask_opacity <- concept_ui_opacity; => nrel_ui_value: [1]; -> btn_ask;;
-btn_ask_text_value <- concept_ui_text_value;
-    => nrel_ui_value: [Спросить]; -> btn_ask;;
+btn_ask_text_value <- concept_ui_text_value; => nrel_ui_value: [Спросить]; -> btn_ask;;
 btn_ask_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> btn_ask;;
 btn_ask_action_id <- concept_ui_action_id;
     => nrel_ui_value: [action_ask_assistant]; -> btn_ask;;
@@ -473,10 +517,10 @@ btn_ask_font_weight <- concept_ui_font_weight; => nrel_ui_value: [bold]; -> btn_
 btn_ask_text_align <- concept_ui_text_align; => nrel_ui_value: [center]; -> btn_ask;;
 btn_ask_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> btn_ask;;
 btn_ask_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> btn_ask;;
-btn_ask_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> btn_ask;;
-btn_ask_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> btn_ask;;
-btn_ask_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> btn_ask;;
-btn_ask_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> btn_ask;;
+btn_ask_min_width <- concept_ui_min_width; => nrel_ui_value: [104]; -> btn_ask;;
+btn_ask_min_height <- concept_ui_min_height; => nrel_ui_value: [36]; -> btn_ask;;
+btn_ask_max_width <- concept_ui_max_width; => nrel_ui_value: [104]; -> btn_ask;;
+btn_ask_max_height <- concept_ui_max_height; => nrel_ui_value: [36]; -> btn_ask;;
 
 // История попыток
 wnd_history <- concept_ui_window;;
@@ -494,7 +538,8 @@ wnd_history_text_value <- concept_ui_text_value;
     => nrel_ui_value: [История попыток]; -> wnd_history;;
 wnd_history_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> wnd_history;;
 wnd_history_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> wnd_history;;
-wnd_history_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> wnd_history;;
+wnd_history_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> wnd_history;;
 wnd_history_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> wnd_history;;
 wnd_history_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> wnd_history;;
 wnd_history_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> wnd_history;;
@@ -505,10 +550,10 @@ wnd_history_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -
 wnd_history_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> wnd_history;;
 wnd_history_padding <- concept_ui_padding; => nrel_ui_value: [8]; -> wnd_history;;
 wnd_history_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> wnd_history;;
-wnd_history_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> wnd_history;;
-wnd_history_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> wnd_history;;
-wnd_history_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> wnd_history;;
-wnd_history_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> wnd_history;;
+wnd_history_min_width <- concept_ui_min_width; => nrel_ui_value: [548]; -> wnd_history;;
+wnd_history_min_height <- concept_ui_min_height; => nrel_ui_value: [224]; -> wnd_history;;
+wnd_history_max_width <- concept_ui_max_width; => nrel_ui_value: [548]; -> wnd_history;;
+wnd_history_max_height <- concept_ui_max_height; => nrel_ui_value: [224]; -> wnd_history;;
 
 list_history <- concept_ui_list;;
 list_history => nrel_ui_id: [list_history];;
@@ -524,7 +569,8 @@ list_history_opacity <- concept_ui_opacity; => nrel_ui_value: [1]; -> list_histo
 list_history_text_value <- concept_ui_text_value; => nrel_ui_value: []; -> list_history;;
 list_history_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> list_history;;
 list_history_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> list_history;;
-list_history_background_color <- concept_ui_background_color; => nrel_ui_value: [#ffffff]; -> list_history;;
+list_history_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [#ffffff]; -> list_history;;
 list_history_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> list_history;;
 list_history_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> list_history;;
 list_history_border_width <- concept_ui_border_width; => nrel_ui_value: [1]; -> list_history;;
@@ -535,10 +581,10 @@ list_history_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; 
 list_history_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> list_history;;
 list_history_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> list_history;;
 list_history_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> list_history;;
-list_history_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> list_history;;
-list_history_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> list_history;;
-list_history_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> list_history;;
-list_history_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> list_history;;
+list_history_min_width <- concept_ui_min_width; => nrel_ui_value: [516]; -> list_history;;
+list_history_min_height <- concept_ui_min_height; => nrel_ui_value: [172]; -> list_history;;
+list_history_max_width <- concept_ui_max_width; => nrel_ui_value: [516]; -> list_history;;
+list_history_max_height <- concept_ui_max_height; => nrel_ui_value: [172]; -> list_history;;
 
 txt_att1 <- concept_ui_text;;
 txt_att1 => nrel_ui_id: [txt_att1];;
@@ -555,7 +601,8 @@ txt_att1_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Попытка 1 — 12:02 — пройдено 0 из 2]; -> txt_att1;;
 txt_att1_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_att1;;
 txt_att1_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_att1;;
-txt_att1_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_att1;;
+txt_att1_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_att1;;
 txt_att1_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> txt_att1;;
 txt_att1_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_att1;;
 txt_att1_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_att1;;
@@ -566,10 +613,10 @@ txt_att1_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> t
 txt_att1_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_att1;;
 txt_att1_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_att1;;
 txt_att1_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_att1;;
-txt_att1_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_att1;;
-txt_att1_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_att1;;
-txt_att1_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_att1;;
-txt_att1_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_att1;;
+txt_att1_min_width <- concept_ui_min_width; => nrel_ui_value: [492]; -> txt_att1;;
+txt_att1_min_height <- concept_ui_min_height; => nrel_ui_value: [28]; -> txt_att1;;
+txt_att1_max_width <- concept_ui_max_width; => nrel_ui_value: [492]; -> txt_att1;;
+txt_att1_max_height <- concept_ui_max_height; => nrel_ui_value: [28]; -> txt_att1;;
 
 txt_att2 <- concept_ui_text;;
 txt_att2 => nrel_ui_id: [txt_att2];;
@@ -586,7 +633,8 @@ txt_att2_text_value <- concept_ui_text_value;
     => nrel_ui_value: [Попытка 2 — 12:05 — пройдено 1 из 2]; -> txt_att2;;
 txt_att2_tooltip <- concept_ui_tooltip; => nrel_ui_value: []; -> txt_att2;;
 txt_att2_action_id <- concept_ui_action_id; => nrel_ui_value: []; -> txt_att2;;
-txt_att2_background_color <- concept_ui_background_color; => nrel_ui_value: [transparent]; -> txt_att2;;
+txt_att2_background_color <- concept_ui_background_color;
+    => nrel_ui_value: [transparent]; -> txt_att2;;
 txt_att2_color <- concept_ui_color; => nrel_ui_value: [#1a1a1a]; -> txt_att2;;
 txt_att2_border_color <- concept_ui_border_color; => nrel_ui_value: [#6f6f6f]; -> txt_att2;;
 txt_att2_border_width <- concept_ui_border_width; => nrel_ui_value: [0]; -> txt_att2;;
@@ -597,19 +645,20 @@ txt_att2_font_weight <- concept_ui_font_weight; => nrel_ui_value: [normal]; -> t
 txt_att2_text_align <- concept_ui_text_align; => nrel_ui_value: [left]; -> txt_att2;;
 txt_att2_padding <- concept_ui_padding; => nrel_ui_value: [0]; -> txt_att2;;
 txt_att2_margin <- concept_ui_margin; => nrel_ui_value: [0]; -> txt_att2;;
-txt_att2_min_width <- concept_ui_min_width; => nrel_ui_value: [0]; -> txt_att2;;
-txt_att2_min_height <- concept_ui_min_height; => nrel_ui_value: [0]; -> txt_att2;;
-txt_att2_max_width <- concept_ui_max_width; => nrel_ui_value: [0]; -> txt_att2;;
-txt_att2_max_height <- concept_ui_max_height; => nrel_ui_value: [0]; -> txt_att2;;
+txt_att2_min_width <- concept_ui_min_width; => nrel_ui_value: [492]; -> txt_att2;;
+txt_att2_min_height <- concept_ui_min_height; => nrel_ui_value: [28]; -> txt_att2;;
+txt_att2_max_width <- concept_ui_max_width; => nrel_ui_value: [492]; -> txt_att2;;
+txt_att2_max_height <- concept_ui_max_height; => nrel_ui_value: [28]; -> txt_att2;;
 
 // Вложение компонентов
-python_tutor_model => nrel_ui_contains: txt_title;;
-python_tutor_model => nrel_ui_contains: wnd_task;;
-python_tutor_model => nrel_ui_contains: area_code;;
-python_tutor_model => nrel_ui_contains: btn_check;;
-python_tutor_model => nrel_ui_contains: wnd_results;;
-python_tutor_model => nrel_ui_contains: wnd_dialog;;
-python_tutor_model => nrel_ui_contains: wnd_history;;
+python_education_interface => nrel_ui_contains: wnd_root;;
+wnd_root => nrel_ui_contains: txt_title;;
+wnd_root => nrel_ui_contains: wnd_task;;
+wnd_root => nrel_ui_contains: area_code;;
+wnd_root => nrel_ui_contains: btn_check;;
+wnd_root => nrel_ui_contains: wnd_results;;
+wnd_root => nrel_ui_contains: wnd_dialog;;
+wnd_root => nrel_ui_contains: wnd_history;;
 wnd_task => nrel_ui_contains: txt_task;;
 wnd_results => nrel_ui_contains: list_results;;
 list_results => nrel_ui_contains: txt_res1;;
@@ -624,22 +673,23 @@ list_history => nrel_ui_contains: txt_att1;;
 list_history => nrel_ui_contains: txt_att2;;
 
 // Принадлежность компонентов интерфейсу
-python_tutor_model => nrel_ui_has_component: txt_title;;
-python_tutor_model => nrel_ui_has_component: wnd_task;;
-python_tutor_model => nrel_ui_has_component: txt_task;;
-python_tutor_model => nrel_ui_has_component: area_code;;
-python_tutor_model => nrel_ui_has_component: btn_check;;
-python_tutor_model => nrel_ui_has_component: wnd_results;;
-python_tutor_model => nrel_ui_has_component: list_results;;
-python_tutor_model => nrel_ui_has_component: txt_res1;;
-python_tutor_model => nrel_ui_has_component: txt_res2;;
-python_tutor_model => nrel_ui_has_component: wnd_dialog;;
-python_tutor_model => nrel_ui_has_component: scroll_dialog;;
-python_tutor_model => nrel_ui_has_component: txt_q1;;
-python_tutor_model => nrel_ui_has_component: txt_a1;;
-python_tutor_model => nrel_ui_has_component: area_question;;
-python_tutor_model => nrel_ui_has_component: btn_ask;;
-python_tutor_model => nrel_ui_has_component: wnd_history;;
-python_tutor_model => nrel_ui_has_component: list_history;;
-python_tutor_model => nrel_ui_has_component: txt_att1;;
-python_tutor_model => nrel_ui_has_component: txt_att2;;
+python_education_interface => nrel_ui_has_component: wnd_root;;
+python_education_interface => nrel_ui_has_component: txt_title;;
+python_education_interface => nrel_ui_has_component: wnd_task;;
+python_education_interface => nrel_ui_has_component: txt_task;;
+python_education_interface => nrel_ui_has_component: area_code;;
+python_education_interface => nrel_ui_has_component: btn_check;;
+python_education_interface => nrel_ui_has_component: wnd_results;;
+python_education_interface => nrel_ui_has_component: list_results;;
+python_education_interface => nrel_ui_has_component: txt_res1;;
+python_education_interface => nrel_ui_has_component: txt_res2;;
+python_education_interface => nrel_ui_has_component: wnd_dialog;;
+python_education_interface => nrel_ui_has_component: scroll_dialog;;
+python_education_interface => nrel_ui_has_component: txt_q1;;
+python_education_interface => nrel_ui_has_component: txt_a1;;
+python_education_interface => nrel_ui_has_component: area_question;;
+python_education_interface => nrel_ui_has_component: btn_ask;;
+python_education_interface => nrel_ui_has_component: wnd_history;;
+python_education_interface => nrel_ui_has_component: list_history;;
+python_education_interface => nrel_ui_has_component: txt_att1;;
+python_education_interface => nrel_ui_has_component: txt_att2;;
