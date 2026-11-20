@@ -336,8 +336,6 @@ std::string HTMLTranslator::RecursiveBuild(
         case UIParamType::Height:
         case UIParamType::MinWidth:
         case UIParamType::MinHeight:
-        case UIParamType::MaxWidth:
-        case UIParamType::MaxHeight:
         case UIParamType::Padding:
         case UIParamType::Margin:
         case UIParamType::BorderWidth:
@@ -351,6 +349,10 @@ std::string HTMLTranslator::RecursiveBuild(
       if (NeedsPx(type))
       {
         processedValue += "px";
+      }
+      if ((type == UIParamType::MaxWidth || type == UIParamType::MaxHeight) && value == "0")
+      {
+        processedValue += "none";
       }
 
       auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
