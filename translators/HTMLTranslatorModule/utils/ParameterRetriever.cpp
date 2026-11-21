@@ -79,11 +79,11 @@ std::unordered_map<UIParamType, std::string> ParameterRetriever::GetUIComponentP
             return ScTemplateSearchRequest::STOP;
           });
     }
-    catch (utils::ExceptionInvalidState const & e)
+    catch (std::exception const & e)
     {
       auto const message = std::format("{}: search by template failed: {}.", className, e.what());
       SC_LOG_ERROR(message);
-      throw e;
+      throw std::runtime_error(message);
     }
   }
   return params;
@@ -130,11 +130,11 @@ ScAddrUnorderedSet ParameterRetriever::GetUIComponentRawParams(ScAgentContext & 
           rawUIParams.insert(std::move(uiParam));
         });
   }
-  catch (utils::ExceptionInvalidState const & e)
+  catch (std::exception const & e)
   {
     auto const message = std::format("{}: search by template failed: {}.", className, e.what());
     SC_LOG_ERROR(message);
-    throw e;
+    throw std::runtime_error(message);
   }
   return rawUIParams;
 }

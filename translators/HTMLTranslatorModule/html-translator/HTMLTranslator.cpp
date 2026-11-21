@@ -7,6 +7,8 @@
 #include "HTMLTranslator.hpp"
 
 #include <algorithm>
+#include <cstddef>
+#include <exception>
 #include <stdexcept>
 #include <string>
 #include <format>
@@ -37,33 +39,24 @@ ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const 
         interfaceNode.GetRealAddr().seg,
         interfaceNode.GetRealAddr().offset);
     SC_LOG_ERROR(message);
-    throw utils::ScException(utils::ExceptionInvalidParams("", message));
+    throw std::runtime_error(message);
   }
   auto uiComponents = GetUIComponents(context, interfaceNode);
   auto uiLinks = GetUILinks(context, uiComponents);
-  auto mappedUIComponents = ResolveUIComponents(context, uiComponents);
+  auto mappedUIComponents = GetMappedUIComponents(context, uiComponents);
   auto resolvedUILinks = ResolveUILinks(context, uiLinks, mappedUIComponents);
-  auto resolvedUIComponents = std::vector<UIComponent>();
-  resolvedUIComponents.resize(mappedUIComponents.size());
-  std::transform(
-      mappedUIComponents.begin(),
-      mappedUIComponents.end(),
-      resolvedUIComponents.begin(),
-      [](std::pair<ScAddr, UIComponent> const & p)
-      {
-        return p.second;
-      });
-  auto resultBody = BuildHTML(std::move(resolvedUIComponents), std::move(resolvedUILinks));
-  auto finalHtml = HTMLTagMapper::GetFullHTML(resultBody);
+  auto resolvedUIComponents = ResolveUIComponents(std::move(mappedUIComponents));
+  auto interfaceAbstractTree = BuildInterfaceAbstractTree(resolvedUILinks, resolvedUIComponents);
+  auto html = BuildHTML(std::move(interfaceAbstractTree), std::move(resolvedUIComponents), std::move(resolvedUILinks));
   auto answerHTMLLink = context.GenerateLink();
-  context.SetLinkContent(answerHTMLLink, finalHtml);
+  context.SetLinkContent(answerHTMLLink, html);
   ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, interfaceNode, answerHTMLLink);
   context.GenerateConnector(ScType::ConstPermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
   if (!context.IsElement(answerHTMLLink))
   {
     auto const message = std::format("{}: given result link is invalid.", className);
     SC_LOG_ERROR(message);
-    throw utils::ScException(utils::ExceptionInvalidParams("", message));
+    throw std::runtime_error(message);
   }
   return answerHTMLLink;
 }
@@ -103,11 +96,11 @@ ScAddrUnorderedSet HTMLTranslator::GetUIComponents(ScAgentContext & context, ScA
           uniqueUIComponents.insert(std::move(uiComponent));
         });
   }
-  catch (utils::ExceptionInvalidState const & e)
+  catch (std::exception const & e)
   {
     auto const message = std::format("{}: search by template failed: {}.", className, e.what());
     SC_LOG_ERROR(message);
-    throw e;
+    throw std::runtime_error(message);
   }
 
   return uniqueUIComponents;
@@ -117,7 +110,6 @@ std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUILinks(
     ScAgentContext & context,
     ScAddrUnorderedSet const & uiComponents)
 {
-  // TODO: set instead of vector
   std::vector<std::pair<ScAddr, ScAddr>> uiLinks;
 
   for (auto const & source : uiComponents)
@@ -126,18 +118,17 @@ std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUILinks(
     ScTemplate uiLinkTemplate;
     //
     // source = = = = = => _target
-    //                ^
-    //                |
+    //             ^
+    //             |
     //
-    //                |
+    //             |
     //
-    //                |
+    //             |
     //
-    //         nrel_ui_contains
+    //      nrel_ui_contains
     //
     uiLinkTemplate.Quintuple(
         source, ScType::VarCommonArc, targetAlias, ScType::VarPermPosArc, HTMLTranslatorKeynodes::nrel_ui_contains);
-
     try
     {
       // collect component nodes
@@ -150,17 +141,75 @@ std::vector<std::pair<ScAddr, ScAddr>> HTMLTranslator::GetUILinks(
             uiLinks.emplace_back(source, std::move(target));
           });
     }
-    catch (utils::ExceptionInvalidState const & e)
+    catch (std::exception const & e)
     {
       auto const message = std::format("{}: search by template failed: {}.", className, e.what());
       SC_LOG_ERROR(message);
-      throw e;
+      throw std::runtime_error(message);
     }
   }
   return uiLinks;
 }
 
-std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::ResolveUIComponents(
+UIComponentType HTMLTranslator::ResolveUIComponentType(ScAgentContext & context, ScAddr const & uiComponent)
+{
+  constexpr auto uiComponentClassAlias = "_candidate";
+  ScTemplate uiComponentTemplate;
+  ScAddrUnorderedSet candidates;
+  UIComponentType type;
+  //
+  // _ui_component_class - - - - - -> uiComponent
+  //
+  uiComponentTemplate.Triple(uiComponentClassAlias, ScType::VarPermPosArc, uiComponent);
+  try
+  {
+    context.SearchByTemplate(
+        uiComponentTemplate,
+        [&](ScTemplateSearchResultItem const & item)
+        {
+          ScAddr candidate;
+          item.Get(uiComponentClassAlias, candidate);
+          candidates.emplace(std::move(candidate));
+        });
+  }
+  catch (std::exception const & e)
+  {
+    auto const message = std::format("{}: search by template failed: {}.", className, e.what());
+    SC_LOG_ERROR(message);
+    throw std::runtime_error(message);
+  }
+
+  for (auto const & candidate : candidates)
+  {
+    bool gotItem = false;
+    ScTemplate filter;
+    filter.Quintuple(
+        candidate, ScType::VarCommonArc, "_unused", ScType::VarPermPosArc, HTMLTranslatorKeynodes::nrel_ui_value);
+    try
+    {
+      context.SearchByTemplate(
+          filter,
+          [&](ScTemplateSearchResultItem const & item)
+          {
+            gotItem = true;
+          });
+      if (!gotItem)
+      {
+        type = HTMLTagMapper::GetUIComponentTypeByKeynodeHash().at(candidate.Hash());
+        break;
+      }
+    }
+    catch (std::exception const & e)
+    {
+      auto const message = std::format("{}: search by template failed: {}.", className, e.what());
+      SC_LOG_ERROR(message);
+      throw std::runtime_error(message);
+    }
+  }
+  return type;
+}
+
+std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::GetMappedUIComponents(
     ScAgentContext & context,
     ScAddrUnorderedSet const & uiComponents)
 {
@@ -203,78 +252,20 @@ std::vector<std::pair<ScAddr, UIComponent>> HTMLTranslator::ResolveUIComponents(
             resolvedUIComponents.emplace_back(uiComponent, std::move(component));
           });
     }
-    catch (utils::ExceptionInvalidState const & e)
+    catch (std::exception const & e)
     {
       auto const message = std::format("{}: search by template failed: {}.", className, e.what());
       SC_LOG_ERROR(message);
-      throw e;
+      throw std::runtime_error(message);
     }
   }
   return resolvedUIComponents;
 }
 
-UIComponentType HTMLTranslator::ResolveUIComponentType(ScAgentContext & context, ScAddr const & uiComponent)
-{
-  constexpr auto uiComponentClassAlias = "_candidate";
-  ScTemplate uiComponentTemplate;
-  ScAddrUnorderedSet candidates;
-  UIComponentType type;
-  //
-  // _ui_component_class - - - - - -> uiComponent
-  //
-  uiComponentTemplate.Triple(uiComponentClassAlias, ScType::VarPermPosArc, uiComponent);
-  try
-  {
-    context.SearchByTemplate(
-        uiComponentTemplate,
-        [&](ScTemplateSearchResultItem const & item)
-        {
-          ScAddr candidate;
-          item.Get(uiComponentClassAlias, candidate);
-          candidates.emplace(std::move(candidate));
-        });
-  }
-  catch (utils::ExceptionInvalidState const & e)
-  {
-    auto const message = std::format("{}: search by template failed: {}.", className, e.what());
-    SC_LOG_ERROR(message);
-    throw e;
-  }
-
-  for (auto const & candidate : candidates)
-  {
-    bool gotItem = false;
-    ScTemplate filter;
-    filter.Quintuple(
-        candidate, ScType::VarCommonArc, "_unused", ScType::VarPermPosArc, HTMLTranslatorKeynodes::nrel_ui_value);
-    try
-    {
-      context.SearchByTemplate(
-          filter,
-          [&](ScTemplateSearchResultItem const & item)
-          {
-            gotItem = true;
-          });
-      if (!gotItem)
-      {
-        type = HTMLTagMapper::GetUIComponentTypeByKeynodeHash().at(candidate.Hash());
-        break;
-      }
-    }
-    catch (utils::ExceptionInvalidState const & e)
-    {
-      auto const message = std::format("{}: search by template failed: {}.", className, e.what());
-      SC_LOG_ERROR(message);
-      throw e;
-    }
-  }
-  return type;
-}
-
 std::vector<UILink> HTMLTranslator::ResolveUILinks(
     ScAgentContext & context,
     std::vector<std::pair<ScAddr, ScAddr>> const & uiLinks,
-    std::vector<std::pair<ScAddr, UIComponent>> const & resolvedUIComponents)
+    std::vector<std::pair<ScAddr, UIComponent>> const & mappedUIComponents)
 {
   std::vector<UILink> resolvedUILinks;
   auto getID = [&](ScAddr const & node)
@@ -287,10 +278,12 @@ std::vector<UILink> HTMLTranslator::ResolveUILinks(
       }
       return false;
     };
-    auto res_it = std::find_if(resolvedUIComponents.cbegin(), resolvedUIComponents.cend(), searcher);
-    if (res_it == resolvedUIComponents.cend())
+    auto res_it = std::find_if(mappedUIComponents.cbegin(), mappedUIComponents.cend(), searcher);
+    if (res_it == mappedUIComponents.cend())
     {
-      throw std::runtime_error("Link's corresponding node is not found");
+      auto const message = std::format("{}: link's corresponding node is not found.", className);
+      SC_LOG_ERROR(message);
+      throw std::runtime_error(message);
     }
     return res_it->second.ID;
   };
@@ -304,115 +297,200 @@ std::vector<UILink> HTMLTranslator::ResolveUILinks(
   return resolvedUILinks;
 }
 
-std::string HTMLTranslator::RecursiveBuild(
-    std::string const & id,
-    std::vector<UIComponent> const & uiComponents,
-    std::vector<UILink> const & uiLinks)
+std::vector<UIComponent> HTMLTranslator::ResolveUIComponents(
+    std::vector<std::pair<ScAddr, UIComponent>> && mappedUIComponents)
+{
+  std::vector<UIComponent> resolvedUIComponents;
+  resolvedUIComponents.resize(mappedUIComponents.size());
+  std::transform(
+      mappedUIComponents.begin(),
+      mappedUIComponents.end(),
+      resolvedUIComponents.begin(),
+      [](std::pair<ScAddr, UIComponent> const & p)
+      {
+        return p.second;
+      });
+  return resolvedUIComponents;
+}
+
+std::unordered_map<std::string, std::vector<std::string>> HTMLTranslator::BuildInterfaceAbstractTree(
+    std::vector<UILink> const & resolvedUILinks,
+    std::vector<UIComponent> const & resolvedUIComponents)
+{
+  std::unordered_map<std::string, std::vector<std::string>> interfaceAbstractTree;
+  for (auto const & uiLink : resolvedUILinks)
+  {
+    interfaceAbstractTree[uiLink.Source].push_back(uiLink.Target);
+  }
+  return interfaceAbstractTree;
+}
+
+UIComponent HTMLTranslator::GenerateFakeRootComponent(std::vector<UIComponent> const & uiComponents)
+{
+  UIComponent fakeRoot;
+  fakeRoot.ID = "fake_root";
+  fakeRoot.Type = UIComponentType::Spacer;
+  std::unordered_map<UIParamType, std::string> params{
+      {UIParamType::X, "0"}, {UIParamType::Y, "0"}, {UIParamType::Width, "800"}, {UIParamType::Height, "450"}};
+
+  size_t maxWidth = 0, maxHeight = 0;
+  for (auto const & uiComponent : uiComponents)
+  {
+    auto x_it = uiComponent.Params.find(UIParamType::X);
+    auto y_it = uiComponent.Params.find(UIParamType::Y);
+    auto width_it = uiComponent.Params.find(UIParamType::Width);
+    auto height_it = uiComponent.Params.find(UIParamType::Height);
+    if (x_it == uiComponent.Params.cend() || y_it == uiComponent.Params.cend() || width_it == uiComponent.Params.cend()
+        || height_it == uiComponent.Params.cend())
+    {
+      auto const message =
+          std::format("{}: component {} does not have X, Y, Width or Height attribute.", className, uiComponent.ID);
+      SC_LOG_ERROR(message);
+      throw std::runtime_error(message);
+    }
+    try
+    {
+      auto x = std::stoul(x_it->second);
+      auto y = std::stoul(y_it->second);
+      auto width = std::stoul(width_it->second);
+      auto height = std::stoul(height_it->second);
+      maxWidth = std::max(maxWidth, x + width);
+      maxHeight = std::max(maxHeight, y + height);
+    }
+    catch (std::exception const & e)
+    {
+      auto const message =
+          std::format("{}: component {} has X, Y, Width or Height invalid attribute.", className, uiComponent.ID);
+      SC_LOG_ERROR(message);
+      throw std::runtime_error(message);
+    }
+  }
+  params[UIParamType::Width] = std::to_string(maxWidth + 32);
+  params[UIParamType::Height] = std::to_string(maxHeight + 32);
+  fakeRoot.Params = std::move(params);
+  return fakeRoot;
+}
+
+std::string HTMLTranslator::GenerateParams(
+    UIComponent const & parentComponent,
+    UIComponent const & rootComponent,
+    std::unordered_map<UIParamType, std::string> const & params,
+    std::string & placeholder)
+{
+  std::string generatedParams;
+  for (auto const & [type, value] : params)
+  {
+    if (type == UIParamType::TextValue)
+    {
+      placeholder += value;
+      continue;
+    }
+    auto processedValue = value;
+    if (type == UIParamType::Visible)
+    {
+      processedValue = (value == "true") ? "visible" : "hidden";
+    }
+    if ((type == UIParamType::MaxWidth || type == UIParamType::MaxHeight) && value == "0")
+    {
+      processedValue = "none";
+    }
+    if (type == UIParamType::BorderWidth || type == UIParamType::CornerRadius)
+    {
+      processedValue += "px";
+    }
+    if (type == UIParamType::X)
+    {
+      std::string suffix = "cqw";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width));
+      auto parentV = std::stod(parentComponent.Params.at(UIParamType::X));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * (currentV - parentV) / maxV;
+      processedValue = std::to_string(newV) + suffix;
+    }
+    if (type == UIParamType::Width || type == UIParamType::FontSize)
+    {
+      std::string suffix = "cqw";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * currentV / maxV;
+      processedValue = std::to_string(newV) + suffix;
+    }
+    if (type == UIParamType::Y)
+    {
+      std::string suffix = "cqh";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Height));
+      auto parentV = std::stod(parentComponent.Params.at(UIParamType::Y));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * (currentV - parentV) / maxV;
+      processedValue = std::to_string(newV) + suffix;
+    }
+    if (type == UIParamType::Height)
+    {
+      std::string suffix = "cqh";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Height));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * currentV / maxV;
+      processedValue = std::to_string(newV) + suffix;
+    }
+    auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
+
+    if (paramTemplateIT != HTMLTagMapper::HTMLTemplateByUIParamType.cend())
+    {
+      generatedParams += "    " + std::vformat(paramTemplateIT->second, std::make_format_args(processedValue)) + "\n";
+      continue;
+    }
+    SC_LOG(utils::ScLogLevel::Info, "Encountered attribute that is not supported in HTML, safely continue");
+  }
+  return generatedParams;
+}
+
+std::string HTMLTranslator::GenerateHTMLComponent(
+    std::string const & componentID,
+    std::string const & parentID,
+    std::string const & rootID,
+    std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
+    std::unordered_map<std::string, UIComponent> const & uiComponentByID)
 {
   std::string result, placeholder;
-
-  auto generateParams = [&placeholder](std::unordered_map<UIParamType, std::string> const & params)
+  auto const & children_it = interfaceAbstractTree.find(componentID);
+  if (children_it != interfaceAbstractTree.cend())
   {
-    std::string str_representation;
-    for (auto const & [type, value] : params)
+    for (auto const & childID : children_it->second)
     {
-      if (type == UIParamType::TextValue)
+      auto childHTML = GenerateHTMLComponent(childID, componentID, rootID, interfaceAbstractTree, uiComponentByID);
+      if (uiComponentByID.at(componentID).Type == UIComponentType::Select)
       {
-        placeholder += "\n" + value;
-        continue;
+        placeholder += "<option value=" + childID + ">" + childHTML + "</option>";
       }
-      auto processedValue = value;
-      if (type == UIParamType::Visible)
+      else
       {
-        processedValue = (value == "true") ? "visible" : "hidden";
-      }
-      auto NeedsPx = [](UIParamType type)
-      {
-        switch (type)
-        {
-        case UIParamType::X:
-        case UIParamType::Y:
-        case UIParamType::Width:
-        case UIParamType::Height:
-        case UIParamType::MinWidth:
-        case UIParamType::MinHeight:
-        case UIParamType::Padding:
-        case UIParamType::Margin:
-        case UIParamType::BorderWidth:
-        case UIParamType::CornerRadius:
-        case UIParamType::FontSize:
-          return true;
-        default:
-          return false;
-        }
-      };
-      if (NeedsPx(type))
-      {
-        processedValue += "px";
-      }
-      if ((type == UIParamType::MaxWidth || type == UIParamType::MaxHeight) && value == "0")
-      {
-        processedValue += "none";
-      }
-
-      auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
-
-      if (paramTemplateIT != HTMLTagMapper::HTMLTemplateByUIParamType.cend())
-      {
-        str_representation +=
-            "  " + std::vformat(paramTemplateIT->second, std::make_format_args(processedValue)) + "\n";
-        continue;
-      }
-      SC_LOG(utils::ScLogLevel::Info, "Encountered attribute that is unsupported in HTML, safely continue");
-    }
-    return str_representation;
-  };
-  auto getChildren = [&](std::string const & id)
-  {
-    std::vector<std::string> childrenIDs;
-    for (auto const & l : uiLinks)
-    {
-      if (l.Source == id)
-      {
-        childrenIDs.emplace_back(l.Target);
+        placeholder += childHTML;
       }
     }
-    return childrenIDs;
-  };
-
-  auto children = getChildren(id);
-
-  for (auto const & c : children)
-  {
-    placeholder += RecursiveBuild(c, uiComponents, uiLinks) + "\n";
   }
-  auto component = std::find_if(
-      uiComponents.begin(),
-      uiComponents.end(),
-      [id = id](UIComponent const & c)
-      {
-        return c.ID == id;
-      });
-  if (component->Type == UIComponentType::Select)
-  {
-    auto n = 2 + 2;
-  }
-  auto componentTemplate = HTMLTagMapper::HTMLTemplateByUIComponentType.at(component->Type);
-  auto params = generateParams(component->Params);
-  // TODO: check special templates for img, sound, etc
+  auto component = uiComponentByID.at(componentID);
+  auto componentTemplate = HTMLTagMapper::HTMLTemplateByUIComponentType.at(component.Type);
+  auto params = GenerateParams(uiComponentByID.at(parentID), uiComponentByID.at(rootID), component.Params, placeholder);
   result = std::vformat(componentTemplate, std::make_format_args(params, placeholder));
   return result;
 }
 
-std::string HTMLTranslator::BuildHTML(std::vector<UIComponent> && uiComponents, std::vector<UILink> && uiLinks)
+std::string HTMLTranslator::BuildHTML(
+    std::unordered_map<std::string, std::vector<std::string>> && interfaceAbstractTree,
+    std::vector<UIComponent> && uiComponents,
+    std::vector<UILink> && uiLinks)
 {
   std::string result;
-  for (auto const & c : uiComponents)
+  std::unordered_set<std::string> rootComponents;
+  std::unordered_map<std::string, UIComponent> uiComponentByID;
+  auto fakeRoot = GenerateFakeRootComponent(uiComponents);
+  uiComponentByID.emplace(fakeRoot.ID, fakeRoot);
+  for (auto & uiComponent : uiComponents)
   {
     bool isRoot = true;
-    for (auto const & l : uiLinks)
+    for (auto const & uiLink : uiLinks)
     {
-      if (l.Target == c.ID)
+      if (uiLink.Target == uiComponent.ID)
       {
         isRoot = false;
         break;
@@ -420,9 +498,21 @@ std::string HTMLTranslator::BuildHTML(std::vector<UIComponent> && uiComponents, 
     }
     if (isRoot)
     {
-      result += RecursiveBuild(c.ID, uiComponents, uiLinks) + "\n";
+      rootComponents.insert(uiComponent.ID);
     }
-  };
-  return result;
+    auto ID = uiComponent.ID;
+    uiComponentByID.emplace(std::move(ID), std::move(uiComponent));
+  }
+  if (rootComponents.empty())
+  {
+    auto const message = std::format("{}: no root components of interface were found.", className);
+    SC_LOG_ERROR(message);
+    throw std::runtime_error(message);
+  }
+  for (auto const & rootComponent : rootComponents)
+  {
+    result += GenerateHTMLComponent(rootComponent, fakeRoot.ID, fakeRoot.ID, interfaceAbstractTree, uiComponentByID);
+  }
+  return HTMLTagMapper::GetFullHTML(result);
 }
 }  // namespace htmlTranslationModule

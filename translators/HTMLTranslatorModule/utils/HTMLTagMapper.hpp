@@ -83,22 +83,29 @@ public:
   };
 
   static inline std::unordered_map<UIComponentType, std::string_view> const HTMLTemplateByUIComponentType = {
-      {UIComponentType::Image, "<img style=\"\n{}\" src=\"{}\" alt=\"\">"},
-      {UIComponentType::Sound, "<audio style=\"\n{}\" src=\"{}\" controls></audio>"},
-      {UIComponentType::Text, "<p style=\"\n{}\">{}</p>"},
-      {UIComponentType::Divider, "<hr style=\"\n{}\">"},
-      {UIComponentType::Spacer, "<div style=\"\n{}\"></div>"},
-      {UIComponentType::Menu, "<nav style=\"\n{}\">{}</nav>"},
-      {UIComponentType::MenuBar, "<div role=\"menubar\" style=\"\n{}\">{}</div>"},
-      {UIComponentType::List, "<ul style=\"\n{}\">{}</ul>"},
-      {UIComponentType::Scroll, "<div style=\"\noverflow:auto;{}\">{}</div>"},
-      {UIComponentType::Window, "<section role=\"dialog\" style=\"\n{}\">{}</section>"},
-      {UIComponentType::TextField, "<input type=\"text\" style=\"\n{}\" value=\"{}\">"},
-      {UIComponentType::TextArea, "<textarea style=\"\n{}\">{}</textarea>"},
-      {UIComponentType::Slider, "<input type=\"range\" style=\"\n{}\" value=\"{}\">"},
-      {UIComponentType::Select, "<select style=\"\n{}\">{}</select>"},
-      {UIComponentType::Button, "<button type=\"button\" style=\"\n{}\">{}</button>"},
-      {UIComponentType::MenuItem, "<li role=\"menuitem\" style=\"\n{}\">{}</li>"}};
+      {UIComponentType::Image, "<img style=\"position: absolute;\n{}\" src=\"{}\" alt=\"\">"},
+      {UIComponentType::Sound, "<audio style=\"position: absolute;\n{}\" src=\"{}\" controls></audio>"},
+      {UIComponentType::Text, "<p style=\"position: absolute; font-family: monospace;\n{}\">{}</p>"},
+      {UIComponentType::Divider, "<hr style=\"position: absolute;\n{}\">"},
+      {UIComponentType::Spacer, "<div style=\"position: absolute;\n{}\"></div>"},
+      {UIComponentType::Menu, "<nav style=\"position: absolute;\n{}\">{}</nav>"},
+      {UIComponentType::MenuBar, "<div role=\"menubar\" style=\"position: absolute;\n{}\">{}</div>"},
+      {UIComponentType::List, "<ul style=\"position: absolute;\n{}\">{}</ul>"},
+      {UIComponentType::Scroll,
+       "<div style=\"position: absolute; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;\n{}\">{}</div>"},
+      {UIComponentType::Window, "<section role=\"dialog\" style=\"position: absolute;\n{}\">{}</section>"},
+      {UIComponentType::TextField,
+       "<input type=\"text\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
+      {UIComponentType::TextArea, "<textarea style=\"position: absolute; box-sizing: border-box;\n{}\">{}</textarea>"},
+      {UIComponentType::Slider,
+       "<input type=\"range\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
+      {UIComponentType::Select,
+       "<select style=\"position: absolute; cursor: pointer; box-sizing: border-box;\n{}\">{}</select>"},
+      {UIComponentType::Button,
+       "<button type=\"button\" onclick=\"var b=this.style.backgroundColor; this.style.background='#444444'; "
+       "setTimeout(() "
+       "=> this.style.backgroundColor=b, 200)\" style=\"position: absolute; cursor: pointer;\n{}\">{}</button>"},
+      {UIComponentType::MenuItem, "<li role=\"menuitem\" style=\"position: absolute; list-style: none;\n{}\">{}</li>"}};
 
   static inline std::unordered_map<UIParamType, std::string_view> const HTMLTemplateByUIParamType = {
       {UIParamType::X, R"(left: {};)"},
@@ -124,57 +131,24 @@ public:
       {UIParamType::MaxWidth, R"(max-width: {};)"},
       {UIParamType::MaxHeight, R"(max-height: {};)"}};
 
-  static inline std::string GetFullHTML(std::string const & body)
+  static inline std::string GetFullHTML(std::string const & bodyContent)
   {
-    static auto script = R"(
-<script>
-  addEventListener('load', () => {
-    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-
-    for (const el of document.querySelectorAll('body *')) {
-      const r = el.getBoundingClientRect();
-      if (!r.width && !r.height) continue;
-
-      if (r.left   < minX) minX = r.left;
-      if (r.top    < minY) minY = r.top;
-      if (r.right  > maxX) maxX = r.right;
-      if (r.bottom > maxY) maxY = r.bottom;
-    }
-
-    if (!isFinite(minX)) return;
-
-    const w = maxX - minX;
-    const h = maxY - minY;
-
-    document.body.style.transform = `translate(
-      ${(innerWidth  - w) / 2 - minX}px,
-      ${(innerHeight - h) / 2 - minY}px
-    )`;
-  });
-</script>
-)";
-
     return std::string(R"(<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="viewport"/>
   <title>Test interface</title>
   <style>
-    html, body { margin: 0; height: 100%; }
-    body { position: relative; }
-    body * { position: fixed; resize: none; }
+    body * { resize: none; }
   </style>
-)") + script
-           + R"(
-</head>
-<body>
-  <div>
-)" + body + R"(
+<body style="margin: 0;">
+  <div style="position: relative; width: 100%; height: 100vh; container-type: size; overflow: hidden;">
+  )" + bodyContent + R"(
   </div>
 </body>
 </html>
-)";
+)");
   }
 };
 }  // namespace htmlTranslationModule
