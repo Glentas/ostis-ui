@@ -1,6 +1,5 @@
 # CMake crap
 bin/
-/build/
 
 # IDE crap
 cmake-build-debug
@@ -9,11 +8,16 @@ cmake-build-debug-coverage
 .cache/
 .idea
 .vscode
+.vs
 
 # Our crap
 generated
 ostis-web-platform/
 sc-machine/
+repo/
+.build/
+build/
+.venv/
 
 # Apple crap
 # General

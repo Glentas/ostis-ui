@@ -41,15 +41,28 @@ ScAddr HTMLTranslator::TranslateSCToHTML(ScAgentContext & context, ScAddr const 
     SC_LOG_ERROR(message);
     throw std::runtime_error(message);
   }
-  auto uiComponents = GetUIComponents(context, interfaceNode);
-  auto uiLinks = GetUILinks(context, uiComponents);
-  auto mappedUIComponents = GetMappedUIComponents(context, uiComponents);
-  auto resolvedUILinks = ResolveUILinks(context, uiLinks, mappedUIComponents);
-  auto resolvedUIComponents = ResolveUIComponents(std::move(mappedUIComponents));
-  auto interfaceAbstractTree = BuildInterfaceAbstractTree(resolvedUILinks, resolvedUIComponents);
-  auto html = BuildHTML(std::move(interfaceAbstractTree), std::move(resolvedUIComponents), std::move(resolvedUILinks));
+
   auto answerHTMLLink = context.GenerateLink();
-  context.SetLinkContent(answerHTMLLink, html);
+
+  try
+  {
+    auto uiComponents = GetUIComponents(context, interfaceNode);
+    auto uiLinks = GetUILinks(context, uiComponents);
+    auto mappedUIComponents = GetMappedUIComponents(context, uiComponents);
+    auto resolvedUILinks = ResolveUILinks(context, uiLinks, mappedUIComponents);
+    auto resolvedUIComponents = ResolveUIComponents(std::move(mappedUIComponents));
+    auto interfaceAbstractTree = BuildInterfaceAbstractTree(resolvedUILinks, resolvedUIComponents);
+    auto html =
+        BuildHTML(std::move(interfaceAbstractTree), std::move(resolvedUIComponents), std::move(resolvedUILinks));
+    context.SetLinkContent(answerHTMLLink, html);
+  }
+  catch (std::exception const & e)
+  {
+    auto const message = std::format("{}: caught exception while generating interface: {}", className, e.what());
+    SC_LOG_ERROR(message);
+    throw std::runtime_error(message);
+  }
+
   ScAddr arcAddr = context.GenerateConnector(ScType::ConstCommonArc, interfaceNode, answerHTMLLink);
   context.GenerateConnector(ScType::ConstPermPosArc, HTMLTranslatorKeynodes::nrel_html_representation, arcAddr);
   if (!context.IsElement(answerHTMLLink))
