@@ -340,6 +340,7 @@ UIComponent HTMLTranslator::GenerateFakeRootComponent(std::vector<UIComponent> c
     auto y_it = uiComponent.Params.find(UIParamType::Y);
     auto width_it = uiComponent.Params.find(UIParamType::Width);
     auto height_it = uiComponent.Params.find(UIParamType::Height);
+    auto margin_it = uiComponent.Params.find(UIParamType::Margin);
     if (x_it == uiComponent.Params.cend() || y_it == uiComponent.Params.cend() || width_it == uiComponent.Params.cend()
         || height_it == uiComponent.Params.cend())
     {
@@ -350,23 +351,28 @@ UIComponent HTMLTranslator::GenerateFakeRootComponent(std::vector<UIComponent> c
     }
     try
     {
+      auto margin = 0ul;
+      if (margin_it != uiComponent.Params.cend())
+      {
+        margin = std::stoul(margin_it->second);
+      }
       auto x = std::stoul(x_it->second);
       auto y = std::stoul(y_it->second);
       auto width = std::stoul(width_it->second);
       auto height = std::stoul(height_it->second);
-      maxWidth = std::max(maxWidth, x + width);
-      maxHeight = std::max(maxHeight, y + height);
+      maxWidth = std::max(maxWidth, x + width + margin);
+      maxHeight = std::max(maxHeight, y + height + margin);
     }
     catch (std::exception const & e)
     {
       auto const message =
-          std::format("{}: component {} has X, Y, Width or Height invalid attribute.", className, uiComponent.ID);
+          std::format("{}: component {} has X, Y, Width or Height with invalid value.", className, uiComponent.ID);
       SC_LOG_ERROR(message);
       throw std::runtime_error(message);
     }
   }
-  params[UIParamType::Width] = std::to_string(maxWidth + 32);
-  params[UIParamType::Height] = std::to_string(maxHeight + 32);
+  params[UIParamType::Width] = std::to_string(maxWidth);
+  params[UIParamType::Height] = std::to_string(maxHeight);
   fakeRoot.Params = std::move(params);
   return fakeRoot;
 }
@@ -375,14 +381,20 @@ std::string HTMLTranslator::GenerateParams(
     UIComponent const & parentComponent,
     UIComponent const & rootComponent,
     std::unordered_map<UIParamType, std::string> const & params,
-    std::string & placeholder)
+    std::string & text,
+    std::string & actionID)
 {
   std::string generatedParams;
   for (auto const & [type, value] : params)
   {
     if (type == UIParamType::TextValue)
     {
-      placeholder += value;
+      text = value;
+      continue;
+    }
+    if (type == UIParamType::ActionId)
+    {
+      actionID = value;
       continue;
     }
     auto processedValue = value;
@@ -407,15 +419,18 @@ std::string HTMLTranslator::GenerateParams(
       auto newV = 100.0 * (currentV - parentV) / maxV;
       processedValue = std::to_string(newV) + suffix;
     }
-    if (type == UIParamType::Width || type == UIParamType::FontSize)
+    switch (type)
+    {
+    case UIParamType::Width:
     {
       std::string suffix = "cqw";
       auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width));
       auto currentV = std::stod(value);
       auto newV = 100.0 * currentV / maxV;
       processedValue = std::to_string(newV) + suffix;
+      break;
     }
-    if (type == UIParamType::Y)
+    case UIParamType::Y:
     {
       std::string suffix = "cqh";
       auto maxV = std::stod(rootComponent.Params.at(UIParamType::Height));
@@ -423,14 +438,51 @@ std::string HTMLTranslator::GenerateParams(
       auto currentV = std::stod(value);
       auto newV = 100.0 * (currentV - parentV) / maxV;
       processedValue = std::to_string(newV) + suffix;
+      break;
     }
-    if (type == UIParamType::Height)
+    case UIParamType::Height:
     {
       std::string suffix = "cqh";
       auto maxV = std::stod(rootComponent.Params.at(UIParamType::Height));
       auto currentV = std::stod(value);
       auto newV = 100.0 * currentV / maxV;
       processedValue = std::to_string(newV) + suffix;
+      break;
+    }
+    case UIParamType::FontSize:
+    {
+      std::string suffix = "cqmin";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width))
+                  + std::stod(rootComponent.Params.at(UIParamType::Height));
+      auto currentV = 2.0 * std::stod(value);
+      auto newV = 100.0 * currentV / maxV;
+      processedValue = std::to_string(newV) + suffix;
+      break;
+    }
+    case UIParamType::Margin:
+    {
+      std::string suffix = "cqmin";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width))
+                  + std::stod(rootComponent.Params.at(UIParamType::Height));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * currentV / maxV;
+      processedValue = std::to_string(newV) + suffix;
+      break;
+    }
+    case UIParamType::Padding:
+    {
+      std::string suffix = "cqmin";
+      auto maxV = std::stod(rootComponent.Params.at(UIParamType::Width))
+                  + std::stod(rootComponent.Params.at(UIParamType::Height));
+      auto currentV = std::stod(value);
+      auto newV = 100.0 * currentV / maxV;
+      processedValue = std::to_string(newV) + suffix;
+      break;
+    }
+    default:
+    {
+      break;
+    }
     }
     auto paramTemplateIT = HTMLTagMapper::HTMLTemplateByUIParamType.find(type);
 
@@ -449,18 +501,21 @@ std::string HTMLTranslator::GenerateHTMLComponent(
     std::string const & parentID,
     std::string const & rootID,
     std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
-    std::unordered_map<std::string, UIComponent> const & uiComponentByID)
+    std::unordered_map<std::string, UIComponent> const & uiComponentByID,
+    std::unordered_set<std::string> & actionIDs)
 {
-  std::string result, placeholder;
+  std::string placeholder, text, actionID;
   auto const & children_it = interfaceAbstractTree.find(componentID);
   if (children_it != interfaceAbstractTree.cend())
   {
     for (auto const & childID : children_it->second)
     {
-      auto childHTML = GenerateHTMLComponent(childID, componentID, rootID, interfaceAbstractTree, uiComponentByID);
+      auto childHTML =
+          GenerateHTMLComponent(childID, componentID, rootID, interfaceAbstractTree, uiComponentByID, actionIDs);
       if (uiComponentByID.at(componentID).Type == UIComponentType::Select)
       {
-        placeholder += "<option value=" + childID + ">" + childHTML + "</option>";
+        placeholder += HTMLTagMapper::WrapOptionComponent(
+            childID, uiComponentByID.at(componentID).Params.at(UIParamType::ActionId), childHTML);
       }
       else
       {
@@ -470,9 +525,15 @@ std::string HTMLTranslator::GenerateHTMLComponent(
   }
   auto component = uiComponentByID.at(componentID);
   auto componentTemplate = HTMLTagMapper::HTMLTemplateByUIComponentType.at(component.Type);
-  auto params = GenerateParams(uiComponentByID.at(parentID), uiComponentByID.at(rootID), component.Params, placeholder);
-  result = std::vformat(componentTemplate, std::make_format_args(params, placeholder));
-  return result;
+  auto params =
+      GenerateParams(uiComponentByID.at(parentID), uiComponentByID.at(rootID), component.Params, text, actionID);
+  actionIDs.insert(actionID);
+  if (uiComponentByID.at(componentID).Type == UIComponentType::Button)
+  {
+    placeholder += HTMLTagMapper::CreateSenderScript(componentID, actionID, text) + "\n";
+  }
+  placeholder += text;
+  return std::vformat(componentTemplate, std::make_format_args(componentID, params, placeholder));
 }
 
 std::string HTMLTranslator::BuildHTML(
@@ -483,6 +544,7 @@ std::string HTMLTranslator::BuildHTML(
   std::string result;
   std::unordered_set<std::string> rootComponents;
   std::unordered_map<std::string, UIComponent> uiComponentByID;
+  std::unordered_set<std::string> actionIDs;
   auto fakeRoot = GenerateFakeRootComponent(uiComponents);
   uiComponentByID.emplace(fakeRoot.ID, fakeRoot);
   for (auto & uiComponent : uiComponents)
@@ -511,7 +573,12 @@ std::string HTMLTranslator::BuildHTML(
   }
   for (auto const & rootComponent : rootComponents)
   {
-    result += GenerateHTMLComponent(rootComponent, fakeRoot.ID, fakeRoot.ID, interfaceAbstractTree, uiComponentByID);
+    result += GenerateHTMLComponent(
+        rootComponent, fakeRoot.ID, fakeRoot.ID, interfaceAbstractTree, uiComponentByID, actionIDs);
+  }
+  for (auto const & actionID : actionIDs)
+  {
+    result += HTMLTagMapper::CreateRecieverScript(actionID) + "\n";
   }
   return HTMLTagMapper::GetFullHTML(result);
 }

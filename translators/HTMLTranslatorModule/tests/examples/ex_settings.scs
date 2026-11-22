@@ -1,0 +1,3277 @@
+ex_settings
+<- concept_ui_interface;;
+
+ex_settings => nrel_ui_id: [ex_settings];;
+
+ex_settings_name
+<- concept_ui_name;
+=> nrel_ui_value: [Панель настроек];
+-> ex_settings;;
+
+ex_settings_cmp_1
+<- concept_ui_window;;
+
+ex_settings_cmp_1 => nrel_ui_id: [ex_settings_cmp_1];;
+
+ex_settings_cmp_1_name
+<- concept_ui_name;
+=> nrel_ui_value: [Настройки];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_x
+<- concept_ui_x;
+=> nrel_ui_value: [40];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_y
+<- concept_ui_y;
+=> nrel_ui_value: [24];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_width
+<- concept_ui_width;
+=> nrel_ui_value: [560];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_height
+<- concept_ui_height;
+=> nrel_ui_value: [620];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_order
+<- concept_ui_order;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#e8eaef];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#b8bec8];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [12];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_1_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_1;;
+
+ex_settings_cmp_2
+<- concept_ui_menu_bar;;
+
+ex_settings_cmp_2 => nrel_ui_id: [ex_settings_cmp_2];;
+
+ex_settings_cmp_2_name
+<- concept_ui_name;
+=> nrel_ui_value: [Строка разделов];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_x
+<- concept_ui_x;
+=> nrel_ui_value: [40];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_y
+<- concept_ui_y;
+=> nrel_ui_value: [24];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_width
+<- concept_ui_width;
+=> nrel_ui_value: [560];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_height
+<- concept_ui_height;
+=> nrel_ui_value: [44];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_order
+<- concept_ui_order;
+=> nrel_ui_value: [2];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#1f2937];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_color
+<- concept_ui_color;
+=> nrel_ui_value: [#f9fafb];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_2_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_2;;
+
+ex_settings_cmp_3
+<- concept_ui_menu_item;;
+
+ex_settings_cmp_3 => nrel_ui_id: [ex_settings_cmp_3];;
+
+ex_settings_cmp_3_name
+<- concept_ui_name;
+=> nrel_ui_value: [Общие];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_x
+<- concept_ui_x;
+=> nrel_ui_value: [52];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_y
+<- concept_ui_y;
+=> nrel_ui_value: [30];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_width
+<- concept_ui_width;
+=> nrel_ui_value: [96];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_height
+<- concept_ui_height;
+=> nrel_ui_value: [32];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_order
+<- concept_ui_order;
+=> nrel_ui_value: [3];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Общие];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_general];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#374151];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_color
+<- concept_ui_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [4];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_3_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_3;;
+
+ex_settings_cmp_4
+<- concept_ui_menu_item;;
+
+ex_settings_cmp_4 => nrel_ui_id: [ex_settings_cmp_4];;
+
+ex_settings_cmp_4_name
+<- concept_ui_name;
+=> nrel_ui_value: [Звук];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_x
+<- concept_ui_x;
+=> nrel_ui_value: [156];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_y
+<- concept_ui_y;
+=> nrel_ui_value: [30];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_width
+<- concept_ui_width;
+=> nrel_ui_value: [96];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_height
+<- concept_ui_height;
+=> nrel_ui_value: [32];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_order
+<- concept_ui_order;
+=> nrel_ui_value: [4];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Звук];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_audio];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_color
+<- concept_ui_color;
+=> nrel_ui_value: [#d1d5db];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [4];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_4_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_4;;
+
+ex_settings_cmp_5
+<- concept_ui_menu_item;;
+
+ex_settings_cmp_5 => nrel_ui_id: [ex_settings_cmp_5];;
+
+ex_settings_cmp_5_name
+<- concept_ui_name;
+=> nrel_ui_value: [О программе];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_x
+<- concept_ui_x;
+=> nrel_ui_value: [260];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_y
+<- concept_ui_y;
+=> nrel_ui_value: [30];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_width
+<- concept_ui_width;
+=> nrel_ui_value: [120];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_height
+<- concept_ui_height;
+=> nrel_ui_value: [32];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_order
+<- concept_ui_order;
+=> nrel_ui_value: [5];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [О программе];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_about];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_color
+<- concept_ui_color;
+=> nrel_ui_value: [#d1d5db];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [4];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_5_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_5;;
+
+ex_settings_cmp_6
+<- concept_ui_scroll;;
+
+ex_settings_cmp_6 => nrel_ui_id: [ex_settings_cmp_6];;
+
+ex_settings_cmp_6_name
+<- concept_ui_name;
+=> nrel_ui_value: [Область прокрутки];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_x
+<- concept_ui_x;
+=> nrel_ui_value: [64];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_y
+<- concept_ui_y;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_width
+<- concept_ui_width;
+=> nrel_ui_value: [512];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_height
+<- concept_ui_height;
+=> nrel_ui_value: [480];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_order
+<- concept_ui_order;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#d1d5db];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [10];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_6_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_6;;
+
+ex_settings_cmp_7
+<- concept_ui_text;;
+
+ex_settings_cmp_7 => nrel_ui_id: [ex_settings_cmp_7];;
+
+ex_settings_cmp_7_name
+<- concept_ui_name;
+=> nrel_ui_value: [Заголовок раздела];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_y
+<- concept_ui_y;
+=> nrel_ui_value: [96];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_width
+<- concept_ui_width;
+=> nrel_ui_value: [480];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_height
+<- concept_ui_height;
+=> nrel_ui_value: [28];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_order
+<- concept_ui_order;
+=> nrel_ui_value: [7];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Общие параметры];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_color
+<- concept_ui_color;
+=> nrel_ui_value: [#111827];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [18];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [bold];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_7_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_7;;
+
+ex_settings_cmp_8
+<- concept_ui_text;;
+
+ex_settings_cmp_8 => nrel_ui_id: [ex_settings_cmp_8];;
+
+ex_settings_cmp_8_name
+<- concept_ui_name;
+=> nrel_ui_value: [Тема];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_y
+<- concept_ui_y;
+=> nrel_ui_value: [144];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_width
+<- concept_ui_width;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_order
+<- concept_ui_order;
+=> nrel_ui_value: [8];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Тема оформления];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_color
+<- concept_ui_color;
+=> nrel_ui_value: [#4b5563];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_8_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_8;;
+
+ex_settings_cmp_9
+<- concept_ui_select;;
+
+ex_settings_cmp_9 => nrel_ui_id: [ex_settings_cmp_9];;
+
+ex_settings_cmp_9_name
+<- concept_ui_name;
+=> nrel_ui_value: [Выбор темы];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_x
+<- concept_ui_x;
+=> nrel_ui_value: [284];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_y
+<- concept_ui_y;
+=> nrel_ui_value: [144];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_width
+<- concept_ui_width;
+=> nrel_ui_value: [276];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_order
+<- concept_ui_order;
+=> nrel_ui_value: [9];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Светлая];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_theme];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#9ca3af];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [8];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_9_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_9;;
+
+ex_settings_cmp_10
+<- concept_ui_text;;
+
+ex_settings_cmp_10 => nrel_ui_id: [ex_settings_cmp_10];;
+
+ex_settings_cmp_10_name
+<- concept_ui_name;
+=> nrel_ui_value: [Язык];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_y
+<- concept_ui_y;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_width
+<- concept_ui_width;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_order
+<- concept_ui_order;
+=> nrel_ui_value: [10];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Язык интерфейса];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_color
+<- concept_ui_color;
+=> nrel_ui_value: [#4b5563];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_10_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_10;;
+
+ex_settings_cmp_11
+<- concept_ui_select;;
+
+ex_settings_cmp_11 => nrel_ui_id: [ex_settings_cmp_11];;
+
+ex_settings_cmp_11_name
+<- concept_ui_name;
+=> nrel_ui_value: [Выбор языка];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_x
+<- concept_ui_x;
+=> nrel_ui_value: [284];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_y
+<- concept_ui_y;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_width
+<- concept_ui_width;
+=> nrel_ui_value: [276];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_order
+<- concept_ui_order;
+=> nrel_ui_value: [11];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Русский];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_lang];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#9ca3af];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [8];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_11_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_11;;
+
+ex_settings_cmp_12
+<- concept_ui_text;;
+
+ex_settings_cmp_12 => nrel_ui_id: [ex_settings_cmp_12];;
+
+ex_settings_cmp_12_name
+<- concept_ui_name;
+=> nrel_ui_value: [Громкость];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_y
+<- concept_ui_y;
+=> nrel_ui_value: [248];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_width
+<- concept_ui_width;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_order
+<- concept_ui_order;
+=> nrel_ui_value: [12];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Громкость уведомлений];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_color
+<- concept_ui_color;
+=> nrel_ui_value: [#4b5563];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_12_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_12;;
+
+ex_settings_cmp_13
+<- concept_ui_slider;;
+
+ex_settings_cmp_13 => nrel_ui_id: [ex_settings_cmp_13];;
+
+ex_settings_cmp_13_name
+<- concept_ui_name;
+=> nrel_ui_value: [Ползунок громкости];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_x
+<- concept_ui_x;
+=> nrel_ui_value: [284];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_y
+<- concept_ui_y;
+=> nrel_ui_value: [252];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_width
+<- concept_ui_width;
+=> nrel_ui_value: [276];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_height
+<- concept_ui_height;
+=> nrel_ui_value: [28];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_order
+<- concept_ui_order;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [70%];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_volume];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#e5e7eb];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [14];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_13_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_13;;
+
+ex_settings_cmp_14
+<- concept_ui_text;;
+
+ex_settings_cmp_14 => nrel_ui_id: [ex_settings_cmp_14];;
+
+ex_settings_cmp_14_name
+<- concept_ui_name;
+=> nrel_ui_value: [Яркость];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_y
+<- concept_ui_y;
+=> nrel_ui_value: [300];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_width
+<- concept_ui_width;
+=> nrel_ui_value: [196];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_order
+<- concept_ui_order;
+=> nrel_ui_value: [14];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Яркость панели];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_color
+<- concept_ui_color;
+=> nrel_ui_value: [#4b5563];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_14_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_14;;
+
+ex_settings_cmp_15
+<- concept_ui_slider;;
+
+ex_settings_cmp_15 => nrel_ui_id: [ex_settings_cmp_15];;
+
+ex_settings_cmp_15_name
+<- concept_ui_name;
+=> nrel_ui_value: [Ползунок яркости];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_x
+<- concept_ui_x;
+=> nrel_ui_value: [284];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_y
+<- concept_ui_y;
+=> nrel_ui_value: [304];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_width
+<- concept_ui_width;
+=> nrel_ui_value: [276];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_height
+<- concept_ui_height;
+=> nrel_ui_value: [28];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_order
+<- concept_ui_order;
+=> nrel_ui_value: [15];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [55%];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_brightness];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#e5e7eb];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [14];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_15_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_15;;
+
+ex_settings_cmp_16
+<- concept_ui_text;;
+
+ex_settings_cmp_16 => nrel_ui_id: [ex_settings_cmp_16];;
+
+ex_settings_cmp_16_name
+<- concept_ui_name;
+=> nrel_ui_value: [Заметки];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_y
+<- concept_ui_y;
+=> nrel_ui_value: [352];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_width
+<- concept_ui_width;
+=> nrel_ui_value: [480];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_height
+<- concept_ui_height;
+=> nrel_ui_value: [22];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_order
+<- concept_ui_order;
+=> nrel_ui_value: [16];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Комментарий к профилю];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_color
+<- concept_ui_color;
+=> nrel_ui_value: [#4b5563];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_16_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_16;;
+
+ex_settings_cmp_17
+<- concept_ui_text_area;;
+
+ex_settings_cmp_17 => nrel_ui_id: [ex_settings_cmp_17];;
+
+ex_settings_cmp_17_name
+<- concept_ui_name;
+=> nrel_ui_value: [Поле заметок];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_y
+<- concept_ui_y;
+=> nrel_ui_value: [380];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_width
+<- concept_ui_width;
+=> nrel_ui_value: [480];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_height
+<- concept_ui_height;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_order
+<- concept_ui_order;
+=> nrel_ui_value: [17];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Краткое описание предпочтений пользователя];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_notes];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#9ca3af];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [10];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_17_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_17;;
+
+ex_settings_cmp_18
+<- concept_ui_list;;
+
+ex_settings_cmp_18 => nrel_ui_id: [ex_settings_cmp_18];;
+
+ex_settings_cmp_18_name
+<- concept_ui_name;
+=> nrel_ui_value: [Список модулей];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_x
+<- concept_ui_x;
+=> nrel_ui_value: [80];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_y
+<- concept_ui_y;
+=> nrel_ui_value: [476];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_width
+<- concept_ui_width;
+=> nrel_ui_value: [480];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_height
+<- concept_ui_height;
+=> nrel_ui_value: [68];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_order
+<- concept_ui_order;
+=> nrel_ui_value: [18];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#f9fafb];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#d1d5db];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [6];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_18_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_18;;
+
+ex_settings_cmp_19
+<- concept_ui_text;;
+
+ex_settings_cmp_19 => nrel_ui_id: [ex_settings_cmp_19];;
+
+ex_settings_cmp_19_name
+<- concept_ui_name;
+=> nrel_ui_value: [Модуль 1];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_x
+<- concept_ui_x;
+=> nrel_ui_value: [92];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_y
+<- concept_ui_y;
+=> nrel_ui_value: [484];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_width
+<- concept_ui_width;
+=> nrel_ui_value: [456];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_height
+<- concept_ui_height;
+=> nrel_ui_value: [18];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_order
+<- concept_ui_order;
+=> nrel_ui_value: [19];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [• Уведомления — включены];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [12];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_19_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_19;;
+
+ex_settings_cmp_20
+<- concept_ui_text;;
+
+ex_settings_cmp_20 => nrel_ui_id: [ex_settings_cmp_20];;
+
+ex_settings_cmp_20_name
+<- concept_ui_name;
+=> nrel_ui_value: [Модуль 2];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_x
+<- concept_ui_x;
+=> nrel_ui_value: [92];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_y
+<- concept_ui_y;
+=> nrel_ui_value: [504];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_width
+<- concept_ui_width;
+=> nrel_ui_value: [456];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_height
+<- concept_ui_height;
+=> nrel_ui_value: [18];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_order
+<- concept_ui_order;
+=> nrel_ui_value: [20];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [• Автосохранение — каждые 5 мин];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [12];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_20_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_20;;
+
+ex_settings_cmp_21
+<- concept_ui_text;;
+
+ex_settings_cmp_21 => nrel_ui_id: [ex_settings_cmp_21];;
+
+ex_settings_cmp_21_name
+<- concept_ui_name;
+=> nrel_ui_value: [Модуль 3];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_x
+<- concept_ui_x;
+=> nrel_ui_value: [92];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_y
+<- concept_ui_y;
+=> nrel_ui_value: [524];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_width
+<- concept_ui_width;
+=> nrel_ui_value: [456];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_height
+<- concept_ui_height;
+=> nrel_ui_value: [18];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_order
+<- concept_ui_order;
+=> nrel_ui_value: [21];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [• Телеметрия — выключена];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [12];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_21_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_21;;
+
+ex_settings_cmp_22
+<- concept_ui_button;;
+
+ex_settings_cmp_22 => nrel_ui_id: [ex_settings_cmp_22];;
+
+ex_settings_cmp_22_name
+<- concept_ui_name;
+=> nrel_ui_value: [Сохранить];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_x
+<- concept_ui_x;
+=> nrel_ui_value: [64];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_y
+<- concept_ui_y;
+=> nrel_ui_value: [580];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_width
+<- concept_ui_width;
+=> nrel_ui_value: [140];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_height
+<- concept_ui_height;
+=> nrel_ui_value: [40];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_order
+<- concept_ui_order;
+=> nrel_ui_value: [22];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Сохранить];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_save];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#059669];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_color
+<- concept_ui_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [8];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [bold];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_22_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_22;;
+
+ex_settings_cmp_23
+<- concept_ui_button;;
+
+ex_settings_cmp_23 => nrel_ui_id: [ex_settings_cmp_23];;
+
+ex_settings_cmp_23_name
+<- concept_ui_name;
+=> nrel_ui_value: [Сбросить];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_x
+<- concept_ui_x;
+=> nrel_ui_value: [216];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_y
+<- concept_ui_y;
+=> nrel_ui_value: [580];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_width
+<- concept_ui_width;
+=> nrel_ui_value: [140];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_height
+<- concept_ui_height;
+=> nrel_ui_value: [40];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_order
+<- concept_ui_order;
+=> nrel_ui_value: [23];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [Сбросить];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [settings_reset];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_color
+<- concept_ui_color;
+=> nrel_ui_value: [#111827];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#9ca3af];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [8];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [bold];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings_cmp_23_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_settings_cmp_23;;
+
+ex_settings => nrel_ui_has_component: ex_settings_cmp_1;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_2;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_3;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_4;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_5;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_6;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_7;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_8;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_9;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_10;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_11;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_12;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_13;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_14;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_15;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_16;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_17;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_18;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_19;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_20;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_21;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_22;;
+ex_settings => nrel_ui_has_component: ex_settings_cmp_23;;
+
+ex_settings => nrel_ui_contains: ex_settings_cmp_1;;
+ex_settings_cmp_1 => nrel_ui_contains: ex_settings_cmp_2;;
+ex_settings_cmp_2 => nrel_ui_contains: ex_settings_cmp_3;;
+ex_settings_cmp_2 => nrel_ui_contains: ex_settings_cmp_4;;
+ex_settings_cmp_2 => nrel_ui_contains: ex_settings_cmp_5;;
+ex_settings_cmp_1 => nrel_ui_contains: ex_settings_cmp_6;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_7;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_8;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_9;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_10;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_11;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_12;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_13;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_14;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_15;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_16;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_17;;
+ex_settings_cmp_6 => nrel_ui_contains: ex_settings_cmp_18;;
+ex_settings_cmp_18 => nrel_ui_contains: ex_settings_cmp_19;;
+ex_settings_cmp_18 => nrel_ui_contains: ex_settings_cmp_20;;
+ex_settings_cmp_18 => nrel_ui_contains: ex_settings_cmp_21;;
+ex_settings_cmp_1 => nrel_ui_contains: ex_settings_cmp_22;;
+ex_settings_cmp_1 => nrel_ui_contains: ex_settings_cmp_23;;

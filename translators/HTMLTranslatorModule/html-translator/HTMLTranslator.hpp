@@ -47,13 +47,15 @@ private:
       UIComponent const & parentComponent,
       UIComponent const & rootComponent,
       std::unordered_map<UIParamType, std::string> const & params,
-      std::string & placeholder);
+      std::string & text,
+      std::string & actionID);
   static std::string GenerateHTMLComponent(
       std::string const & componentID,
       std::string const & parentID,
       std::string const & rootID,
       std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
-      std::unordered_map<std::string, UIComponent> const & uiComponentByID);
+      std::unordered_map<std::string, UIComponent> const & uiComponentByID,
+      std::unordered_set<std::string> & actionIDs);
   static std::string BuildHTML(
       std::unordered_map<std::string, std::vector<std::string>> && interfaceAbstractTree,
       std::vector<UIComponent> && uiComponents,

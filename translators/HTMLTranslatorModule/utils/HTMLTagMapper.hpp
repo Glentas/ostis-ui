@@ -83,29 +83,32 @@ public:
   };
 
   static inline std::unordered_map<UIComponentType, std::string_view> const HTMLTemplateByUIComponentType = {
-      {UIComponentType::Image, "<img style=\"position: absolute;\n{}\" src=\"{}\" alt=\"\">"},
-      {UIComponentType::Sound, "<audio style=\"position: absolute;\n{}\" src=\"{}\" controls></audio>"},
-      {UIComponentType::Text, "<p style=\"position: absolute; font-family: monospace;\n{}\">{}</p>"},
-      {UIComponentType::Divider, "<hr style=\"position: absolute;\n{}\">"},
-      {UIComponentType::Spacer, "<div style=\"position: absolute;\n{}\"></div>"},
-      {UIComponentType::Menu, "<nav style=\"position: absolute;\n{}\">{}</nav>"},
-      {UIComponentType::MenuBar, "<div role=\"menubar\" style=\"position: absolute;\n{}\">{}</div>"},
-      {UIComponentType::List, "<ul style=\"position: absolute;\n{}\">{}</ul>"},
+      {UIComponentType::Image, "<img id=\"{}\"style=\"position: absolute;\n{}\" src=\"{}\" alt=\"\">"},
+      {UIComponentType::Sound, "<audio id=\"{}\" style=\"position: absolute;\n{}\" src=\"{}\" controls></audio>"},
+      {UIComponentType::Text, "<p id=\"{}\" style=\"position: absolute; font-family: monospace;\n{}\">{}</p>"},
+      {UIComponentType::Divider, "<hr id=\"{}\" style=\"position: absolute;\n{}\">"},
+      {UIComponentType::Spacer, "<div id=\"{}\" style=\"position: absolute;\n{}\">{}</div>"},
+      {UIComponentType::Menu, "<nav id=\"{}\" style=\"position: absolute;\n{}\">{}</nav>"},
+      {UIComponentType::MenuBar, "<div id=\"{}\" role=\"menubar\" style=\"position: absolute;\n{}\">{}</div>"},
+      {UIComponentType::List, "<ul id=\"{}\" style=\"position: absolute;\n{}\">{}</ul>"},
       {UIComponentType::Scroll,
-       "<div style=\"position: absolute; overflow-y: auto; overflow-x: hidden; box-sizing: border-box;\n{}\">{}</div>"},
-      {UIComponentType::Window, "<section role=\"dialog\" style=\"position: absolute;\n{}\">{}</section>"},
+       "<div id=\"{}\" style=\"position: absolute; overflow-y: auto; overflow-x: hidden; box-sizing: "
+       "border-box;\n{}\">{}</div>"},
+      {UIComponentType::Window, "<section id=\"{}\" role=\"dialog\" style=\"position: absolute;\n{}\">{}</section>"},
       {UIComponentType::TextField,
-       "<input type=\"text\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
-      {UIComponentType::TextArea, "<textarea style=\"position: absolute; box-sizing: border-box;\n{}\">{}</textarea>"},
+       "<input id=\"{}\" type=\"text\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
+      {UIComponentType::TextArea,
+       "<textarea id=\"{}\" style=\"position: absolute; box-sizing: border-box;\n{}\">{}</textarea>"},
       {UIComponentType::Slider,
-       "<input type=\"range\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
+       "<input id=\"{}\" type=\"range\" style=\"position: absolute; box-sizing: border-box;\n{}\" value=\"{}\">"},
       {UIComponentType::Select,
-       "<select style=\"position: absolute; cursor: pointer; box-sizing: border-box;\n{}\">{}</select>"},
+       "<select id=\"{}\" style=\"position: absolute; cursor: pointer; box-sizing: border-box;\n{}\">{}</select>"},
       {UIComponentType::Button,
-       "<button type=\"button\" onclick=\"var b=this.style.backgroundColor; this.style.background='#444444'; "
+       "<button type=\"button\" id=\"{}\" onclick=\"var b=this.style.backgroundColor; this.style.background='#444444'; "
        "setTimeout(() "
        "=> this.style.backgroundColor=b, 200)\" style=\"position: absolute; cursor: pointer;\n{}\">{}</button>"},
-      {UIComponentType::MenuItem, "<li role=\"menuitem\" style=\"position: absolute; list-style: none;\n{}\">{}</li>"}};
+      {UIComponentType::MenuItem,
+       "<li id=\"{}\" role=\"menuitem\" style=\"position: absolute; list-style: none;\n{}\">{}</li>"}};
 
   static inline std::unordered_map<UIParamType, std::string_view> const HTMLTemplateByUIParamType = {
       {UIParamType::X, R"(left: {};)"},
@@ -142,13 +145,58 @@ public:
   <style>
     body * { resize: none; }
   </style>
-<body style="margin: 0;">
+<body style="margin: 2px;">
   <div style="position: relative; width: 100%; height: 100vh; container-type: size; overflow: hidden;">
   )" + bodyContent + R"(
   </div>
 </body>
 </html>
 )");
+  }
+
+  static inline std::string WrapOptionComponent(
+      std::string const & childID,
+      std::string const & actionID,
+      std::string const & conent)
+  {
+    return std::string("<option id=\"" + childID + "\" value=\"" + actionID + "\">" + conent + "</option>");
+  }
+
+  static inline std::string CreateSenderScript(
+      std::string const & elementID,
+      std::string const & actionID,
+      std::string const & text)
+  {
+    return std::string(
+        R"(<script>
+      (() => {
+        const btn = document.getElementById(")"
+        + elementID + R"(");
+        const letter = ")"
+        + text + R"(";
+        btn.addEventListener('click', () => {
+          btn.dispatchEvent(new CustomEvent(')"
+        + actionID + R"(', {
+            detail: { letter },
+            bubbles: true
+          }));
+        });
+      })();
+    </script>)");
+  }
+
+  static inline std::string CreateRecieverScript(std::string const & actionID)
+  {
+    return std::string(
+        R"(<script>
+  document.addEventListener(')"
+        + actionID + R"(', (e) => {
+    const { letter } = e.detail;
+    const btn = e.target;
+    alert('Content: ' + letter + '; from button: ' + btn.id + ' with id=)"
+        + actionID + R"(');
+  });
+</script>)");
   }
 };
 }  // namespace htmlTranslationModule
