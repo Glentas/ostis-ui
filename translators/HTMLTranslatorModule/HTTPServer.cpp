@@ -1,5 +1,4 @@
 #include <string>
-
 #include <httplib.h>
 
 #include <HTTPRequestHandler.hpp>
@@ -11,7 +10,7 @@ void ServerWrapper::StartServer()
 {
   // Instantiate the server
   m_isRunning = SC_TRUE;
-  m_serverThread = std::thread(&ServerWrapper::Run, this);
+  m_serverThread = std::jthread(&ServerWrapper::Run, this);
 }
 
 void ServerWrapper::Run()

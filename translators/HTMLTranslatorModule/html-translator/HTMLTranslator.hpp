@@ -25,21 +25,21 @@ public:
 
 private:
   static ScAddrUnorderedSet GetUIComponents(ScAgentContext & context, ScAddr const & interfaceNode);
-  static std::vector<std::pair<ScAddr, ScAddr>> GetUILinks(
+  static std::unordered_map<UILinkType, std::vector<std::pair<ScAddr, ScAddr>>> GetUILinks(
       ScAgentContext & context,
       ScAddrUnorderedSet const & uiComponents);
   static UIComponentType ResolveUIComponentType(ScAgentContext & context, ScAddr const & uiComponent);
   static std::vector<std::pair<ScAddr, UIComponent>> GetMappedUIComponents(
       ScAgentContext & context,
       ScAddrUnorderedSet const & uiComponents);
-  static std::vector<UILink> ResolveUILinks(
+  static std::unordered_map<UILinkType, std::vector<UILink>> ResolveUILinks(
       ScAgentContext & context,
-      std::vector<std::pair<ScAddr, ScAddr>> const & uiLinks,
+      std::unordered_map<UILinkType, std::vector<std::pair<ScAddr, ScAddr>>> const & uiLinks,
       std::vector<std::pair<ScAddr, UIComponent>> const & mappedUIComponents);
   static std::vector<UIComponent> ResolveUIComponents(
       std::vector<std::pair<ScAddr, UIComponent>> && mappedUIComponents);
   static std::unordered_map<std::string, std::vector<std::string>> BuildInterfaceAbstractTree(
-      std::vector<UILink> const & resolvedUILinks,
+      std::unordered_map<UILinkType, std::vector<UILink>> const & resolvedUILinks,
       std::vector<UIComponent> const & resolvedUIComponents);
   // ---------------------------
   static UIComponent GenerateFakeRootComponent(std::vector<UIComponent> const & uiComponents);
@@ -55,11 +55,12 @@ private:
       std::string const & rootID,
       std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
       std::unordered_map<std::string, UIComponent> const & uiComponentByID,
-      std::unordered_set<std::string> & actionIDs);
+      std::unordered_map<std::string, std::string> & actionIDbyTriggerID,
+      std::unordered_map<UILinkType, std::vector<UILink>> const & UILinks);
   static std::string BuildHTML(
       std::unordered_map<std::string, std::vector<std::string>> && interfaceAbstractTree,
       std::vector<UIComponent> && uiComponents,
-      std::vector<UILink> && uiLinks);
+      std::unordered_map<UILinkType, std::vector<UILink>> && uiLinks);
 
 private:
   constexpr inline static std::string_view className = "HTMLTranslator";

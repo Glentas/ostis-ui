@@ -1,0 +1,724 @@
+ex_trigger
+<- concept_ui_interface;;
+
+ex_trigger => nrel_ui_id: [ex_trigger];;
+
+ex_trigger_name
+<- concept_ui_name;
+=> nrel_ui_value: [test_trigger];
+-> ex_trigger;;
+
+ex_trigger_cmp_6
+<- concept_ui_window;;
+
+ex_trigger_cmp_6 => nrel_ui_id: [ex_trigger_cmp_6];;
+
+ex_trigger_cmp_6_name
+<- concept_ui_name;
+=> nrel_ui_value: [Window];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_x
+<- concept_ui_x;
+=> nrel_ui_value: [117];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_y
+<- concept_ui_y;
+=> nrel_ui_value: [113];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_width
+<- concept_ui_width;
+=> nrel_ui_value: [320];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_height
+<- concept_ui_height;
+=> nrel_ui_value: [256];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_order
+<- concept_ui_order;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#eeeeff];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_6_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_6;;
+
+ex_trigger_cmp_8
+<- concept_ui_text;;
+
+ex_trigger_cmp_8 => nrel_ui_id: [ex_trigger_cmp_8];;
+
+ex_trigger_cmp_8_name
+<- concept_ui_name;
+=> nrel_ui_value: [Text];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_x
+<- concept_ui_x;
+=> nrel_ui_value: [294];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_y
+<- concept_ui_y;
+=> nrel_ui_value: [166];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_width
+<- concept_ui_width;
+=> nrel_ui_value: [119];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_height
+<- concept_ui_height;
+=> nrel_ui_value: [138];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_order
+<- concept_ui_order;
+=> nrel_ui_value: [2];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#000000];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [2];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [8];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_8_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_8;;
+
+ex_trigger_cmp_10
+<- concept_ui_text_area;;
+
+ex_trigger_cmp_10 => nrel_ui_id: [ex_trigger_cmp_10];;
+
+ex_trigger_cmp_10_name
+<- concept_ui_name;
+=> nrel_ui_value: [Text area];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_x
+<- concept_ui_x;
+=> nrel_ui_value: [142];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_y
+<- concept_ui_y;
+=> nrel_ui_value: [166];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_width
+<- concept_ui_width;
+=> nrel_ui_value: [126];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_height
+<- concept_ui_height;
+=> nrel_ui_value: [137];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_order
+<- concept_ui_order;
+=> nrel_ui_value: [3];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#ffffff];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [4];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [left];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_10_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_10;;
+
+ex_trigger_cmp_16
+<- concept_ui_button;;
+
+ex_trigger_cmp_16 => nrel_ui_id: [ex_trigger_cmp_16];;
+
+ex_trigger_cmp_16_name
+<- concept_ui_name;
+=> nrel_ui_value: [Button];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_x
+<- concept_ui_x;
+=> nrel_ui_value: [221];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_y
+<- concept_ui_y;
+=> nrel_ui_value: [314];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_width
+<- concept_ui_width;
+=> nrel_ui_value: [120];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_height
+<- concept_ui_height;
+=> nrel_ui_value: [36];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_order
+<- concept_ui_order;
+=> nrel_ui_value: [4];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [->];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [action_calculate_or_append];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [#aabbdd];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [solid];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [4];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [bold];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_16_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_16;;
+
+ex_trigger_cmp_20
+<- concept_ui_text;;
+
+ex_trigger_cmp_20 => nrel_ui_id: [ex_trigger_cmp_20];;
+
+ex_trigger_cmp_20_name
+<- concept_ui_name;
+=> nrel_ui_value: [Text];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_x
+<- concept_ui_x;
+=> nrel_ui_value: [169];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_y
+<- concept_ui_y;
+=> nrel_ui_value: [130];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_width
+<- concept_ui_width;
+=> nrel_ui_value: [200];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_height
+<- concept_ui_height;
+=> nrel_ui_value: [19];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_order
+<- concept_ui_order;
+=> nrel_ui_value: [5];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_visible
+<- concept_ui_visible;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_enabled
+<- concept_ui_enabled;
+=> nrel_ui_value: [true];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_opacity
+<- concept_ui_opacity;
+=> nrel_ui_value: [1];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_text_value
+<- concept_ui_text_value;
+=> nrel_ui_value: [My agent];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_tooltip
+<- concept_ui_tooltip;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_action_id
+<- concept_ui_action_id;
+=> nrel_ui_value: [];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_background_color
+<- concept_ui_background_color;
+=> nrel_ui_value: [transparent];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_color
+<- concept_ui_color;
+=> nrel_ui_value: [#1a1a1a];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_border_color
+<- concept_ui_border_color;
+=> nrel_ui_value: [#6f6f6f];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_border_width
+<- concept_ui_border_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_border_style
+<- concept_ui_border_style;
+=> nrel_ui_value: [none];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_corner_radius
+<- concept_ui_corner_radius;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_font_size
+<- concept_ui_font_size;
+=> nrel_ui_value: [13];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_font_weight
+<- concept_ui_font_weight;
+=> nrel_ui_value: [normal];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_text_align
+<- concept_ui_text_align;
+=> nrel_ui_value: [center];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_padding
+<- concept_ui_padding;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_margin
+<- concept_ui_margin;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_min_width
+<- concept_ui_min_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_min_height
+<- concept_ui_min_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_max_width
+<- concept_ui_max_width;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger_cmp_20_max_height
+<- concept_ui_max_height;
+=> nrel_ui_value: [0];
+-> ex_trigger_cmp_20;;
+
+ex_trigger => nrel_ui_has_component: ex_trigger_cmp_6;;
+ex_trigger => nrel_ui_has_component: ex_trigger_cmp_8;;
+ex_trigger => nrel_ui_has_component: ex_trigger_cmp_10;;
+ex_trigger => nrel_ui_has_component: ex_trigger_cmp_16;;
+ex_trigger => nrel_ui_has_component: ex_trigger_cmp_20;;
+
+ex_trigger => nrel_ui_contains: ex_trigger_cmp_6;;
+ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_10;;
+ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_8;;
+ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_16;;
+ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_20;;
+
+ex_trigger_cmp_16 => nrel_ui_input_target: ex_trigger_cmp_10;;
+ex_trigger_cmp_16 => nrel_ui_output_target: ex_trigger_cmp_8;;

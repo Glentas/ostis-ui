@@ -1,1 +1,2 @@
 add_subdirectory(HTMLTranslatorModule)
+add_subdirectory(CalculatorModule)

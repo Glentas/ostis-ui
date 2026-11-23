@@ -2,6 +2,7 @@
 #include <sc-memory/sc_type.hpp>
 
 #include <httplib.h>
+#include <thread>
 
 namespace htmlTranslationModule
 {
@@ -20,7 +21,7 @@ public:
   void StopServer();
 
 protected:
-  std::thread m_serverThread;
+  std::jthread m_serverThread;
   httplib::Server m_server;
   std::atomic<sc_bool> m_isRunning;
 };

@@ -29,7 +29,8 @@ enum class UIComponentType : std::uint8_t
   Slider,
   Select,
   Button,
-  MenuItem
+  MenuItem,
+  COUNT
 };
 enum class UIParamType : std::uint8_t
 {
@@ -59,11 +60,15 @@ enum class UIParamType : std::uint8_t
   MinWidth,
   MinHeight,
   MaxWidth,
-  MaxHeight
+  MaxHeight,
+  COUNT
 };
 enum class UILinkType : std::uint8_t
 {
-  Contains
+  Contains,
+  Inputs,
+  Outputs,
+  COUNT
 };
 
 struct UIComponent

@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -39,6 +40,7 @@ public:
          {HTMLTranslatorKeynodes::concept_ui_select.Hash(), UIComponentType::Select},
          {HTMLTranslatorKeynodes::concept_ui_button.Hash(), UIComponentType::Button},
          {HTMLTranslatorKeynodes::concept_ui_menu_item.Hash(), UIComponentType::MenuItem}});
+    assert(UIComponentTypeByKeynodeHash.size() == static_cast<size_t>(UIComponentType::COUNT));
     return UIComponentTypeByKeynodeHash;
   }
 
@@ -72,16 +74,24 @@ public:
          {HTMLTranslatorKeynodes::concept_ui_min_height.Hash(), UIParamType::MinHeight},
          {HTMLTranslatorKeynodes::concept_ui_max_width.Hash(), UIParamType::MaxWidth},
          {HTMLTranslatorKeynodes::concept_ui_max_height.Hash(), UIParamType::MaxHeight}});
+    assert(UIParamTypeByKeynodeHash.size() == static_cast<size_t>(UIParamType::COUNT));
     return UIParamTypeByKeynodeHash;
   };
 
-  static std::unordered_map<ScKeynode::HashType, UILinkType> const & GetUILinkTypeByKeynodeClass()
+  static std::unordered_map<std::string, UILinkType> const & GetUILinkTypeByKeynodeClass()
   {
-    static auto const UILinkTypeByKeynode = std::unordered_map<ScKeynode::HashType, UILinkType>(
-        {{HTMLTranslatorKeynodes::nrel_ui_contains.Hash(), UILinkType::Contains}});
+    static auto const UILinkTypeByKeynode = std::unordered_map<std::string, UILinkType>(
+        {{"nrel_ui_contains", UILinkType::Contains},
+         {"nrel_ui_input_target", UILinkType::Inputs},
+         {"nrel_ui_output_target", UILinkType::Outputs}});
+    assert(UILinkTypeByKeynode.size() == static_cast<size_t>(UILinkType::COUNT));
     return UILinkTypeByKeynode;
   };
 
+  static inline std::array<std::string, static_cast<size_t>(UILinkType::COUNT)> const ALL_UI_LINK_TYPES = {
+      "nrel_ui_contains",
+      "nrel_ui_input_target",
+      "nrel_ui_output_target"};
   static inline std::unordered_map<UIComponentType, std::string_view> const HTMLTemplateByUIComponentType = {
       {UIComponentType::Image, "<img id=\"{}\"style=\"position: absolute;\n{}\" src=\"{}\" alt=\"\">"},
       {UIComponentType::Sound, "<audio id=\"{}\" style=\"position: absolute;\n{}\" src=\"{}\" controls></audio>"},
@@ -1345,9 +1355,8 @@ function M() {
         })()))
     })(E)), E.exports
 }
-var V = M(),
-    I = V.sc;
-globalThis.sc = I;)";
+var V = M();
+globalThis.sc = V;)";
 
     return std::string(
         R"(<!DOCTYPE html>
@@ -1369,6 +1378,15 @@ globalThis.sc = I;)";
   )" + bodyContent
         + R"(
   </div>
+  <script>
+    function GetText(el) {
+      return 'value' in el ? el.value : el.textContent;
+    }
+    function SetText(el, text) {
+      if ('value' in el) el.value = text;
+      else el.textContent = text;
+    }
+  </script>
 </body>
 </html>
 )");
@@ -1419,18 +1437,39 @@ globalThis.sc = I;)";
 </script>)");
   }
 
-  static inline std::string AgentConnectScript(std::string const & actionID, std::string const & outputID)
+  static inline std::string AddAgentScript(
+      std::string const & triggerID,
+      std::string const & actionID,
+      std::string const & inputID,
+      std::string const & outputID)
   {
-    return std::string(
+    auto triggerScript = std::string(
+        R"(<script>
+(() => {
+const trigger = document.getElementById(")"
+        + triggerID + R"(");
+const inputElement = document.getElementById(")"
+        + inputID + R"(");
+trigger.addEventListener('click', () => {
+    const letter = GetText(inputElement);
+    trigger.dispatchEvent(new CustomEvent(')"
+        + actionID + R"(', {
+    detail: { letter },
+    bubbles: true
+    }));
+});
+})();
+</script>)");
+    auto agentScript = std::string(
         R"(<script type="module">
 const { ScClient, ScType, ScConstruction, ScLinkContent, ScLinkContentType, ScHelper } = sc;
 const client = new ScClient("ws://localhost:8090/ws_json");
 
 const kn = await client.resolveKeynodes([
   { id: ")"
-        + actionID + R"(" },
-  { id: "action" },
-  { id: "rrel_1" },
+        + actionID + R"(", type: ScType.ConstNode },
+  { id: "action", type: ScType.ConstNode },
+  { id: "rrel_1", type: ScType.ConstNode },
 ]);
 for (const [name, addr] of Object.entries(kn))
   if (!addr?.isValid()) throw `Key node is not found: ${name}`;
@@ -1452,12 +1491,15 @@ document.addEventListener(')"
   const [action] = await client.generateElements(c);
   const result = await new ScHelper(client).getResult(action);
   const [type] = await client.getElementsTypes([result]);
-  document.getElementById(")"
-        + outputID + R"(").textContent =
-    type?.isLink() ? (await client.getLinkContents([result]))[0].data
-                   : `ScAddr(${result.value})`;
+  const agentResult = type?.isLink() ? (await client.getLinkContents([result]))[0].data : `ScAddr(${result.value})`;
+  const outputElement = document.getElementById(")"
+        + outputID + R"(");
+  SetText(outputElement, letter);
+    
 });
 </script>)");
-  };
+
+    return triggerScript + "\n" + agentScript;
+  }
 };
 }  // namespace htmlTranslationModule

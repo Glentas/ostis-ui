@@ -19,15 +19,17 @@ public:
       "concept_current_ostis_ui_model",
       ScType::ConstNodeClass};
 
-  // отношения
+  // relations
   static inline ScKeynode const nrel_inclusion{"nrel_inclusion", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_html_representation{"nrel_html_representation", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_contains{"nrel_ui_contains", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_has_component{"nrel_ui_has_component", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_id{"nrel_ui_id", ScType::ConstNodeNonRole};
   static inline ScKeynode const nrel_ui_value{"nrel_ui_value", ScType::ConstNodeNonRole};
+  static inline ScKeynode const nrel_ui_input_target{"nrel_ui_input_target", ScType::ConstNodeNonRole};
+  static inline ScKeynode const nrel_ui_output_target{"nrel_ui_output_target", ScType::ConstNodeNonRole};
 
-  // типы компонентов
+  // ui component types
   static inline ScKeynode const concept_ui_interface{"concept_ui_interface", ScType::ConstNodeClass};
   static inline ScKeynode const concept_ui_object{"concept_ui_object", ScType::ConstNodeClass};
   static inline ScKeynode const concept_ui_image{"concept_ui_image", ScType::ConstNodeClass};
