@@ -1400,43 +1400,6 @@ globalThis.sc = V;)";
     return std::string("<option id=\"" + childID + "\" value=\"" + actionID + "\">" + conent + "</option>");
   }
 
-  static inline std::string CreateSenderScript(
-      std::string const & elementID,
-      std::string const & actionID,
-      std::string const & text)
-  {
-    return std::string(
-        R"(<script>
-      (() => {
-        const btn = document.getElementById(")"
-        + elementID + R"(");
-        const letter = ")"
-        + text + R"(";
-        btn.addEventListener('click', () => {
-          btn.dispatchEvent(new CustomEvent(')"
-        + actionID + R"(', {
-            detail: { letter },
-            bubbles: true
-          }));
-        });
-      })();
-    </script>)");
-  }
-
-  static inline std::string CreateRecieverScript(std::string const & actionID)
-  {
-    return std::string(
-        R"(<script>
-  document.addEventListener(')"
-        + actionID + R"(', (e) => {
-    const { letter } = e.detail;
-    const btn = e.target;
-    alert('Content: ' + letter + '; from button: ' + btn.id + ' with id=)"
-        + actionID + R"(');
-  });
-</script>)");
-  }
-
   static inline std::string AddAgentScript(
       std::string const & triggerID,
       std::string const & actionID,
@@ -1468,6 +1431,7 @@ const client = new ScClient("ws://localhost:8090/ws_json");
 const kn = await client.resolveKeynodes([
   { id: ")"
         + actionID + R"(", type: ScType.ConstNode },
+  { id: "action_initiated", type: ScType.ConstNode },
   { id: "action", type: ScType.ConstNode },
   { id: "rrel_1", type: ScType.ConstNode },
 ]);
@@ -1482,20 +1446,40 @@ document.addEventListener(')"
   c.generateNode(ScType.NodeConst, "act");
   c.generateConnector(ScType.EdgeAccessConstPosPerm, kn.action, "act");
   c.generateLink(ScType.LinkConst,
-    new ScLinkContent(letter, ScLinkContentType.String), "letter");
-  c.generateConnector(ScType.EdgeDCommonConst, "act", "letter", "arg");
+    new ScLinkContent(String(letter), ScLinkContentType.String), "letter");
+  c.generateConnector(ScType.ConstPermPosArc, "act", "letter", "arg");
   c.generateConnector(ScType.EdgeAccessConstPosPerm, kn.rrel_1, "arg");
-  c.generateConnector(ScType.EdgeDCommonConst, kn[")"
+  c.generateConnector(ScType.EdgeAccessConstPosPerm,
+    kn[")"
         + actionID + R"("], "act");
+  c.generateConnector(ScType.EdgeAccessConstPosPerm,
+    kn.action_initiated, "act");
 
   const [action] = await client.generateElements(c);
+
   const result = await new ScHelper(client).getResult(action);
   const [type] = await client.getElementsTypes([result]);
-  const agentResult = type?.isLink() ? (await client.getLinkContents([result]))[0].data : `ScAddr(${result.value})`;
+
+  let agentResult;
+  if (type?.isLink()) {
+    agentResult = (await client.getLinkContents([result]))[0].data;
+  } else {
+    const { ScTemplate } = sc;
+    const tpl = new ScTemplate();
+    tpl.triple(result, ScType.VarPermPosArc, [ScType.VarNodeLink, "_item"]);
+    const found = await client.searchByTemplate(tpl);
+    if (found.length) {
+      const item = found[0].get("_item");
+      const [content] = await client.getLinkContents([item]);
+      agentResult = content?.data ?? `ScAddr(${result.value})`;
+    } else {
+      agentResult = `ScAddr(${result.value})`;
+    }
+  }
+
   const outputElement = document.getElementById(")"
         + outputID + R"(");
-  SetText(outputElement, letter);
-    
+  SetText(outputElement, agentResult);
 });
 </script>)");
 

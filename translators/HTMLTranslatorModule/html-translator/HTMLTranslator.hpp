@@ -55,8 +55,7 @@ private:
       std::string const & rootID,
       std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
       std::unordered_map<std::string, UIComponent> const & uiComponentByID,
-      std::unordered_map<std::string, std::string> & actionIDbyTriggerID,
-      std::unordered_map<UILinkType, std::vector<UILink>> const & UILinks);
+      std::unordered_map<std::string, std::string> & actionIDbyTriggerID);
   static std::string BuildHTML(
       std::unordered_map<std::string, std::vector<std::string>> && interfaceAbstractTree,
       std::vector<UIComponent> && uiComponents,

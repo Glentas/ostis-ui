@@ -8,6 +8,6 @@
 
 #include <sc-memory/sc_module.hpp>
 
-class HTMLTranslatorModule : public ScModule
+class CalculatorModule : public ScModule
 {
 };

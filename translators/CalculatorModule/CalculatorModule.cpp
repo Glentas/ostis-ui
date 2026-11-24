@@ -10,4 +10,4 @@
 
 using namespace calculatorModule;
 
-SC_MODULE_REGISTER(HTMLTranslatorModule)->Agent<CalculatorAgent>();
+SC_MODULE_REGISTER(CalculatorModule)->Agent<CalculatorAgent>();

@@ -534,8 +534,7 @@ std::string HTMLTranslator::GenerateHTMLComponent(
     std::string const & rootID,
     std::unordered_map<std::string, std::vector<std::string>> const & interfaceAbstractTree,
     std::unordered_map<std::string, UIComponent> const & uiComponentByID,
-    std::unordered_map<std::string, std::string> & actionIDbyTriggerID,
-    std::unordered_map<UILinkType, std::vector<UILink>> const & UILinks)
+    std::unordered_map<std::string, std::string> & actionIDbyTriggerID)
 {
   std::string placeholder, text, actionID;
   auto const & children_it = interfaceAbstractTree.find(componentID);
@@ -544,7 +543,7 @@ std::string HTMLTranslator::GenerateHTMLComponent(
     for (auto const & childID : children_it->second)
     {
       auto childHTML = GenerateHTMLComponent(
-          childID, componentID, rootID, interfaceAbstractTree, uiComponentByID, actionIDbyTriggerID, UILinks);
+          childID, componentID, rootID, interfaceAbstractTree, uiComponentByID, actionIDbyTriggerID);
       if (uiComponentByID.at(componentID).Type == UIComponentType::Select)
       {
         placeholder += HTMLTagMapper::WrapOptionComponent(
@@ -581,39 +580,55 @@ std::string HTMLTranslator::BuildHTML(
   std::unordered_map<std::string, std::string> actionIDbyTriggerID;
   auto fakeRoot = GenerateFakeRootComponent(uiComponents);
   uiComponentByID.emplace(fakeRoot.ID, fakeRoot);
-  auto const & containLinks = uiLinks.at(UILinkType::Contains);
+  auto const & containLinks_it = uiLinks.find(UILinkType::Contains);
   auto const & inputLinks_it = uiLinks.find(UILinkType::Inputs);
   auto const & outputLinks_it = uiLinks.find(UILinkType::Outputs);
-  for (auto & uiComponent : uiComponents)
+
+  if (containLinks_it != uiLinks.cend())
   {
-    bool isRoot = true;
-    for (auto const & uiLink : containLinks)
+    for (auto & uiComponent : uiComponents)
     {
-      if (uiLink.Target == uiComponent.ID)
+      bool isRoot = true;
+      for (auto const & uiLink : containLinks_it->second)
       {
-        isRoot = false;
-        break;
+        if (uiLink.Target == uiComponent.ID)
+        {
+          isRoot = false;
+          break;
+        }
       }
+      if (isRoot)
+      {
+        rootComponents.insert(uiComponent.ID);
+      }
+      auto ID = uiComponent.ID;
+      uiComponentByID.emplace(std::move(ID), std::move(uiComponent));
     }
-    if (isRoot)
+  }
+
+  if (rootComponents.empty())
+  {
+    for (auto const & uiComponent : uiComponents)
     {
       rootComponents.insert(uiComponent.ID);
     }
-    auto ID = uiComponent.ID;
-    uiComponentByID.emplace(std::move(ID), std::move(uiComponent));
   }
+
   if (rootComponents.empty())
   {
     auto const message = std::format("{}: no root components of interface were found.", className);
     SC_LOG_ERROR(message);
     throw std::runtime_error(message);
   }
+
   for (auto const & rootComponent : rootComponents)
   {
     result += GenerateHTMLComponent(
-        rootComponent, fakeRoot.ID, fakeRoot.ID, interfaceAbstractTree, uiComponentByID, actionIDbyTriggerID, uiLinks);
+        rootComponent, fakeRoot.ID, fakeRoot.ID, interfaceAbstractTree, uiComponentByID, actionIDbyTriggerID);
   }
+
   if (inputLinks_it != uiLinks.cend() && outputLinks_it != uiLinks.cend())
+  {
     for (auto const & [triggerID, actionID] : actionIDbyTriggerID)
     {
       std::string inputID;
@@ -638,6 +653,8 @@ std::string HTMLTranslator::BuildHTML(
         result += "\n" + HTMLTagMapper::AddAgentScript(triggerID, actionID, inputID, outputID);
       }
     }
+  }
+
   return HTMLTagMapper::GetFullHTML(result);
 }
 }  // namespace htmlTranslationModule
