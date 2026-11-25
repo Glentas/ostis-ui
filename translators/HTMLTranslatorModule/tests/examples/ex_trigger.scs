@@ -720,5 +720,5 @@ ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_8;;
 ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_16;;
 ex_trigger_cmp_6 => nrel_ui_contains: ex_trigger_cmp_20;;
 
-ex_trigger_cmp_16 => nrel_ui_input_target: ex_trigger_cmp_10;;
+ex_trigger_cmp_16 => nrel_ui_input_target: ex_trigger_cmp_10;; 
 ex_trigger_cmp_16 => nrel_ui_output_target: ex_trigger_cmp_8;;

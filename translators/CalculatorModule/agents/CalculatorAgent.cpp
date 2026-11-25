@@ -209,7 +209,7 @@ ScResult CalculatorAgent::DoProgram(ScActionInitiatedEvent const & event, ScActi
     return action.FinishUnsuccessfully();
   }
 
-  std::string content = calc(content);
+  std::string content;
   if (!m_context.GetLinkContent(inputLink, content))
   {
     SC_LOG_ERROR("Failed to read content of rrel_1 link.");
